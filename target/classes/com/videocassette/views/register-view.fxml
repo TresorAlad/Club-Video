@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.videocassette.controller.RegisterController"
+           styleClass="login-background"
+           prefWidth="900" prefHeight="600">
+
+    <VBox styleClass="login-card" alignment="CENTER" spacing="8" maxWidth="450">
+        <padding><Insets top="30" right="40" bottom="30" left="40"/></padding>
+
+        <Label text="🎬 Inscription" styleClass="login-title"/>
+        <Label text="Rejoignez notre club de vidéo dès aujourd'hui !" styleClass="login-subtitle"/>
+
+        <Region prefHeight="10"/>
+
+        <HBox spacing="15">
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Nom complet" styleClass="form-label"/>
+                <TextField fx:id="nomField" styleClass="login-field"
+                         promptText="Jean Dupont" prefHeight="38"/>
+            </VBox>
+        </HBox>
+
+        <Label text="Adresse postale" styleClass="form-label" maxWidth="Infinity" alignment="CENTER_LEFT"/>
+        <TextField fx:id="adresseField" styleClass="login-field"
+                 promptText="123 Rue de la Vidéo, Paris" prefHeight="38"/>
+
+        <Label text="Adresse email" styleClass="form-label" maxWidth="Infinity" alignment="CENTER_LEFT"/>
+        <TextField fx:id="emailField" styleClass="login-field"
+                 promptText="jean.dupont@example.com" prefHeight="38"/>
+
+        <HBox spacing="15">
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Mot de passe" styleClass="form-label"/>
+                <PasswordField fx:id="passwordField" styleClass="login-field"
+                             promptText="••••••••" prefHeight="38"/>
+            </VBox>
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Confirmer" styleClass="form-label"/>
+                <PasswordField fx:id="confirmPasswordField" styleClass="login-field"
+                             promptText="••••••••" prefHeight="38"/>
+            </VBox>
+        </HBox>
+
+        <Region prefHeight="6"/>
+
+        <Label fx:id="errorLabel" styleClass="login-error" text="" wrapText="true"/>
+
+        <Region prefHeight="10"/>
+
+        <Button text="S'inscrire" styleClass="login-button"
+                onAction="#handleRegister" prefHeight="42" maxWidth="Infinity"/>
+
+        <Region prefHeight="5"/>
+        
+        <Hyperlink text="Déjà un compte ? Se connecter" onAction="#goToLogin" style="-fx-text-fill: #415A77;"/>
+    </VBox>
+</StackPane>

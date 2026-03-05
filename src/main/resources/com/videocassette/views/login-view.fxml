@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.videocassette.controller.LoginController"
+           styleClass="login-background"
+           prefWidth="900" prefHeight="600">
+
+    <VBox styleClass="login-card" alignment="CENTER" spacing="8" maxWidth="420">
+        <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+
+        <Label text="🎬 Video Club" styleClass="login-title"/>
+        <Label text="Connectez-vous pour accéder au système" styleClass="login-subtitle"/>
+
+        <Region prefHeight="20"/>
+
+        <Label text="Adresse email" styleClass="form-label" maxWidth="Infinity" alignment="CENTER_LEFT"/>
+        <TextField fx:id="emailField" styleClass="login-field"
+                   promptText="Entrez votre email" prefHeight="42"/>
+
+        <Region prefHeight="6"/>
+
+        <Label text="Mot de passe" styleClass="form-label" maxWidth="Infinity" alignment="CENTER_LEFT"/>
+        <PasswordField fx:id="passwordField" styleClass="login-field"
+                       promptText="Entrez votre mot de passe" prefHeight="42"/>
+
+        <Region prefHeight="6"/>
+
+        <Label fx:id="errorLabel" styleClass="login-error" text="" wrapText="true"/>
+
+        <Region prefHeight="10"/>
+
+        <Button text="Se Connecter" styleClass="login-button"
+                onAction="#handleLogin" prefHeight="44" maxWidth="Infinity"/>
+
+        <Region prefHeight="5"/>
+        
+        <Hyperlink text="Pas encore de compte ? S'inscrire" onAction="#goToRegister" style="-fx-text-fill: #415A77;"/>
+
+        <Region prefHeight="10"/>
+
+        <Label text="Admin par défaut: admin@videoclub.com / admin123"
+               styleClass="login-subtitle" wrapText="true" style="-fx-font-size: 11px;"/>
+    </VBox>
+</StackPane>

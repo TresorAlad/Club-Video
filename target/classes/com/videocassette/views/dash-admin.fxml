@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.videocassette.controller.DashAdminController"
+      prefWidth="1100" prefHeight="700">
+
+    <!-- ============ SIDEBAR ============ -->
+    <VBox styleClass="sidebar" spacing="2">
+        <VBox styleClass="sidebar-header">
+            <Label text="🎬 Video Club" styleClass="sidebar-title"/>
+        </VBox>
+
+        <Region prefHeight="10"/>
+        <Button text="   🏠  Accueil" styleClass="nav-button" onAction="#showAccueil" fx:id="btnAccueil"/>
+        <Button text="   📼  Cassettes" styleClass="nav-button" onAction="#showCassettes" fx:id="btnCassettes"/>
+        <Button text="   👥  Abonnés" styleClass="nav-button" onAction="#showAbonnes" fx:id="btnAbonnes"/>
+        <Button text="   📂  Catégories" styleClass="nav-button" onAction="#showCategories" fx:id="btnCategories"/>
+        <Button text="   📋  Locations" styleClass="nav-button" onAction="#showLocations" fx:id="btnLocations"/>
+        <Button text="   📊  Statistiques" styleClass="nav-button" onAction="#showStatistiques" fx:id="btnStats"/>
+        <Button text="   👤  Profil" styleClass="nav-button" onAction="#showProfil" fx:id="btnProfil"/>
+
+        <Region VBox.vgrow="ALWAYS"/>
+        <VBox alignment="CENTER" spacing="0">
+            <padding><Insets top="0" right="20" bottom="20" left="20"/></padding>
+            <Button text="Déconnecter" styleClass="nav-button-disconnect" onAction="#deconnecter" maxWidth="Infinity"/>
+        </VBox>
+    </VBox>
+
+    <!-- ============ CONTENU ============ -->
+    <StackPane fx:id="contentArea" HBox.hgrow="ALWAYS" styleClass="content-area">
+
+        <!-- ===== ACCUEIL ===== -->
+        <VBox fx:id="accueilPane" spacing="20">
+            <Label text="Tableau de Bord" styleClass="content-title"/>
+            <Label text="Bienvenue dans le système de gestion Video Club" styleClass="content-subtitle"/>
+            <Region prefHeight="10"/>
+            <HBox spacing="16">
+                <VBox styleClass="stat-card" spacing="6">
+                    <Label fx:id="statCassettes" text="0" styleClass="stat-value"/>
+                    <Label text="Cassettes" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" spacing="6">
+                    <Label fx:id="statAbonnes" text="0" styleClass="stat-value"/>
+                    <Label text="Abonnés" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" spacing="6">
+                    <Label fx:id="statLocationsActives" text="0" styleClass="stat-value"/>
+                    <Label text="Locations Actives" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" spacing="6">
+                    <Label fx:id="statCategories" text="0" styleClass="stat-value"/>
+                    <Label text="Catégories" styleClass="stat-label"/>
+                </VBox>
+            </HBox>
+        </VBox>
+
+        <!-- ===== CASSETTES ===== -->
+        <VBox fx:id="cassettesPane" spacing="14" visible="false" managed="false">
+            <Label text="Gestion des Cassettes" styleClass="content-title"/>
+            <HBox styleClass="toolbar-box">
+                <TextField fx:id="searchCassette" styleClass="search-field" promptText="🔍 Rechercher une cassette..."/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Ajouter" styleClass="action-button" onAction="#ajouterCassette"/>
+                <Button text="✏ Modifier" styleClass="action-button-secondary" onAction="#modifierCassette"/>
+                <Button text="🗑 Supprimer" styleClass="action-button-danger" onAction="#supprimerCassette"/>
+            </HBox>
+            <TableView fx:id="cassetteTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="casIdCol" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="casTitreCol" text="Titre" prefWidth="180"/>
+                    <TableColumn fx:id="casDureeCol" text="Durée" prefWidth="80"/>
+                    <TableColumn fx:id="casCategorieCol" text="Catégorie" prefWidth="120"/>
+                    <TableColumn fx:id="casPrixCol" text="Prix" prefWidth="80"/>
+                    <TableColumn fx:id="casDateCol" text="Date Achat" prefWidth="110"/>
+                    <TableColumn fx:id="casDispoCol" text="Disponible" prefWidth="90"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- ===== ABONNÉS ===== -->
+        <VBox fx:id="abonnesPane" spacing="14" visible="false" managed="false">
+            <Label text="Gestion des Abonnés" styleClass="content-title"/>
+            <HBox styleClass="toolbar-box">
+                <TextField fx:id="searchAbonne" styleClass="search-field" promptText="🔍 Rechercher un abonné..."/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Ajouter" styleClass="action-button" onAction="#ajouterAbonne"/>
+                <Button text="✏ Modifier" styleClass="action-button-secondary" onAction="#modifierAbonne"/>
+                <Button text="🗑 Supprimer" styleClass="action-button-danger" onAction="#supprimerAbonne"/>
+            </HBox>
+            <TableView fx:id="abonneTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="abIdCol" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="abNomCol" text="Nom" prefWidth="180"/>
+                    <TableColumn fx:id="abAdresseCol" text="Adresse" prefWidth="200"/>
+                    <TableColumn fx:id="abDateAbCol" text="Date Abonnement" prefWidth="130"/>
+                    <TableColumn fx:id="abDateEntCol" text="Date Entrée" prefWidth="120"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- ===== CATÉGORIES ===== -->
+        <VBox fx:id="categoriesPane" spacing="14" visible="false" managed="false">
+            <Label text="Gestion des Catégories" styleClass="content-title"/>
+            <HBox styleClass="toolbar-box">
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Ajouter" styleClass="action-button" onAction="#ajouterCategorie"/>
+                <Button text="✏ Modifier" styleClass="action-button-secondary" onAction="#modifierCategorie"/>
+                <Button text="🗑 Supprimer" styleClass="action-button-danger" onAction="#supprimerCategorie"/>
+            </HBox>
+            <TableView fx:id="categorieTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="catIdCol" text="ID" prefWidth="80"/>
+                    <TableColumn fx:id="catLibelleCol" text="Libellé Catégorie" prefWidth="350"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- ===== LOCATIONS ===== -->
+        <VBox fx:id="locationsPane" spacing="14" visible="false" managed="false">
+            <Label text="Gestion des Locations" styleClass="content-title"/>
+            <HBox styleClass="toolbar-box">
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Nouvelle Location" styleClass="action-button" onAction="#nouvelleLocation"/>
+                <Button text="✔ Clôturer" styleClass="action-button-success" onAction="#cloturerLocation"/>
+            </HBox>
+            <TableView fx:id="locationTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="locIdCol" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="locCassetteCol" text="Cassette" prefWidth="180"/>
+                    <TableColumn fx:id="locAbonneCol" text="Abonné" prefWidth="150"/>
+                    <TableColumn fx:id="locDateAllocCol" text="Date Location" prefWidth="120"/>
+                    <TableColumn fx:id="locDateRetCol" text="Date Retour" prefWidth="120"/>
+                    <TableColumn fx:id="locStatutCol" text="Statut" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- ===== STATISTIQUES ===== -->
+        <VBox fx:id="statistiquesPane" spacing="20" visible="false" managed="false">
+            <Label text="Statistiques" styleClass="content-title"/>
+            <HBox spacing="16">
+                <VBox styleClass="stat-card" spacing="6">
+                    <Label fx:id="statTotalCassettes2" text="0" styleClass="stat-value"/>
+                    <Label text="Total Cassettes" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" spacing="6">
+                    <Label fx:id="statTotalAbonnes2" text="0" styleClass="stat-value"/>
+                    <Label text="Total Abonnés" styleClass="stat-label"/>
+                </VBox>
+                <VBox styleClass="stat-card" spacing="6">
+                    <Label fx:id="statLocActives2" text="0" styleClass="stat-value"/>
+                    <Label text="Locations Actives" styleClass="stat-label"/>
+                </VBox>
+            </HBox>
+            <VBox styleClass="stat-card" spacing="10">
+                <Label text="Résumé" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1B2838;"/>
+                <Label fx:id="statsResume" wrapText="true" style="-fx-text-fill: #555; -fx-font-size: 14px;"/>
+            </VBox>
+        </VBox>
+
+        <!-- ===== PROFIL ===== -->
+        <VBox fx:id="profilPane" spacing="20" visible="false" managed="false">
+            <Label text="Mon Profil" styleClass="content-title"/>
+            <VBox styleClass="profil-card" spacing="16" maxWidth="500">
+                <HBox spacing="16" alignment="CENTER_LEFT">
+                    <StackPane styleClass="profil-avatar">
+                        <Label text="A" styleClass="profil-avatar-text"/>
+                    </StackPane>
+                    <VBox spacing="4">
+                        <Label fx:id="profilEmail" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1B2838;"/>
+                        <Label fx:id="profilRole" style="-fx-font-size: 13px; -fx-text-fill: #778DA9;"/>
+                    </VBox>
+                </HBox>
+
+                <Separator/>
+
+                <Label text="Changer le mot de passe" styleClass="form-label"/>
+                <PasswordField fx:id="newPasswordField" styleClass="form-field" promptText="Nouveau mot de passe"/>
+                <PasswordField fx:id="confirmPasswordField" styleClass="form-field" promptText="Confirmer le mot de passe"/>
+                <Label fx:id="profilMessage" style="-fx-font-size: 12px;"/>
+                <Button text="Enregistrer" styleClass="action-button" onAction="#changerMotDePasse"/>
+            </VBox>
+        </VBox>
+
+    </StackPane>
+</HBox>
