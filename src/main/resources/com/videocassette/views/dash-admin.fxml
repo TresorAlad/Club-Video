@@ -15,13 +15,13 @@
         </VBox>
 
         <Region prefHeight="10"/>
-        <Button text="   🏠  Accueil" styleClass="nav-button" onAction="#showAccueil" fx:id="btnAccueil"/>
-        <Button text="   📼  Cassettes" styleClass="nav-button" onAction="#showCassettes" fx:id="btnCassettes"/>
-        <Button text="   👥  Abonnés" styleClass="nav-button" onAction="#showAbonnes" fx:id="btnAbonnes"/>
-        <Button text="   📂  Catégories" styleClass="nav-button" onAction="#showCategories" fx:id="btnCategories"/>
-        <Button text="   📋  Locations" styleClass="nav-button" onAction="#showLocations" fx:id="btnLocations"/>
-        <Button text="   📊  Statistiques" styleClass="nav-button" onAction="#showStatistiques" fx:id="btnStats"/>
-        <Button text="   👤  Profil" styleClass="nav-button" onAction="#showProfil" fx:id="btnProfil"/>
+        <Button text="     Accueil" styleClass="nav-button" onAction="#showAccueil" fx:id="btnAccueil"/>
+        <Button text="     Cassettes" styleClass="nav-button" onAction="#showCassettes" fx:id="btnCassettes"/>
+        <Button text="     Abonnés" styleClass="nav-button" onAction="#showAbonnes" fx:id="btnAbonnes"/>
+        <Button text="     Catégories" styleClass="nav-button" onAction="#showCategories" fx:id="btnCategories"/>
+        <Button text="     Locations" styleClass="nav-button" onAction="#showLocations" fx:id="btnLocations"/>
+        <Button text="     Statistiques" styleClass="nav-button" onAction="#showStatistiques" fx:id="btnStats"/>
+        <Button text="     Profil" styleClass="nav-button" onAction="#showProfil" fx:id="btnProfil"/>
 
         <Region VBox.vgrow="ALWAYS"/>
         <VBox alignment="CENTER" spacing="0">

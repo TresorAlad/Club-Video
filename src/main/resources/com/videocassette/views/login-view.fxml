@@ -41,8 +41,5 @@
         <Hyperlink text="Pas encore de compte ? S'inscrire" onAction="#goToRegister" style="-fx-text-fill: #415A77;"/>
 
         <Region prefHeight="10"/>
-
-        <Label text="Admin par défaut: admin@videoclub.com / admin123"
-               styleClass="login-subtitle" wrapText="true" style="-fx-font-size: 11px;"/>
     </VBox>
 </StackPane>
