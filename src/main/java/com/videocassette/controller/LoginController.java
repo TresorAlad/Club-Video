@@ -49,8 +49,7 @@ public class LoginController {
             }
 
             try {
-                // Tout le monde va vers le dashboard admin unique
-                App.changerVue("/com/videocassette/views/dash-admin.fxml");
+                App.changerVue("/com/videocassette/views/dashboard.fxml");
             } catch (IOException e) {
                 errorLabel.setText("Erreur lors du chargement de la page.");
                 e.printStackTrace();

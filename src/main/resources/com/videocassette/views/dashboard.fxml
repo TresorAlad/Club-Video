@@ -5,7 +5,7 @@
 <?import javafx.geometry.Insets?>
 
 <HBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.videocassette.controller.DashAdminController"
+      fx:controller="com.videocassette.controller.DashboardController"
       prefWidth="1100" prefHeight="700">
 
     <!-- ============ SIDEBAR ============ -->

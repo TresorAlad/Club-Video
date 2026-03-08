@@ -2,12 +2,12 @@
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/util/Session.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/dao/CassetteDAO.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/model/Utilisateur.java
-/home/tresor/Documents/Projet Java/src/main/java/com/videocassette/controller/DashAdminController.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/model/Abonne.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/dao/CarteAbonneDAO.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/dao/LocationDAO.java
 /home/tresor/Documents/Projet Java/src/main/java/module-info.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/controller/LoginController.java
+/home/tresor/Documents/Projet Java/src/main/java/com/videocassette/controller/DashboardController.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/model/Categorie.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/dao/AbonneDAO.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/model/CarteAbonne.java
@@ -17,4 +17,3 @@
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/controller/RegisterController.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/model/Location.java
 /home/tresor/Documents/Projet Java/src/main/java/com/videocassette/App.java
-/home/tresor/Documents/Projet Java/src/main/java/com/videocassette/model/Administrateur.java

@@ -6,17 +6,12 @@ Une application de bureau moderne développée en **JavaFX** pour la gestion d'u
 
 ## 📸 Aperçu des Fonctionnalités
 
-### 👤 Espace Adhérent (Abonné)
+### 👤 Tableau de Bord Unique
 - **Inscription & Connexion** : Création de compte autonome avec génération automatique de carte d'abonné.
-- **Catalogue Dynamique** : Consultation des cassettes disponibles avec recherche en temps réel.
-- **Locations** : Louer des cassettes (limite de 3 simultanées) et gérer ses retours.
+- **Catalogue & Catégories** : Gérer (ajouter, modifier, supprimer) et consulter les cassettes et catégories disponibles.
+- **Locations & Abonnés** : Enregistrer de nouvelles locations, gérer les retours, et suivre la liste des abonnés.
+- **Statistiques** : Vue globale avec statistiques en temps réel sur le parc de cassettes et les locations.
 - **Profil** : Modification du mot de passe et visualisation des informations personnelles.
-
-### 🛠️ Espace Administration (Agent/Admin)
-- **Tableau de Bord** : Statistiques en temps réel sur le parc de cassettes et les locations.
-- **Gestion du Catalogue** : Ajouter, modifier ou supprimer des cassettes et des catégories.
-- **Gestion des Adhérents** : Suivi complet des abonnés et de leurs cartes.
-- **Historique** : Vue globale de toutes les locations (actives et terminées).
 
 ---
 
@@ -78,15 +73,10 @@ mvn javafx:run
 
 ---
 
-## 🔐 Identifiants par défaut
+## 🔐 Création de Compte
 
-Au premier lancement, la base de données est initialisée avec un compte administrateur :
-
-| Rôle | Email | Mot de passe |
-| :--- | :--- | :--- |
-| **Administrateur** | `admin@videoclub.com` | `admin123` |
-
-*Note : Pour les abonnés, utilisez la page **Inscription** pour créer votre propre compte.*
+L'application ne fait plus de distinction entre les utilisateurs ("admin" ou "abonné"). Chaque compte créé donne un accès complet à la plateforme.
+Utilisez la page **Inscription** pour créer votre propre compte. Tous les membres ont accès à toutes les fonctionnalités du club vidéo !
 
 ---
 

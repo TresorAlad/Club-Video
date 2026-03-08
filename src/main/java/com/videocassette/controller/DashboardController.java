@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.List;
 import javafx.application.Platform;
 
-public class DashAdminController {
+public class DashboardController {
 
     @FXML
     private Button btnAccueil, btnCassettes, btnAbonnes, btnCategories, btnLocations, btnStats, btnProfil;
@@ -88,15 +88,7 @@ public class DashAdminController {
     }
 
     private void applySecurity() {
-        if (!Session.isAdmin()) {
-            // Cacher les boutons de gestion admin pour les abonnés
-            btnAbonnes.setVisible(false);
-            btnAbonnes.setManaged(false);
-            btnCategories.setVisible(false);
-            btnCategories.setManaged(false);
-            btnStats.setVisible(false);
-            btnStats.setManaged(false);
-        }
+        // Accès total pour tous les utilisateurs (aucun bouton masqué)
     }
 
     private void setupTables() {
@@ -552,13 +544,10 @@ public class DashAdminController {
         grid.add(new Label("Cassette:"), 0, 0);
         grid.add(cbCassette, 1, 0);
 
-        ComboBox<Abonne> cbAbonne = null;
-        if (Session.isAdmin()) {
-            cbAbonne = new ComboBox<>(FXCollections.observableArrayList(abonneDAO.getAll()));
-            cbAbonne.setPromptText("Sélectionnez un abonné");
-            grid.add(new Label("Abonné:"), 0, 1);
-            grid.add(cbAbonne, 1, 1);
-        }
+        ComboBox<Abonne> cbAbonne = new ComboBox<>(FXCollections.observableArrayList(abonneDAO.getAll()));
+        cbAbonne.setPromptText("Sélectionnez un abonné");
+        grid.add(new Label("Abonné:"), 0, 1);
+        grid.add(cbAbonne, 1, 1);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -566,7 +555,7 @@ public class DashAdminController {
         dialog.setResultConverter(b -> {
             if (b == ButtonType.OK) {
                 Cassette selectedCassette = cbCassette.getValue();
-                Abonne selectedAbonne = Session.isAdmin() ? finalCbAbonne.getValue() : Session.getCurrentAbonne();
+                Abonne selectedAbonne = finalCbAbonne.getValue();
 
                 if (selectedCassette == null) {
                     alerte("Veuillez sélectionner une cassette.");
