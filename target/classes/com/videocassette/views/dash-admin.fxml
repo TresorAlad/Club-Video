@@ -59,26 +59,26 @@
         </VBox>
 
         <!-- ===== CASSETTES ===== -->
-        <VBox fx:id="cassettesPane" spacing="14" visible="false" managed="false">
+        <VBox fx:id="cassettesPane" spacing="20" visible="false" managed="false" VBox.vgrow="ALWAYS">
             <Label text="Gestion des Cassettes" styleClass="content-title"/>
-            <HBox styleClass="toolbar-box">
-                <TextField fx:id="searchCassette" styleClass="search-field" promptText="🔍 Rechercher une cassette..."/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Button text="+ Ajouter" styleClass="action-button" onAction="#ajouterCassette"/>
-                <Button text="✏ Modifier" styleClass="action-button-secondary" onAction="#modifierCassette"/>
-                <Button text="🗑 Supprimer" styleClass="action-button-danger" onAction="#supprimerCassette"/>
+            <HBox styleClass="toolbar-box" alignment="CENTER_LEFT" spacing="20">
+                <HBox styleClass="category-filter-box" alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
+                    <Label text="Catégories :" style="-fx-font-weight: bold; -fx-text-fill: #1B2838;" minWidth="-Infinity"/>
+                    <ScrollPane vbarPolicy="NEVER" hbarPolicy="NEVER" style="-fx-background-color: transparent;" fitToHeight="true" pannable="true" HBox.hgrow="ALWAYS">
+                        <HBox fx:id="categoryFilterBox" spacing="10" alignment="CENTER_LEFT"/>
+                    </ScrollPane>
+                </HBox>
+                <Region HBox.hgrow="NEVER"/>
+                <StackPane alignment="CENTER_RIGHT" minWidth="-Infinity">
+                    <TextField fx:id="searchCassette" styleClass="search-field" promptText="🔍 Rechercher" minWidth="200"/>
+                </StackPane>
+                <Button text="+ Ajouter" styleClass="action-button" onAction="#ajouterCassette" minWidth="-Infinity"/>
             </HBox>
-            <TableView fx:id="cassetteTable" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="casIdCol" text="ID" prefWidth="50"/>
-                    <TableColumn fx:id="casTitreCol" text="Titre" prefWidth="180"/>
-                    <TableColumn fx:id="casDureeCol" text="Durée" prefWidth="80"/>
-                    <TableColumn fx:id="casCategorieCol" text="Catégorie" prefWidth="120"/>
-                    <TableColumn fx:id="casPrixCol" text="Prix" prefWidth="80"/>
-                    <TableColumn fx:id="casDateCol" text="Date Achat" prefWidth="110"/>
-                    <TableColumn fx:id="casDispoCol" text="Disponible" prefWidth="90"/>
-                </columns>
-            </TableView>
+            <ScrollPane fitToWidth="true" styleClass="scroll-pane" style="-fx-background-color: transparent; -fx-background: #E0E1DD;" VBox.vgrow="ALWAYS">
+                <FlowPane fx:id="cassettesFlowPane" hgap="25" vgap="25">
+                    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                </FlowPane>
+            </ScrollPane>
         </VBox>
 
         <!-- ===== ABONNÉS ===== -->

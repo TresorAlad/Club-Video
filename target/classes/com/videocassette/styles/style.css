@@ -17,7 +17,7 @@
 .login-card {
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 16;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 20, 0, 0, 8);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 20, 0, 0, 8);
     -fx-padding: 40;
     -fx-min-width: 380;
     -fx-max-width: 420;
@@ -47,7 +47,7 @@
 .login-field:focused {
     -fx-border-color: #415A77;
     -fx-background-color: #FFFFFF;
-    -fx-effect: dropshadow(gaussian, rgba(65,90,119,0.15), 8, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(65, 90, 119, 0.15), 8, 0, 0, 0);
 }
 
 .login-button {
@@ -94,7 +94,7 @@
 }
 
 .sidebar-separator {
-    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-background-color: rgba(255, 255, 255, 0.15);
     -fx-pref-height: 1;
     -fx-max-height: 1;
 }
@@ -113,18 +113,18 @@
 }
 
 .nav-button:hover {
-    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-background-color: rgba(255, 255, 255, 0.1);
     -fx-text-fill: white;
 }
 
 .nav-button-active {
-    -fx-background-color: rgba(255,255,255,0.18);
+    -fx-background-color: rgba(255, 255, 255, 0.18);
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
 .nav-button-disconnect {
-    -fx-background-color: rgba(231,76,60,0.8);
+    -fx-background-color: rgba(231, 76, 60, 0.8);
     -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-alignment: CENTER;
@@ -136,7 +136,7 @@
 }
 
 .nav-button-disconnect:hover {
-    -fx-background-color: rgba(231,76,60,1.0);
+    -fx-background-color: rgba(231, 76, 60, 1.0);
 }
 
 /* === ZONE DE CONTENU === */
@@ -161,7 +161,7 @@
     -fx-background-color: white;
     -fx-background-radius: 12;
     -fx-padding: 20 24;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 3);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 10, 0, 0, 3);
     -fx-min-width: 180;
     -fx-pref-width: 200;
 }
@@ -212,7 +212,7 @@
 }
 
 .table-view .table-row-cell:selected {
-    -fx-background-color: rgba(65,90,119,0.15);
+    -fx-background-color: rgba(65, 90, 119, 0.15);
 }
 
 .table-view .table-row-cell:selected .text {
@@ -306,7 +306,7 @@
 
 .form-field:focused {
     -fx-border-color: #415A77;
-    -fx-effect: dropshadow(gaussian, rgba(65,90,119,0.12), 6, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(65, 90, 119, 0.12), 6, 0, 0, 0);
 }
 
 /* === COMBOBOX === */
@@ -331,13 +331,13 @@
     -fx-background-color: transparent;
 }
 
-.scroll-pane > .viewport {
+.scroll-pane>.viewport {
     -fx-background-color: transparent;
 }
 
 /* === BADGES === */
 .badge-active {
-    -fx-background-color: rgba(39,174,96,0.15);
+    -fx-background-color: rgba(39, 174, 96, 0.15);
     -fx-text-fill: #27AE60;
     -fx-padding: 4 12;
     -fx-background-radius: 12;
@@ -346,7 +346,7 @@
 }
 
 .badge-inactive {
-    -fx-background-color: rgba(149,165,166,0.15);
+    -fx-background-color: rgba(149, 165, 166, 0.15);
     -fx-text-fill: #95A5A6;
     -fx-padding: 4 12;
     -fx-background-radius: 12;
@@ -358,7 +358,7 @@
     -fx-background-color: white;
     -fx-background-radius: 12;
     -fx-padding: 30;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 3);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 10, 0, 0, 3);
 }
 
 .profil-avatar {
@@ -390,5 +390,102 @@
 }
 
 .search-field:focused {
+    -fx-border-color: #415A77;
+}
+
+/* === CASSETTE CARDS === */
+.cassette-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 4);
+    -fx-pref-width: 220;
+    -fx-spacing: 5;
+}
+
+.cassette-image-box {
+    -fx-background-color: #E0E1DD;
+    -fx-background-radius: 8;
+    -fx-pref-height: 120;
+    -fx-alignment: center;
+    -fx-padding: 5;
+}
+
+.badge-dispo {
+    -fx-background-color: #415A77;
+    -fx-text-fill: white;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8;
+    -fx-background-radius: 10;
+}
+
+.badge-indispo {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 8;
+    -fx-background-radius: 10;
+}
+
+.cassette-info {
+    -fx-font-size: 12px;
+    -fx-text-fill: #333;
+}
+
+.cassette-btn-loue {
+    -fx-background-color: #E0E1DD;
+    -fx-text-fill: black;
+    -fx-border-color: #A0A0A0;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-padding: 5 15;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.cassette-btn-loue:hover {
+    -fx-background-color: #D6D8D4;
+}
+
+.category-filter-box {
+    -fx-background-color: white;
+    -fx-padding: 10 20;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 10, 0, 0, 2);
+}
+
+.category-toggle {
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+    -fx-border-color: #D6D8D4;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5 15;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+}
+
+.category-toggle:selected {
+    -fx-background-color: #415A77;
+    -fx-text-fill: white;
+    -fx-border-color: #415A77;
+}
+
+.category-toggle-all {
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+    -fx-border-color: #D6D8D4;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 5 15;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+}
+
+.category-toggle-all:selected {
+    -fx-background-color: #415A77;
+    -fx-text-fill: white;
     -fx-border-color: #415A77;
 }

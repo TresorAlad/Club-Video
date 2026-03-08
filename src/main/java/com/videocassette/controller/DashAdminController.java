@@ -31,12 +31,9 @@ public class DashAdminController {
     private Label statCassettes, statAbonnes, statLocationsActives, statCategories;
 
     @FXML
-    private TableView<Cassette> cassetteTable;
+    private FlowPane cassettesFlowPane;
     @FXML
-    private TableColumn<Cassette, Integer> casIdCol;
-    @FXML
-    private TableColumn<Cassette, String> casTitreCol, casDureeCol, casCategorieCol, casPrixCol, casDateCol,
-            casDispoCol;
+    private HBox categoryFilterBox;
     @FXML
     private TextField searchCassette;
 
@@ -103,18 +100,7 @@ public class DashAdminController {
     }
 
     private void setupTables() {
-        casIdCol.setCellValueFactory(
-                d -> new javafx.beans.property.SimpleIntegerProperty(d.getValue().getIdCassette()).asObject());
-        casTitreCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getTitre()));
-        casDureeCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getDuree()));
-        casCategorieCol.setCellValueFactory(
-                d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getCategorieNom()));
-        casPrixCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getPrix()));
-        casDateCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
-                d.getValue().getDateAchat() != null ? d.getValue().getDateAchat().toString() : ""));
-        casDispoCol.setCellValueFactory(
-                d -> new javafx.beans.property.SimpleStringProperty(d.getValue().estDisponible() ? "✅ Oui" : "❌ Non"));
-        cassetteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        // cassetteTable has been replaced by cassettesFlowPane
 
         abIdCol.setCellValueFactory(
                 d -> new javafx.beans.property.SimpleIntegerProperty(d.getValue().getIdAbonne()).asObject());
@@ -150,8 +136,7 @@ public class DashAdminController {
 
     private void setupSearch() {
         searchCassette.textProperty().addListener((obs, old, val) -> {
-            cassetteTable.setItems(new FilteredList<>(cassettesData,
-                    c -> val == null || val.isEmpty() || c.getTitre().toLowerCase().contains(val.toLowerCase())));
+            applyCassettesFilter();
         });
         searchAbonne.textProperty().addListener((obs, old, val) -> {
             abonneTable.setItems(new FilteredList<>(abonnesData,
@@ -238,7 +223,135 @@ public class DashAdminController {
 
     private void refreshCassettes() {
         cassettesData.setAll(cassetteDAO.getAll());
-        cassetteTable.setItems(cassettesData);
+        setupCategoryFilters();
+        applyCassettesFilter();
+    }
+
+    private ToggleGroup categoryToggleGroup = new ToggleGroup();
+
+    private void setupCategoryFilters() {
+        categoryFilterBox.getChildren().clear();
+
+        ToggleButton allBtn = new ToggleButton("Toutes");
+        allBtn.getStyleClass().add("category-toggle-all");
+        allBtn.setToggleGroup(categoryToggleGroup);
+        allBtn.setSelected(true);
+        allBtn.setUserData(null);
+        allBtn.setMinSize(javafx.scene.layout.Region.USE_PREF_SIZE, javafx.scene.layout.Region.USE_PREF_SIZE);
+        categoryFilterBox.getChildren().add(allBtn);
+
+        for (Categorie cat : categorieDAO.getAll()) {
+            ToggleButton btn = new ToggleButton(cat.getLibelleCategorie());
+            btn.getStyleClass().add("category-toggle");
+            btn.setToggleGroup(categoryToggleGroup);
+            btn.setUserData(cat.getIdCategorie());
+            btn.setMinSize(javafx.scene.layout.Region.USE_PREF_SIZE, javafx.scene.layout.Region.USE_PREF_SIZE);
+            categoryFilterBox.getChildren().add(btn);
+        }
+
+        categoryToggleGroup.selectedToggleProperty().addListener((obs, old, val) -> {
+            if (val == null) {
+                allBtn.setSelected(true);
+            } else {
+                applyCassettesFilter();
+            }
+        });
+    }
+
+    private void applyCassettesFilter() {
+        cassettesFlowPane.getChildren().clear();
+        String searchText = searchCassette.getText() != null ? searchCassette.getText().toLowerCase() : "";
+
+        Integer selectedCatId = null;
+        if (categoryToggleGroup.getSelectedToggle() != null) {
+            selectedCatId = (Integer) categoryToggleGroup.getSelectedToggle().getUserData();
+        }
+
+        for (Cassette c : cassettesData) {
+            boolean matchesSearch = searchText.isEmpty() || c.getTitre().toLowerCase().contains(searchText);
+            boolean matchesCat = selectedCatId == null || c.getIdCategorie() == selectedCatId;
+
+            if (matchesSearch && matchesCat) {
+                cassettesFlowPane.getChildren().add(createCassetteCard(c));
+            }
+        }
+    }
+
+    private VBox createCassetteCard(Cassette c) {
+        VBox card = new VBox();
+        card.getStyleClass().add("cassette-card");
+
+        StackPane imageBox = new StackPane();
+        imageBox.getStyleClass().add("cassette-image-box");
+
+        Label icon = new Label("🎬");
+        icon.setStyle("-fx-font-size: 50px;");
+
+        Label badge = new Label(c.estDisponible() ? "Disponible" : "Indisponible");
+        badge.getStyleClass().add(c.estDisponible() ? "badge-dispo" : "badge-indispo");
+        StackPane.setAlignment(badge, javafx.geometry.Pos.TOP_RIGHT);
+
+        Button btnDelete = new Button("X");
+        btnDelete.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: red; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 0 5;");
+        btnDelete.setOnAction(e -> supprimerCassetteCard(c));
+        StackPane.setAlignment(btnDelete, javafx.geometry.Pos.TOP_LEFT);
+
+        imageBox.getChildren().addAll(icon, btnDelete, badge);
+
+        Label lblTitre = new Label("Titre : " + c.getTitre());
+        lblTitre.setStyle("-fx-font-weight: bold;");
+        lblTitre.getStyleClass().add("cassette-info");
+
+        Label lblDuree = new Label("Durée : " + c.getDuree());
+        lblDuree.getStyleClass().add("cassette-info");
+
+        Label lblPrix = new Label("Prix : " + c.getPrix() + " CFA");
+        lblPrix.getStyleClass().add("cassette-info");
+
+        Button btnLoue = new Button("Loué");
+        btnLoue.getStyleClass().add("cassette-btn-loue");
+        btnLoue.setMaxWidth(Double.MAX_VALUE);
+        if (!c.estDisponible()) {
+            btnLoue.setDisable(true);
+        }
+
+        card.getChildren().addAll(imageBox, lblTitre, lblDuree, lblPrix, btnLoue);
+
+        ContextMenu contextMenu = new ContextMenu();
+        MenuItem editItem = new MenuItem("✏ Modifier");
+        editItem.setOnAction(e -> modifierCassetteCard(c));
+        MenuItem deleteItem = new MenuItem("🗑 Supprimer");
+        deleteItem.setOnAction(e -> supprimerCassetteCard(c));
+        contextMenu.getItems().addAll(editItem, deleteItem);
+
+        card.setOnContextMenuRequested(e -> contextMenu.show(card, e.getScreenX(), e.getScreenY()));
+
+        card.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                modifierCassetteCard(c);
+            }
+        });
+
+        return card;
+    }
+
+    private void modifierCassetteCard(Cassette sel) {
+        if (sel == null)
+            return;
+        Optional<Cassette> res = creerCassetteDialog(sel).showAndWait();
+        res.ifPresent(c -> {
+            c.setIdCassette(sel.getIdCassette());
+            cassetteDAO.update(c);
+            refreshCassettes();
+        });
+    }
+
+    private void supprimerCassetteCard(Cassette sel) {
+        if (sel != null && confirmer("Supprimer \"" + sel.getTitre() + "\" ?")) {
+            cassetteDAO.delete(sel.getIdCassette());
+            refreshCassettes();
+        }
     }
 
     private void refreshAbonnes() {
@@ -277,24 +390,12 @@ public class DashAdminController {
 
     @FXML
     private void modifierCassette() {
-        Cassette sel = cassetteTable.getSelectionModel().getSelectedItem();
-        if (sel == null)
-            return;
-        Optional<Cassette> res = creerCassetteDialog(sel).showAndWait();
-        res.ifPresent(c -> {
-            c.setIdCassette(sel.getIdCassette());
-            cassetteDAO.update(c);
-            refreshCassettes();
-        });
+        // Obsolete function, replaced by modifierCassetteCard through ContextMenu
     }
 
     @FXML
     private void supprimerCassette() {
-        Cassette sel = cassetteTable.getSelectionModel().getSelectedItem();
-        if (sel != null && confirmer("Supprimer \"" + sel.getTitre() + "\" ?")) {
-            cassetteDAO.delete(sel.getIdCassette());
-            refreshCassettes();
-        }
+        // Obsolete function, replaced by supprimerCassetteCard through ContextMenu
     }
 
     private Dialog<Cassette> creerCassetteDialog(Cassette ex) {
