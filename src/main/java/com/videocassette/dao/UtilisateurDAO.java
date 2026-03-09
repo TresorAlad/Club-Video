@@ -12,11 +12,11 @@ public class UtilisateurDAO {
     }
 
     public boolean create(Utilisateur utilisateur) {
-        String sql = "INSERT INTO utilisateur (email, mot_de_passe, role) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO utilisateur (nom_complet, email, mot_de_passe) VALUES (?, ?, ?)";
         try (PreparedStatement ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, utilisateur.getEmail());
-            ps.setString(2, utilisateur.getMotDePasse());
-            ps.setString(3, utilisateur.getRole() != null ? utilisateur.getRole() : "abonne");
+            ps.setString(1, utilisateur.getNomComplet());
+            ps.setString(2, utilisateur.getEmail());
+            ps.setString(3, utilisateur.getMotDePasse());
 
             int rows = ps.executeUpdate();
             if (rows > 0) {
@@ -40,9 +40,9 @@ public class UtilisateurDAO {
             if (rs.next()) {
                 Utilisateur u = new Utilisateur();
                 u.setIdUtilisateur(rs.getInt("id_utilisateur"));
+                u.setNomComplet(rs.getString("nom_complet"));
                 u.setEmail(rs.getString("email"));
                 u.setMotDePasse(rs.getString("mot_de_passe"));
-                u.setRole(rs.getString("role"));
                 return u;
             }
         } catch (SQLException e) {

@@ -1,43 +1,57 @@
 -- Structure de la base de données pour Video Club
+DROP TABLE IF EXISTS utilisateur;
+DROP TABLE IF EXISTS categorie;
+DROP TABLE IF EXISTS cassette;
+DROP TABLE IF EXISTS abonne;
+DROP TABLE IF EXISTS carte_abonne;
+DROP TABLE IF EXISTS location_cassette;
 
--- Table des utilisateurs (pour l'authentification)
-CREATE TABLE IF NOT EXISTS utilisateur (
+
+-- 1. Table Utilisateur (Informations d'authentification et d'identité)
+CREATE TABLE  utilisateur (
     id_utilisateur INTEGER PRIMARY KEY AUTOINCREMENT,
+    nom_complet TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
-    mot_de_passe TEXT NOT NULL,
-    role TEXT NOT NULL DEFAULT 'abonne'
+    mot_de_passe TEXT NOT NULL
 );
 
--- Table des catégories
-CREATE TABLE IF NOT EXISTS categorie (
+-- 2. Table des catégories
+CREATE TABLE  categorie (
     id_categorie INTEGER PRIMARY KEY AUTOINCREMENT,
     libelle_categorie TEXT NOT NULL
 );
 
--- Table des cassettes
-CREATE TABLE IF NOT EXISTS cassette (
+-- 3. Table des cassettes
+CREATE TABLE  cassette (
     id_cassette INTEGER PRIMARY KEY AUTOINCREMENT,
     titre TEXT NOT NULL,
-    duree TEXT,
+    duree INTEGER,        -- Changé en NUMBER (Juste des minutes, ex: 148)
     id_categorie INTEGER,
-    prix TEXT,
+    prix REAL,            -- Changé en DECIMAL (ex: 15.00)
     date_achat TEXT,
     FOREIGN KEY (id_categorie) REFERENCES categorie(id_categorie) ON DELETE SET NULL
 );
 
--- Table des abonnés
-CREATE TABLE IF NOT EXISTS abonne (
+-- 4. Table des abonnés (Le profil qui donne le droit d'avoir une carte et de louer)
+CREATE TABLE  abonne (
     id_abonne INTEGER PRIMARY KEY AUTOINCREMENT,
     nom_abonne TEXT NOT NULL,
     adresse_abonne TEXT,
     date_abonnement TEXT,
     date_entree TEXT,
-    id_utilisateur INTEGER,
+    id_utilisateur INTEGER UNIQUE, -- Relation UNIQUE : 1 compte Utilisateur = 1 Abonné
     FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur) ON DELETE CASCADE
 );
 
--- Table des locations
-CREATE TABLE IF NOT EXISTS location_cassette (
+-- 5. Table des cartes d'abonné
+CREATE TABLE  carte_abonne (
+    id_carte_abonne INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_abonne INTEGER NOT NULL UNIQUE,
+    FOREIGN KEY (id_abonne) REFERENCES abonne(id_abonne) ON DELETE CASCADE
+);
+
+-- 6. Table des locations
+CREATE TABLE  location_cassette (
     id_location INTEGER PRIMARY KEY AUTOINCREMENT,
     id_cassette INTEGER NOT NULL,
     id_abonne INTEGER NOT NULL,
@@ -47,26 +61,29 @@ CREATE TABLE IF NOT EXISTS location_cassette (
     FOREIGN KEY (id_abonne) REFERENCES abonne(id_abonne) ON DELETE CASCADE
 );
 
--- Table des cartes d'abonné
-CREATE TABLE IF NOT EXISTS carte_abonne (
-    id_carte_abonne INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_abonne INTEGER NOT NULL UNIQUE,
-    FOREIGN KEY (id_abonne) REFERENCES abonne(id_abonne) ON DELETE CASCADE
-);
+-- ==========================================
+-- Données initiales (Jeux d'essai mis à jour)
+-- ==========================================
+INSERT INTO utilisateur (id_utilisateur, nom_complet, email, mot_de_passe) 
+VALUES (1, 'Admin VideoClub', 'admin@videoclub.com', 'admin123');
 
--- Données initiales
-INSERT OR IGNORE INTO utilisateur (id_utilisateur, email, mot_de_passe, role) VALUES (1, 'admin@videoclub.com', 'admin123', 'admin');
-INSERT OR IGNORE INTO utilisateur (id_utilisateur, email, mot_de_passe, role) VALUES (2, 'abonne@videoclub.com', 'abonne123', 'abonne');
+INSERT INTO utilisateur (id_utilisateur, nom_complet, email, mot_de_passe) 
+VALUES (2, 'Jean Dupont', 'abonne@videoclub.com', 'abonne123');
 
-INSERT OR IGNORE INTO abonne (id_abonne, nom_abonne, adresse_abonne, date_abonnement, date_entree, id_utilisateur) 
-VALUES (1, 'Abonné Test', '123 Rue de la Liberté, Paris', '2024-01-01', '2024-01-01', 2);
+-- L'abonné est lié à l'utilisateur #2 (Jean Dupont)
+INSERT INTO abonne (id_abonne, nom_abonne, adresse_abonne, date_abonnement, date_entree, id_utilisateur) 
+VALUES (1, 'Jean Dupont', '123 Rue de la Liberté, Paris', '2024-01-01', '2024-01-01', 2);
 
-INSERT OR IGNORE INTO categorie (id_categorie, libelle_categorie) VALUES (1, 'Action');
-INSERT OR IGNORE INTO categorie (id_categorie, libelle_categorie) VALUES (2, 'Comédie');
-INSERT OR IGNORE INTO categorie (id_categorie, libelle_categorie) VALUES (3, 'Drame');
-INSERT OR IGNORE INTO categorie (id_categorie, libelle_categorie) VALUES (4, 'Horreur');
-INSERT OR IGNORE INTO categorie (id_categorie, libelle_categorie) VALUES (5, 'Science-Fiction');
+-- On lui crée sa carte !
+INSERT INTO carte_abonne (id_carte_abonne, id_abonne) 
+VALUES (1, 1);
 
-INSERT OR IGNORE INTO cassette (id_cassette, titre, duree, id_categorie, prix, date_achat) VALUES (1, 'Inception', '148 min', 5, '15€', '2023-10-10');
-INSERT OR IGNORE INTO cassette (id_cassette, titre, duree, id_categorie, prix, date_achat) VALUES (2, 'The Dark Knight', '152 min', 1, '12€', '2023-05-12');
-INSERT OR IGNORE INTO cassette (id_cassette, titre, duree, id_categorie, prix, date_achat) VALUES (3, 'Superbad', '113 min', 2, '10€', '2023-08-20');
+INSERT INTO categorie (id_categorie, libelle_categorie) VALUES (1, 'Action');
+INSERT INTO categorie (id_categorie, libelle_categorie) VALUES (2, 'Comédie');
+INSERT INTO categorie (id_categorie, libelle_categorie) VALUES (5, 'Science-Fiction');
+
+-- Remarque : Les prix et la durée sont maintenant des VRAIS nombres sans texte
+INSERT INTO cassette (id_cassette, titre, duree, id_categorie, prix, date_achat) 
+VALUES (1, 'Inception', 148, 5, 15.00, '2023-10-10');
+INSERT INTO cassette (id_cassette, titre, duree, id_categorie, prix, date_achat) 
+VALUES (2, 'The Dark Knight', 152, 1, 12.00, '2023-05-12');

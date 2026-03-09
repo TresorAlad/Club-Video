@@ -192,7 +192,7 @@ public class DashboardController {
         Utilisateur u = Session.getCurrentUser();
         if (u != null) {
             profilEmail.setText(u.getEmail());
-            profilRole.setText("Rôle : " + u.getRole().toUpperCase());
+            profilRole.setText("Nom : " + u.getNomComplet());
         }
     }
 
@@ -399,8 +399,8 @@ public class DashboardController {
         g.setVgap(10);
         g.setPadding(new Insets(20));
         TextField t = new TextField(ex != null ? ex.getTitre() : "");
-        TextField du = new TextField(ex != null ? ex.getDuree() : "");
-        TextField p = new TextField(ex != null ? ex.getPrix() : "");
+        TextField du = new TextField(ex != null && ex.getDuree() != null ? String.valueOf(ex.getDuree()) : "");
+        TextField p = new TextField(ex != null && ex.getPrix() != null ? String.valueOf(ex.getPrix()) : "");
         DatePicker da = new DatePicker(ex != null ? ex.getDateAchat() : LocalDate.now());
         ComboBox<Categorie> cb = new ComboBox<>(FXCollections.observableArrayList(categorieDAO.getAll()));
         if (ex != null)
@@ -418,7 +418,8 @@ public class DashboardController {
         g.add(da, 1, 4);
         d.getDialogPane().setContent(g);
         d.setResultConverter(b -> (b == ButtonType.OK)
-                ? new Cassette(t.getText(), du.getText(), cb.getValue().getIdCategorie(), p.getText(), da.getValue())
+                ? new Cassette(t.getText(), Integer.valueOf(du.getText()), cb.getValue().getIdCategorie(),
+                        Double.valueOf(p.getText()), da.getValue())
                 : null);
         return d;
     }

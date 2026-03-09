@@ -61,7 +61,7 @@ public class RegisterController {
         }
 
         // 1. Créer l'utilisateur
-        Utilisateur user = new Utilisateur(email, password, "abonne");
+        Utilisateur user = new Utilisateur(nom, email, password);
         if (utilisateurDAO.create(user)) {
             // 2. Créer l'abonné lié
             Abonne abonne = new Abonne(nom, adresse, LocalDate.now(), LocalDate.now());

@@ -7,24 +7,24 @@ package com.videocassette.model;
 public class Utilisateur {
 
     private int idUtilisateur;
+    private String nomComplet;
     private String email;
     private String motDePasse;
-    private String role; // "admin" ou "abonne"
 
     public Utilisateur() {
     }
 
-    public Utilisateur(int idUtilisateur, String email, String motDePasse, String role) {
+    public Utilisateur(int idUtilisateur, String nomComplet, String email, String motDePasse) {
         this.idUtilisateur = idUtilisateur;
+        this.nomComplet = nomComplet;
         this.email = email;
         this.motDePasse = motDePasse;
-        this.role = role;
     }
 
-    public Utilisateur(String email, String motDePasse, String role) {
+    public Utilisateur(String nomComplet, String email, String motDePasse) {
+        this.nomComplet = nomComplet;
         this.email = email;
         this.motDePasse = motDePasse;
-        this.role = role;
     }
 
     // ======================== Getters et Setters ========================
@@ -35,6 +35,14 @@ public class Utilisateur {
 
     public void setIdUtilisateur(int idUtilisateur) {
         this.idUtilisateur = idUtilisateur;
+    }
+
+    public String getNomComplet() {
+        return nomComplet;
+    }
+
+    public void setNomComplet(String nomComplet) {
+        this.nomComplet = nomComplet;
     }
 
     public String getEmail() {
@@ -53,16 +61,8 @@ public class Utilisateur {
         this.motDePasse = motDePasse;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     @Override
     public String toString() {
-        return email + " (" + role + ")";
+        return nomComplet + " (" + email + ")";
     }
 }

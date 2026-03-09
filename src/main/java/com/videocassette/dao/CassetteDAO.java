@@ -17,9 +17,9 @@ public class CassetteDAO {
         Cassette c = new Cassette();
         c.setIdCassette(rs.getInt("id_cassette"));
         c.setTitre(rs.getString("titre"));
-        c.setDuree(rs.getString("duree"));
+        c.setDuree(rs.getInt("duree"));
         c.setIdCategorie(rs.getInt("id_categorie"));
-        c.setPrix(rs.getString("prix"));
+        c.setPrix(rs.getDouble("prix"));
         String dateStr = rs.getString("date_achat");
         if (dateStr != null && !dateStr.isEmpty()) {
             c.setDateAchat(LocalDate.parse(dateStr));
@@ -36,9 +36,15 @@ public class CassetteDAO {
         String sql = "INSERT INTO cassette (titre, duree, id_categorie, prix, date_achat) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, cassette.getTitre());
-            ps.setString(2, cassette.getDuree());
+            if (cassette.getDuree() != null)
+                ps.setInt(2, cassette.getDuree());
+            else
+                ps.setNull(2, java.sql.Types.INTEGER);
             ps.setInt(3, cassette.getIdCategorie());
-            ps.setString(4, cassette.getPrix());
+            if (cassette.getPrix() != null)
+                ps.setDouble(4, cassette.getPrix());
+            else
+                ps.setNull(4, java.sql.Types.REAL);
             ps.setString(5, cassette.getDateAchat() != null ? cassette.getDateAchat().toString() : null);
             int rows = ps.executeUpdate();
             if (rows > 0) {
@@ -98,9 +104,15 @@ public class CassetteDAO {
         String sql = "UPDATE cassette SET titre = ?, duree = ?, id_categorie = ?, prix = ?, date_achat = ? WHERE id_cassette = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setString(1, cassette.getTitre());
-            ps.setString(2, cassette.getDuree());
+            if (cassette.getDuree() != null)
+                ps.setInt(2, cassette.getDuree());
+            else
+                ps.setNull(2, java.sql.Types.INTEGER);
             ps.setInt(3, cassette.getIdCategorie());
-            ps.setString(4, cassette.getPrix());
+            if (cassette.getPrix() != null)
+                ps.setDouble(4, cassette.getPrix());
+            else
+                ps.setNull(4, java.sql.Types.REAL);
             ps.setString(5, cassette.getDateAchat() != null ? cassette.getDateAchat().toString() : null);
             ps.setInt(6, cassette.getIdCassette());
             return ps.executeUpdate() > 0;

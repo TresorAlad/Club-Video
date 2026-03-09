@@ -28,7 +28,7 @@ public class Session {
     }
 
     public static boolean isAdmin() {
-        return currentUser != null && "admin".equals(currentUser.getRole());
+        return true; // Tous les utilisateurs ont un accès total
     }
 
     public static void clear() {

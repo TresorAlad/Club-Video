@@ -14,10 +14,10 @@ public class Cassette {
 
     private int idCassette;
     private String titre;
-    private String duree;
+    private Integer duree;
     private int idCategorie;
     private String categorieNom;
-    private String prix;
+    private Double prix;
     private LocalDate dateAchat;
 
     // ======================== Constructeurs ========================
@@ -25,7 +25,7 @@ public class Cassette {
     public Cassette() {
     }
 
-    public Cassette(int idCassette, String titre, String duree, int idCategorie, String prix, LocalDate dateAchat) {
+    public Cassette(int idCassette, String titre, Integer duree, int idCategorie, Double prix, LocalDate dateAchat) {
         this.idCassette = idCassette;
         this.titre = titre;
         this.duree = duree;
@@ -34,7 +34,7 @@ public class Cassette {
         this.dateAchat = dateAchat;
     }
 
-    public Cassette(String titre, String duree, int idCategorie, String prix, LocalDate dateAchat) {
+    public Cassette(String titre, Integer duree, int idCategorie, Double prix, LocalDate dateAchat) {
         this.titre = titre;
         this.duree = duree;
         this.idCategorie = idCategorie;
@@ -60,11 +60,11 @@ public class Cassette {
         this.titre = titre;
     }
 
-    public String getDuree() {
+    public Integer getDuree() {
         return duree;
     }
 
-    public void setDuree(String duree) {
+    public void setDuree(Integer duree) {
         this.duree = duree;
     }
 
@@ -84,11 +84,11 @@ public class Cassette {
         this.categorieNom = categorieNom;
     }
 
-    public String getPrix() {
+    public Double getPrix() {
         return prix;
     }
 
-    public void setPrix(String prix) {
+    public void setPrix(Double prix) {
         this.prix = prix;
     }
 
@@ -128,6 +128,6 @@ public class Cassette {
 
     @Override
     public String toString() {
-        return titre + " (" + duree + ")";
+        return titre + " (" + duree + " min)";
     }
 }
