@@ -25,9 +25,9 @@
             </VBox>
         </HBox>
 
-        <Label text="Adresse postale" styleClass="form-label" maxWidth="Infinity" alignment="CENTER_LEFT"/>
+        <Label text="Adresse" styleClass="form-label" maxWidth="Infinity" alignment="CENTER_LEFT"/>
         <TextField fx:id="adresseField" styleClass="login-field"
-                 promptText="123 Rue de la Vidéo, Paris" prefHeight="38"/>
+                 promptText="123 Bd 30 Août, Lomé" prefHeight="38"/>
 
         <Label text="Adresse email" styleClass="form-label" maxWidth="Infinity" alignment="CENTER_LEFT"/>
         <TextField fx:id="emailField" styleClass="login-field"
