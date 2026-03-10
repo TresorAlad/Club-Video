@@ -10,6 +10,7 @@ import java.util.List;
 public class Abonne {
 
     private int idAbonne;
+    private String codeAbonne; // CLUBXXX
     private String nomAbonne;
     private String adresseAbonne;
     private LocalDate dateAbonement;
@@ -27,6 +28,15 @@ public class Abonne {
         this.dateEntree = dateEntree;
     }
 
+    public Abonne(String codeAbonne, String nomAbonne, String adresseAbonne, LocalDate dateAbonement,
+            LocalDate dateEntree) {
+        this.codeAbonne = codeAbonne;
+        this.nomAbonne = nomAbonne;
+        this.adresseAbonne = adresseAbonne;
+        this.dateAbonement = dateAbonement;
+        this.dateEntree = dateEntree;
+    }
+
     // Getters et Setters
     public int getIdAbonne() {
         return idAbonne;
@@ -34,6 +44,14 @@ public class Abonne {
 
     public void setIdAbonne(int idAbonne) {
         this.idAbonne = idAbonne;
+    }
+
+    public String getCodeAbonne() {
+        return codeAbonne;
+    }
+
+    public void setCodeAbonne(String codeAbonne) {
+        this.codeAbonne = codeAbonne;
     }
 
     public String getNomAbonne() {

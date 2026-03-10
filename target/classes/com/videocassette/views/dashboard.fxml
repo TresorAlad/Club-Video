@@ -195,12 +195,13 @@
             </HBox>
             <TableView fx:id="abonneTable" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="abIdCol" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="abCodeCol" text="Code" prefWidth="90"/>
                     <TableColumn fx:id="abNomCol" text="Nom" prefWidth="180"/>
                     <TableColumn fx:id="abAdresseCol" text="Adresse" prefWidth="200"/>
                     <TableColumn fx:id="abDateAbCol" text="Date Abonnement" prefWidth="130"/>
                     <TableColumn fx:id="abDateEntCol" text="Date Entrée" prefWidth="120"/>
                     <TableColumn fx:id="abNbLocCol" text="Nb Locations" prefWidth="100"/>
+                    <TableColumn fx:id="abActionsCol" text="Actions" prefWidth="100"/>
                 </columns>
             </TableView>
         </VBox>

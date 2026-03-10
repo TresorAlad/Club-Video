@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.videocassette.controller.LandingController"
+           styleClass="login-background"
+           prefWidth="900" prefHeight="600">
+
+    <VBox alignment="CENTER" spacing="30" maxWidth="600">
+        <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+
+        <VBox alignment="CENTER" spacing="10">
+            <Label text="🎬" style="-fx-font-size: 80px;"/>
+            <Label text="Video Club" style="-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+            <Label text="Votre destination préférée pour le cinéma vintage" 
+                   style="-fx-font-size: 18px; -fx-text-fill: #E0E1DD; -fx-opacity: 0.9;"/>
+        </VBox>
+
+        <VBox alignment="CENTER" spacing="15" styleClass="login-card" style="-fx-background-color: rgba(255, 255, 255, 0.9);">
+            <padding><Insets top="30" right="40" bottom="30" left="40"/></padding>
+            
+            <Label text="Système d'information dédié à la gestion des locations de cassettes, au suivi des abonnés et au contrôle des retours." 
+                   wrapText="true" textAlignment="CENTER" style="-fx-font-size: 14px; -fx-text-fill: #415A77;"/>
+            
+            <Region prefHeight="10"/>
+
+            <HBox spacing="15" alignment="CENTER">
+                <Button text="Se Connecter" styleClass="login-button" onAction="#goToLogin" 
+                        prefWidth="160" prefHeight="45" style="-fx-min-width: 160;"/>
+                <Button text="S'inscrire" styleClass="action-button-secondary" onAction="#goToRegister" 
+                        prefWidth="160" prefHeight="45" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+            </HBox>
+            
+            <Button text="Nous Contacter" onAction="#showContactInfo" 
+                    styleClass="landing-link" style="-fx-background-color: transparent;"/>
+        </VBox>
+
+        <VBox fx:id="contactBox" alignment="CENTER" spacing="10" 
+              style="-fx-background-color: rgba(27, 40, 56, 0.8); -fx-background-radius: 12; -fx-padding: 20;" 
+              visible="false" managed="false">
+            <Label text=" 123 Rue du Cinéma, Bd 30 Août ADIDOGOME" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label text=" +228 99 70 70 99" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+            <Label text=" bester@videoclub.org" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+        </VBox>
+
+    </VBox>
+</StackPane>

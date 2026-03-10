@@ -12,6 +12,10 @@
     <VBox styleClass="login-card" alignment="CENTER" spacing="8" maxWidth="420">
         <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
 
+        <HBox alignment="CENTER_LEFT">
+            <Button text="← Retour" onAction="#goToLanding" style="-fx-background-color: transparent; -fx-text-fill: #778DA9; -fx-cursor: hand;"/>
+        </HBox>
+
         <Label text="🎬 Video Club" styleClass="login-title"/>
         <Label text="Connectez-vous pour accéder au système" styleClass="login-subtitle"/>
 

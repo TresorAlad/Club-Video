@@ -95,4 +95,13 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void goToLanding() {
+        try {
+            App.changerVue("/com/videocassette/views/landing-view.fxml", 900, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

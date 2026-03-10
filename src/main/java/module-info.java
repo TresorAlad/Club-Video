@@ -2,6 +2,8 @@ module com.videocassette {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires java.desktop;
+    requires com.github.librepdf.openpdf;
 
     opens com.videocassette to javafx.fxml;
     opens com.videocassette.controller to javafx.fxml;

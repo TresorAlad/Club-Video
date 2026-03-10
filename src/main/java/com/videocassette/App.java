@@ -22,8 +22,8 @@ public class App extends Application {
         // Initialiser la base de données
         DatabaseConnection.getInstance().initialiserBase();
 
-        // Charger la vue de connexion
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/videocassette/views/login-view.fxml"));
+        // Charger la vue d'accueil (landing page)
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/videocassette/views/landing-view.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root, 900, 600);

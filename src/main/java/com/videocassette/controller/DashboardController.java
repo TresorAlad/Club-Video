@@ -1,3 +1,4 @@
+
 package com.videocassette.controller;
 
 import com.videocassette.App;
@@ -51,11 +52,13 @@ public class DashboardController {
     @FXML
     private TableView<Abonne> abonneTable;
     @FXML
-    private TableColumn<Abonne, Integer> abIdCol;
-    @FXML
-    private TableColumn<Abonne, String> abNomCol, abAdresseCol, abDateAbCol, abDateEntCol;
+    private TableColumn<Abonne, String> abCodeCol, abNomCol, abAdresseCol, abDateAbCol, abDateEntCol;
     @FXML
     private TableColumn<Abonne, Integer> abNbLocCol;
+    @FXML
+    private TableColumn<Abonne, Abonne> abActionsCol;
+
+    private final java.util.Random random = new java.util.Random();
     @FXML
     private TextField searchAbonne;
 
@@ -127,8 +130,8 @@ public class DashboardController {
         cassetteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // --- Abonnés
-        abIdCol.setCellValueFactory(
-                d -> new javafx.beans.property.SimpleIntegerProperty(d.getValue().getIdAbonne()).asObject());
+        abCodeCol
+                .setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getCodeAbonne()));
         abNomCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getNomAbonne()));
         abAdresseCol.setCellValueFactory(
                 d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getAdresseAbonne()));
@@ -138,6 +141,47 @@ public class DashboardController {
                 d.getValue().getDateEntree() != null ? d.getValue().getDateEntree().toString() : ""));
         abNbLocCol.setCellValueFactory(
                 d -> new javafx.beans.property.SimpleIntegerProperty(d.getValue().getNombreLocations()).asObject());
+
+        // --- Cellule d'Action (Imprimer Carte)
+        abActionsCol.setCellValueFactory(param -> new javafx.beans.property.SimpleObjectProperty<>(param.getValue()));
+        abActionsCol.setCellFactory(param -> new TableCell<Abonne, Abonne>() {
+            private final Button btn = new Button("🖨️ Imprimer");
+            {
+                btn.getStyleClass().add("action-button-secondary");
+                btn.setOnAction(event -> {
+                    Abonne a = getItem();
+                    if (a != null) {
+                        btn.setDisable(true); // Eviter les clics multiples
+                        new Thread(() -> {
+                            String path = com.videocassette.util.PDFUtils.generateMemberCard(a);
+                            javafx.application.Platform.runLater(() -> {
+                                btn.setDisable(false);
+                                if (path != null) {
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Impression réussie");
+                                    alert.setHeaderText("Carte générée");
+                                    alert.setContentText("Le PDF a été créé dans :\n" + path);
+                                    alert.showAndWait();
+                                } else {
+                                    alerte("Erreur lors de la génération du PDF.");
+                                }
+                            });
+                        }).start();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Abonne item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
+
         abonneTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // --- Catégories
@@ -181,7 +225,10 @@ public class DashboardController {
         // Recherche abonnés
         searchAbonne.textProperty().addListener((obs, old, val) -> {
             abonneTable.setItems(new FilteredList<>(abonnesData,
-                    a -> val == null || val.isEmpty() || a.getNomAbonne().toLowerCase().contains(val.toLowerCase())));
+                    a -> val == null || val.isEmpty()
+                            || a.getNomAbonne().toLowerCase().contains(val.toLowerCase())
+                            || (a.getCodeAbonne() != null
+                                    && a.getCodeAbonne().toLowerCase().contains(val.toLowerCase()))));
         });
     }
 
@@ -385,18 +432,19 @@ public class DashboardController {
         grid.setVgap(10);
         grid.setPadding(new Insets(20));
 
-        ComboBox<Abonne> cbAbonne = new ComboBox<>(FXCollections.observableArrayList(abonneDAO.getAll()));
-        cbAbonne.setPromptText("Choisir un abonné");
-        cbAbonne.setMaxWidth(Double.MAX_VALUE);
-        grid.add(new Label("Abonné :"), 0, 0);
-        grid.add(cbAbonne, 1, 0);
+        TextField txtCodeAbonne = new TextField();
+        txtCodeAbonne.setPromptText("Saisir le code (ex: CLUB452)");
+        txtCodeAbonne.setMaxWidth(Double.MAX_VALUE);
+        grid.add(new Label("Code Abonné :"), 0, 0);
+        grid.add(txtCodeAbonne, 1, 0);
         dialog.getDialogPane().setContent(grid);
 
         dialog.setResultConverter(btn -> {
             if (btn == ButtonType.OK) {
-                Abonne sel = cbAbonne.getValue();
+                String code = txtCodeAbonne.getText().trim();
+                Abonne sel = abonneDAO.getByCode(code);
                 if (sel == null) {
-                    alerte("Veuillez sélectionner un abonné.");
+                    alerte("Code abonné inconnu. Veuillez vérifier.");
                     return false;
                 }
                 if (sel.louerCassette(c.getIdCassette())) {
@@ -516,12 +564,25 @@ public class DashboardController {
         Optional<Abonne> res = creerAbonneDialog(null).showAndWait();
         res.ifPresent(a -> {
             if (abonneDAO.create(a)) {
+                // L'ID est maintenant renseigné dans l'objet 'a' grâce à getGeneratedKeys
                 CarteAbonne c = new CarteAbonne();
                 c.setIdAbonne(a.getIdAbonne());
                 carteAbonneDAO.create(c);
+
+                // Générer la carte PDF automatiquement
+                com.videocassette.util.PDFUtils.generateMemberCard(a);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Succès");
+                alert.setHeaderText("Abonné ajouté avec succès");
+                alert.setContentText(
+                        "La carte de membre a été générée et enregistrée dans le dossier 'cards' du projet.");
+                alert.showAndWait();
+
                 refreshAbonnes();
             }
         });
+
     }
 
     @FXML
@@ -556,21 +617,30 @@ public class DashboardController {
         g.setHgap(10);
         g.setVgap(10);
         g.setPadding(new Insets(20));
+
+        // Code random si nouvel abonné
+        String generatedCode = "CLUB" + (100 + random.nextInt(900));
+        TextField c = new TextField(ex != null ? ex.getCodeAbonne() : generatedCode);
         TextField n = new TextField(ex != null ? ex.getNomAbonne() : "");
         TextField ad = new TextField(ex != null ? ex.getAdresseAbonne() : "");
         DatePicker da = new DatePicker(ex != null ? ex.getDateAbonement() : LocalDate.now());
         DatePicker de = new DatePicker(ex != null ? ex.getDateEntree() : LocalDate.now());
-        g.add(new Label("Nom :"), 0, 0);
-        g.add(n, 1, 0);
-        g.add(new Label("Adresse :"), 0, 1);
-        g.add(ad, 1, 1);
-        g.add(new Label("Date Ab. :"), 0, 2);
-        g.add(da, 1, 2);
-        g.add(new Label("Date Entrée :"), 0, 3);
-        g.add(de, 1, 3);
+
+        g.add(new Label("Code :"), 0, 0);
+        g.add(c, 1, 0);
+        g.add(new Label("Nom :"), 0, 1);
+        g.add(n, 1, 1);
+        g.add(new Label("Adresse :"), 0, 2);
+        g.add(ad, 1, 2);
+        g.add(new Label("Date Ab. :"), 0, 3);
+        g.add(da, 1, 3);
+        g.add(new Label("Date Entrée :"), 0, 4);
+        g.add(de, 1, 4);
+
         d.getDialogPane().setContent(g);
-        d.setResultConverter(
-                b -> (b == ButtonType.OK) ? new Abonne(n.getText(), ad.getText(), da.getValue(), de.getValue()) : null);
+        d.setResultConverter(b -> (b == ButtonType.OK)
+                ? new Abonne(c.getText(), n.getText(), ad.getText(), da.getValue(), de.getValue())
+                : null);
         return d;
     }
 
@@ -650,23 +720,25 @@ public class DashboardController {
         grid.add(new Label("Cassette :"), 0, 0);
         grid.add(cbCassette, 1, 0);
 
-        ComboBox<Abonne> cbAbonne = new ComboBox<>(FXCollections.observableArrayList(abonneDAO.getAll()));
-        cbAbonne.setPromptText("Sélectionnez un abonné");
-        grid.add(new Label("Abonné :"), 0, 1);
-        grid.add(cbAbonne, 1, 1);
+        TextField txtCodeAbonne = new TextField();
+        txtCodeAbonne.setPromptText("Ex: CLUB123");
+        grid.add(new Label("Code Abonné :"), 0, 1);
+        grid.add(txtCodeAbonne, 1, 1);
 
         dialog.getDialogPane().setContent(grid);
 
         dialog.setResultConverter(b -> {
             if (b == ButtonType.OK) {
                 Cassette selectedCassette = cbCassette.getValue();
-                Abonne selectedAbonne = cbAbonne.getValue();
+                String code = txtCodeAbonne.getText().trim();
+                Abonne selectedAbonne = abonneDAO.getByCode(code);
+
                 if (selectedCassette == null) {
                     alerte("Veuillez sélectionner une cassette.");
                     return false;
                 }
                 if (selectedAbonne == null) {
-                    alerte("Veuillez sélectionner un abonné valide.");
+                    alerte("Code abonné invalide.");
                     return false;
                 }
                 if (selectedAbonne.louerCassette(selectedCassette.getIdCassette())) {

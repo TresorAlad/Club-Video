@@ -15,6 +15,7 @@ public class AbonneDAO {
     private Abonne mapRow(ResultSet rs) throws SQLException {
         Abonne ab = new Abonne();
         ab.setIdAbonne(rs.getInt("id_abonne"));
+        ab.setCodeAbonne(rs.getString("code_abonne"));
         ab.setNomAbonne(rs.getString("nom_abonne"));
         ab.setAdresseAbonne(rs.getString("adresse_abonne"));
 
@@ -39,15 +40,16 @@ public class AbonneDAO {
     }
 
     public boolean create(Abonne abonne) {
-        String sql = "INSERT INTO abonne (nom_abonne, adresse_abonne, date_abonnement, date_entree, id_utilisateur) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO abonne (code_abonne, nom_abonne, adresse_abonne, date_abonnement, date_entree, id_utilisateur) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, abonne.getNomAbonne());
-            ps.setString(2, abonne.getAdresseAbonne());
-            ps.setString(3, abonne.getDateAbonement() != null ? abonne.getDateAbonement().toString()
+            ps.setString(1, abonne.getCodeAbonne());
+            ps.setString(2, abonne.getNomAbonne());
+            ps.setString(3, abonne.getAdresseAbonne());
+            ps.setString(4, abonne.getDateAbonement() != null ? abonne.getDateAbonement().toString()
                     : LocalDate.now().toString());
-            ps.setString(4,
+            ps.setString(5,
                     abonne.getDateEntree() != null ? abonne.getDateEntree().toString() : LocalDate.now().toString());
-            ps.setInt(5, abonne.getIdUtilisateur());
+            ps.setInt(6, abonne.getIdUtilisateur());
 
             int rows = ps.executeUpdate();
             if (rows > 0) {
@@ -103,18 +105,32 @@ public class AbonneDAO {
     }
 
     public boolean update(Abonne abonne) {
-        String sql = "UPDATE abonne SET nom_abonne = ?, adresse_abonne = ?, date_abonnement = ?, date_entree = ? WHERE id_abonne = ?";
+        String sql = "UPDATE abonne SET code_abonne = ?, nom_abonne = ?, adresse_abonne = ?, date_abonnement = ?, date_entree = ? WHERE id_abonne = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
-            ps.setString(1, abonne.getNomAbonne());
-            ps.setString(2, abonne.getAdresseAbonne());
-            ps.setString(3, abonne.getDateAbonement() != null ? abonne.getDateAbonement().toString() : null);
-            ps.setString(4, abonne.getDateEntree() != null ? abonne.getDateEntree().toString() : null);
-            ps.setInt(5, abonne.getIdAbonne());
+            ps.setString(1, abonne.getCodeAbonne());
+            ps.setString(2, abonne.getNomAbonne());
+            ps.setString(3, abonne.getAdresseAbonne());
+            ps.setString(4, abonne.getDateAbonement() != null ? abonne.getDateAbonement().toString() : null);
+            ps.setString(5, abonne.getDateEntree() != null ? abonne.getDateEntree().toString() : null);
+            ps.setInt(6, abonne.getIdAbonne());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Abonne getByCode(String code) {
+        String sql = "SELECT * FROM abonne WHERE code_abonne = ?";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setString(1, code);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return mapRow(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public boolean delete(int id) {
