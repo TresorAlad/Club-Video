@@ -104,12 +104,13 @@
     -fx-text-fill: #C8CDD3;
     -fx-font-size: 14px;
     -fx-alignment: CENTER_LEFT;
-    -fx-padding: 13 24;
+    -fx-padding: 13 24 13 20;
     -fx-min-width: 240;
     -fx-max-width: 240;
     -fx-background-radius: 0;
     -fx-cursor: hand;
-    -fx-graphic-text-gap: 10;
+    -fx-graphic-text-gap: 12;
+    -fx-content-display: LEFT;
 }
 
 .nav-button:hover {
@@ -133,6 +134,8 @@
     -fx-background-radius: 8;
     -fx-cursor: hand;
     -fx-font-weight: bold;
+    -fx-graphic-text-gap: 10;
+    -fx-content-display: LEFT;
 }
 
 .nav-button-disconnect:hover {

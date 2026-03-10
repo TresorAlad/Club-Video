@@ -15,6 +15,7 @@ public class Abonne {
     private LocalDate dateAbonement;
     private LocalDate dateEntree;
     private int idUtilisateur;
+    private int nombreLocations;
 
     public Abonne() {
     }
@@ -73,6 +74,14 @@ public class Abonne {
 
     public void setIdUtilisateur(int idUtilisateur) {
         this.idUtilisateur = idUtilisateur;
+    }
+
+    public int getNombreLocations() {
+        return nombreLocations;
+    }
+
+    public void setNombreLocations(int nombreLocations) {
+        this.nombreLocations = nombreLocations;
     }
 
     // Méthodes du diagramme de classes
