@@ -27,6 +27,14 @@ public class AbonneDAO {
             ab.setDateEntree(LocalDate.parse(dateEnt));
 
         ab.setIdUtilisateur(rs.getInt("id_utilisateur"));
+
+        // Récupérer le nombre de locations si présent dans la requête
+        try {
+            ab.setNombreLocations(rs.getInt("nb_locations"));
+        } catch (SQLException e) {
+            // nb_locations n'est pas dans le ResultSet, on ignore
+        }
+
         return ab;
     }
 
@@ -56,7 +64,8 @@ public class AbonneDAO {
 
     public List<Abonne> getAll() {
         List<Abonne> list = new ArrayList<>();
-        String sql = "SELECT * FROM abonne ORDER BY nom_abonne";
+        String sql = "SELECT a.*, (SELECT COUNT(*) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as nb_locations "
+                + "FROM abonne a ORDER BY a.nom_abonne";
         try (Statement stmt = getConnection().createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next())
