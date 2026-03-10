@@ -74,7 +74,7 @@ public class RegisterController {
                 carteAbonneDAO.create(carte);
 
                 errorLabel.setStyle("-fx-text-fill: green;");
-                errorLabel.setText("Inscription réussie ! Redirection...");
+                errorLabel.setText("Inscription réussie ! Redirection");
 
                 // Rediriger vers la connexion après 1.5s
                 new Thread(() -> {

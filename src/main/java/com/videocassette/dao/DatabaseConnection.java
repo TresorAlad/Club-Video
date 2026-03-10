@@ -66,28 +66,57 @@ public class DatabaseConnection {
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            StringBuilder script = new StringBuilder();
+            StringBuilder currentStatement = new StringBuilder();
             String line;
-            while ((line = reader.readLine()) != null) {
-                String trimmedLine = line.trim();
-                // Ignorer les commentaires et les lignes vides
-                if (!trimmedLine.isEmpty() && !trimmedLine.startsWith("--")) {
-                    script.append(line).append(" "); // Espace pour éviter les collisions à la jointure
-                }
-            }
-            is.close();
+            int count = 0;
 
-            // Découpage intelligent par point-virgule (basique mais suffisant ici)
-            String[] statements = script.toString().split(";");
             try (Statement stmt = getConnection().createStatement()) {
-                int count = 0;
-                for (String sql : statements) {
-                    if (!sql.trim().isEmpty()) {
-                        stmt.execute(sql.trim());
-                        count++;
+                while ((line = reader.readLine()) != null) {
+                    String trimmedLine = line.trim();
+                    if (trimmedLine.isEmpty() || trimmedLine.startsWith("--")) {
+                        continue;
+                    }
+
+                    // On enlève les commentaires en fin de ligne pour la détection du ";"
+                    String lineWithoutComments = line;
+                    int commentIndex = line.indexOf("--");
+                    if (commentIndex >= 0) {
+                        lineWithoutComments = line.substring(0, commentIndex);
+                    }
+                    String checkLine = lineWithoutComments.trim();
+
+                    currentStatement.append(line);
+
+                    if (checkLine.endsWith(";")) {
+                        String sql = currentStatement.toString().trim();
+                        if (!sql.isEmpty()) {
+                            stmt.execute(sql);
+                            count++;
+                        }
+                        currentStatement.setLength(0);
+                    } else {
+                        currentStatement.append("\n");
                     }
                 }
-                System.out.println("Base de données initialisée (" + count + " instructions exécutées).");
+                System.out.println("Base de données initialisée (" + count + " instructions SQL exécutées).");
+
+                // Vérification robuste de l'existence de la table utilisateur
+                try (ResultSet rs = getConnection().getMetaData().getTables(null, null, "utilisateur", null)) {
+                    boolean exists = false;
+                    while (rs.next()) {
+                        String tableName = rs.getString("TABLE_NAME");
+                        if ("utilisateur".equalsIgnoreCase(tableName)) {
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (exists) {
+                        System.out.println("Vérification : Table 'utilisateur' trouvée.");
+                    } else {
+                        System.err
+                                .println("ERREUR CRITIQUE : La table 'utilisateur' est absente après initialisation !");
+                    }
+                }
             }
         } catch (Exception e) {
             System.err.println("Erreur d'initialisation : " + e.getMessage());

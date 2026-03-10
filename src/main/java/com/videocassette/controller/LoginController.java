@@ -22,7 +22,35 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
+    private TextField passwordTextField;
+
+    @FXML
+    private javafx.scene.control.Button togglePasswordBtn;
+
+    private boolean isPasswordVisible = false;
+
+    @FXML
     private Label errorLabel;
+
+    @FXML
+    public void initialize() {
+        // Lier bi-directionnellement les champs de texte
+        passwordTextField.textProperty().bindBidirectional(passwordField.textProperty());
+    }
+
+    @FXML
+    public void togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible;
+        if (isPasswordVisible) {
+            passwordTextField.setVisible(true);
+            passwordField.setVisible(false);
+            togglePasswordBtn.setText("Masquer");
+        } else {
+            passwordTextField.setVisible(false);
+            passwordField.setVisible(true);
+            togglePasswordBtn.setText("Voir");
+        }
+    }
 
     private final UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
     private final AbonneDAO abonneDAO = new AbonneDAO();

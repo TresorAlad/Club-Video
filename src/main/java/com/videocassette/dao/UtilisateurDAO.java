@@ -32,18 +32,20 @@ public class UtilisateurDAO {
     }
 
     public Utilisateur login(String email, String password) {
-        String sql = "SELECT * FROM utilisateur WHERE email = ? AND mot_de_passe = ?";
-        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+        String sql = "SELECT * FROM utilisateur WHERE LOWER(email) = LOWER(?) AND mot_de_passe = ?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, email);
             ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Utilisateur u = new Utilisateur();
-                u.setIdUtilisateur(rs.getInt("id_utilisateur"));
-                u.setNomComplet(rs.getString("nom_complet"));
-                u.setEmail(rs.getString("email"));
-                u.setMotDePasse(rs.getString("mot_de_passe"));
-                return u;
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Utilisateur u = new Utilisateur();
+                    u.setIdUtilisateur(rs.getInt("id_utilisateur"));
+                    u.setNomComplet(rs.getString("nom_complet"));
+                    u.setEmail(rs.getString("email"));
+                    u.setMotDePasse(rs.getString("mot_de_passe"));
+                    return u;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

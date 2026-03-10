@@ -21,7 +21,7 @@
             <VBox spacing="5" HBox.hgrow="ALWAYS">
                 <Label text="Nom complet" styleClass="form-label"/>
                 <TextField fx:id="nomField" styleClass="login-field"
-                         promptText="Jean Dupont" prefHeight="38"/>
+                         promptText="KOMBATE MAXIME" prefHeight="38"/>
             </VBox>
         </HBox>
 
@@ -31,7 +31,7 @@
 
         <Label text="Adresse email" styleClass="form-label" maxWidth="Infinity" alignment="CENTER_LEFT"/>
         <TextField fx:id="emailField" styleClass="login-field"
-                 promptText="jean.dupont@example.com" prefHeight="38"/>
+                 promptText="maxime.kombate@esgis.org" prefHeight="38"/>
 
         <HBox spacing="15">
             <VBox spacing="5" HBox.hgrow="ALWAYS">

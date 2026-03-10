@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
+<!-- FontIcon removed -->
 
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.videocassette.controller.DashboardController"
@@ -13,7 +13,7 @@
     <VBox styleClass="sidebar" spacing="2">
         <VBox styleClass="sidebar-header">
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <FontIcon iconLiteral="mdi2v-video-vintage" iconSize="26" iconColor="white"/>
+                <Label text="🎬" style="-fx-font-size: 26px;"/>
                 <Label text="Video Club" styleClass="sidebar-title"/>
             </HBox>
         </VBox>
@@ -21,37 +21,37 @@
         <Region prefHeight="10"/>
 
         <Button text="Accueil" styleClass="nav-button" onAction="#showAccueil" fx:id="btnAccueil">
-            <graphic><FontIcon iconLiteral="mdi2h-home-outline" iconSize="18" iconColor="#C8CDD3"/></graphic>
+            <graphic><Label text="" style="-fx-font-size: 18px;"/></graphic>
             <padding><Insets top="13" right="24" bottom="13" left="16"/></padding>
         </Button>
 
         <Button text="Cassettes" styleClass="nav-button" onAction="#showCassettes" fx:id="btnCassettes">
-            <graphic><FontIcon iconLiteral="mdi2v-video-box" iconSize="18" iconColor="#C8CDD3"/></graphic>
+            <graphic><Label text="" style="-fx-font-size: 18px;"/></graphic>
             <padding><Insets top="13" right="24" bottom="13" left="16"/></padding>
         </Button>
 
         <Button text="Abonnés" styleClass="nav-button" onAction="#showAbonnes" fx:id="btnAbonnes">
-            <graphic><FontIcon iconLiteral="mdi2a-account-multiple-outline" iconSize="18" iconColor="#C8CDD3"/></graphic>
+            <graphic><Label text="" style="-fx-font-size: 18px;"/></graphic>
             <padding><Insets top="13" right="24" bottom="13" left="16"/></padding>
         </Button>
 
         <Button text="Catégories" styleClass="nav-button" onAction="#showCategories" fx:id="btnCategories">
-            <graphic><FontIcon iconLiteral="mdi2t-tag-multiple-outline" iconSize="18" iconColor="#C8CDD3"/></graphic>
+            <graphic><Label text="" style="-fx-font-size: 18px;"/></graphic>
             <padding><Insets top="13" right="24" bottom="13" left="16"/></padding>
         </Button>
 
         <Button text="Locations" styleClass="nav-button" onAction="#showLocations" fx:id="btnLocations">
-            <graphic><FontIcon iconLiteral="mdi2c-clipboard-list-outline" iconSize="18" iconColor="#C8CDD3"/></graphic>
+            <graphic><Label text="" style="-fx-font-size: 18px;"/></graphic>
             <padding><Insets top="13" right="24" bottom="13" left="16"/></padding>
         </Button>
 
         <Button text="Statistiques" styleClass="nav-button" onAction="#showStatistiques" fx:id="btnStats">
-            <graphic><FontIcon iconLiteral="mdi2c-chart-bar" iconSize="18" iconColor="#C8CDD3"/></graphic>
+            <graphic><Label text="" style="-fx-font-size: 18px;"/></graphic>
             <padding><Insets top="13" right="24" bottom="13" left="16"/></padding>
         </Button>
 
         <Button text="Profil" styleClass="nav-button" onAction="#showProfil" fx:id="btnProfil">
-            <graphic><FontIcon iconLiteral="mdi2a-account-circle-outline" iconSize="18" iconColor="#C8CDD3"/></graphic>
+            <graphic><Label text="" style="-fx-font-size: 18px;"/></graphic>
             <padding><Insets top="13" right="24" bottom="13" left="16"/></padding>
         </Button>
 
@@ -59,7 +59,7 @@
         <VBox alignment="CENTER" spacing="0">
             <padding><Insets top="0" right="20" bottom="20" left="20"/></padding>
             <Button text="Déconnecter" styleClass="nav-button-disconnect" onAction="#deconnecter" maxWidth="Infinity">
-                <graphic><FontIcon iconLiteral="mdi2l-logout" iconSize="16" iconColor="white"/></graphic>
+                <graphic><Label text="" style="-fx-font-size: 16px;"/></graphic>
             </Button>
         </VBox>
     </VBox>
@@ -70,7 +70,7 @@
         <!-- ===== ACCUEIL ===== -->
         <VBox fx:id="accueilPane" spacing="20" VBox.vgrow="ALWAYS">
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <FontIcon iconLiteral="mdi2h-home" iconSize="28" iconColor="#415A77"/>
+                <Label text="" style="-fx-font-size: 28px;"/>
                 <Label text="Tableau de Bord" styleClass="content-title"/>
             </HBox>
             <Label text="Bienvenue dans le système de gestion Video Club" styleClass="content-subtitle"/>
@@ -79,22 +79,22 @@
             <!-- Cartes statistiques -->
             <HBox spacing="16">
                 <VBox styleClass="stat-card" spacing="6" HBox.hgrow="ALWAYS">
-                    <FontIcon iconLiteral="mdi2v-video-box" iconSize="22" iconColor="#415A77"/>
+                    <Label text="" style="-fx-font-size: 22px;"/>
                     <Label fx:id="statCassettes" text="0" styleClass="stat-value"/>
                     <Label text="Cassettes" styleClass="stat-label"/>
                 </VBox>
                 <VBox styleClass="stat-card" spacing="6" HBox.hgrow="ALWAYS">
-                    <FontIcon iconLiteral="mdi2a-account-multiple" iconSize="22" iconColor="#415A77"/>
+                    <Label text="" style="-fx-font-size: 22px;"/>
                     <Label fx:id="statAbonnes" text="0" styleClass="stat-value"/>
                     <Label text="Abonnés" styleClass="stat-label"/>
                 </VBox>
                 <VBox styleClass="stat-card" spacing="6" HBox.hgrow="ALWAYS">
-                    <FontIcon iconLiteral="mdi2c-clipboard-list" iconSize="22" iconColor="#415A77"/>
+                    <Label text="" style="-fx-font-size: 22px;"/>
                     <Label fx:id="statLocationsActives" text="0" styleClass="stat-value"/>
                     <Label text="Locations Actives" styleClass="stat-label"/>
                 </VBox>
                 <VBox styleClass="stat-card" spacing="6" HBox.hgrow="ALWAYS">
-                    <FontIcon iconLiteral="mdi2t-tag-multiple" iconSize="22" iconColor="#415A77"/>
+                    <Label text="" style="-fx-font-size: 22px;"/>
                     <Label fx:id="statCategories" text="0" styleClass="stat-value"/>
                     <Label text="Catégories" styleClass="stat-label"/>
                 </VBox>
@@ -102,22 +102,22 @@
 
             <!-- Séparateur titre catalogue -->
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <FontIcon iconLiteral="mdi2v-video-box" iconSize="20" iconColor="#415A77"/>
+                <Label text="" style="-fx-font-size: 20px;"/>
                 <Label text="Catalogue des Cassettes" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #1B2838;"/>
             </HBox>
 
             <!-- Filtres catégorie + recherche -->
             <HBox styleClass="toolbar-box" alignment="CENTER_LEFT" spacing="16">
                 <HBox styleClass="category-filter-box" alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
-                    <FontIcon iconLiteral="mdi2f-filter-outline" iconSize="16" iconColor="#415A77"/>
-                    <Label text="Catégories :" style="-fx-font-weight: bold; -fx-text-fill: #1B2838;" minWidth="-Infinity"/>
+                    <Label text="" style="-fx-font-size: 16px;"/>
+                    <Label text="Catégories" style="-fx-font-weight: bold; -fx-text-fill: #1B2838;" minWidth="-Infinity"/>
                     <ScrollPane vbarPolicy="NEVER" hbarPolicy="NEVER" style="-fx-background-color: transparent;" fitToHeight="true" pannable="true" HBox.hgrow="ALWAYS">
                         <HBox fx:id="categoryFilterBox" spacing="8" alignment="CENTER_LEFT"/>
                     </ScrollPane>
                 </HBox>
                 <HBox alignment="CENTER_LEFT" spacing="8" styleClass="search-box-wrap">
-                    <FontIcon iconLiteral="mdi2m-magnify" iconSize="16" iconColor="#778DA9"/>
-                    <TextField fx:id="searchCassette" styleClass="search-field" promptText="Rechercher une cassette..." minWidth="220"/>
+                    <Label text="" style="-fx-font-size: 16px;"/>
+                    <TextField fx:id="searchCassette" styleClass="search-field" promptText="Rechercher une cassette" minWidth="220"/>
                 </HBox>
             </HBox>
 
@@ -133,25 +133,25 @@
         <!-- ===== CASSETTES (Gestion - TableView) ===== -->
         <VBox fx:id="cassettesPane" spacing="14" visible="false" managed="false" VBox.vgrow="ALWAYS">
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <FontIcon iconLiteral="mdi2v-video-box" iconSize="28" iconColor="#415A77"/>
+                <Label text="" style="-fx-font-size: 28px;"/>
                 <Label text="Gestion des Cassettes" styleClass="content-title"/>
             </HBox>
             <HBox styleClass="toolbar-box" alignment="CENTER_LEFT" spacing="12">
                 <HBox alignment="CENTER_LEFT" spacing="8" HBox.hgrow="ALWAYS">
-                    <FontIcon iconLiteral="mdi2m-magnify" iconSize="16" iconColor="#778DA9"/>
-                    <TextField fx:id="searchCassetteTable" styleClass="search-field" promptText="Rechercher..." HBox.hgrow="ALWAYS"/>
+                    <Label text="" style="-fx-font-size: 16px;"/>
+                    <TextField fx:id="searchCassetteTable" styleClass="search-field" promptText="Rechercher" HBox.hgrow="ALWAYS"/>
                 </HBox>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button styleClass="action-button" onAction="#ajouterCassette">
-                    <graphic><FontIcon iconLiteral="mdi2p-plus-circle-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Ajouter" styleClass="action-button" onAction="#ajouterCassette">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
-                <Button styleClass="action-button-secondary" onAction="#modifierCassetteSelecTable">
-                    <graphic><FontIcon iconLiteral="mdi2p-pencil-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Modifier" styleClass="action-button-secondary" onAction="#modifierCassetteSelecTable">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
-                <Button styleClass="action-button-danger" onAction="#supprimerCassetteSelecTable">
-                    <graphic><FontIcon iconLiteral="mdi2d-delete-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Supprimer" styleClass="action-button-danger" onAction="#supprimerCassetteSelecTable">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
             </HBox>
@@ -171,25 +171,25 @@
         <!-- ===== ABONNÉS ===== -->
         <VBox fx:id="abonnesPane" spacing="14" visible="false" managed="false" VBox.vgrow="ALWAYS">
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <FontIcon iconLiteral="mdi2a-account-multiple" iconSize="28" iconColor="#415A77"/>
+                <Label text="" style="-fx-font-size: 28px;"/>
                 <Label text="Gestion des Abonnés" styleClass="content-title"/>
             </HBox>
             <HBox styleClass="toolbar-box">
                 <HBox alignment="CENTER_LEFT" spacing="8" HBox.hgrow="ALWAYS">
-                    <FontIcon iconLiteral="mdi2m-magnify" iconSize="16" iconColor="#778DA9"/>
-                    <TextField fx:id="searchAbonne" styleClass="search-field" promptText="Rechercher un abonné..." HBox.hgrow="ALWAYS"/>
+                    <Label text="" style="-fx-font-size: 16px;"/>
+                    <TextField fx:id="searchAbonne" styleClass="search-field" promptText="Rechercher un abonné" HBox.hgrow="ALWAYS"/>
                 </HBox>
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button styleClass="action-button" onAction="#ajouterAbonne">
-                    <graphic><FontIcon iconLiteral="mdi2a-account-plus-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Ajouter" styleClass="action-button" onAction="#ajouterAbonne">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
-                <Button styleClass="action-button-secondary" onAction="#modifierAbonne">
-                    <graphic><FontIcon iconLiteral="mdi2a-account-edit-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Modifier" styleClass="action-button-secondary" onAction="#modifierAbonne">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
-                <Button styleClass="action-button-danger" onAction="#supprimerAbonne">
-                    <graphic><FontIcon iconLiteral="mdi2a-account-remove-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Supprimer" styleClass="action-button-danger" onAction="#supprimerAbonne">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
             </HBox>
@@ -208,21 +208,21 @@
         <!-- ===== CATÉGORIES ===== -->
         <VBox fx:id="categoriesPane" spacing="14" visible="false" managed="false" VBox.vgrow="ALWAYS">
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <FontIcon iconLiteral="mdi2t-tag-multiple" iconSize="28" iconColor="#415A77"/>
+                <Label text="" style="-fx-font-size: 28px;"/>
                 <Label text="Gestion des Catégories" styleClass="content-title"/>
             </HBox>
             <HBox styleClass="toolbar-box">
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button styleClass="action-button" onAction="#ajouterCategorie">
-                    <graphic><FontIcon iconLiteral="mdi2p-plus-circle-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Ajouter" styleClass="action-button" onAction="#ajouterCategorie">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
-                <Button styleClass="action-button-secondary" onAction="#modifierCategorie">
-                    <graphic><FontIcon iconLiteral="mdi2p-pencil-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Modifier" styleClass="action-button-secondary" onAction="#modifierCategorie">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
-                <Button styleClass="action-button-danger" onAction="#supprimerCategorie">
-                    <graphic><FontIcon iconLiteral="mdi2d-delete-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Supprimer" styleClass="action-button-danger" onAction="#supprimerCategorie">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
             </HBox>
@@ -237,17 +237,17 @@
         <!-- ===== LOCATIONS ===== -->
         <VBox fx:id="locationsPane" spacing="14" visible="false" managed="false" VBox.vgrow="ALWAYS">
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <FontIcon iconLiteral="mdi2c-clipboard-list" iconSize="28" iconColor="#415A77"/>
+                <Label text="" style="-fx-font-size: 28px;"/>
                 <Label text="Gestion des Locations" styleClass="content-title"/>
             </HBox>
             <HBox styleClass="toolbar-box">
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button styleClass="action-button" onAction="#nouvelleLocation">
-                    <graphic><FontIcon iconLiteral="mdi2p-plus-circle-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Nouvelle Location" styleClass="action-button" onAction="#nouvelleLocation">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
-                <Button styleClass="action-button-success" onAction="#cloturerLocation">
-                    <graphic><FontIcon iconLiteral="mdi2c-check-circle-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Clôturer" styleClass="action-button-success" onAction="#cloturerLocation">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
             </HBox>
@@ -266,29 +266,29 @@
         <!-- ===== STATISTIQUES ===== -->
         <VBox fx:id="statistiquesPane" spacing="20" visible="false" managed="false">
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <FontIcon iconLiteral="mdi2c-chart-bar" iconSize="28" iconColor="#415A77"/>
+                <Label text="" style="-fx-font-size: 28px;"/>
                 <Label text="Statistiques" styleClass="content-title"/>
             </HBox>
             <HBox spacing="16">
                 <VBox styleClass="stat-card" spacing="6" HBox.hgrow="ALWAYS">
-                    <FontIcon iconLiteral="mdi2v-video-box" iconSize="22" iconColor="#415A77"/>
+                    <Label text="" style="-fx-font-size: 22px;"/>
                     <Label fx:id="statTotalCassettes2" text="0" styleClass="stat-value"/>
                     <Label text="Total Cassettes" styleClass="stat-label"/>
                 </VBox>
                 <VBox styleClass="stat-card" spacing="6" HBox.hgrow="ALWAYS">
-                    <FontIcon iconLiteral="mdi2a-account-multiple" iconSize="22" iconColor="#415A77"/>
+                    <Label text="" style="-fx-font-size: 22px;"/>
                     <Label fx:id="statTotalAbonnes2" text="0" styleClass="stat-value"/>
                     <Label text="Total Abonnés" styleClass="stat-label"/>
                 </VBox>
                 <VBox styleClass="stat-card" spacing="6" HBox.hgrow="ALWAYS">
-                    <FontIcon iconLiteral="mdi2c-clipboard-list" iconSize="22" iconColor="#415A77"/>
+                    <Label text="" style="-fx-font-size: 22px;"/>
                     <Label fx:id="statLocActives2" text="0" styleClass="stat-value"/>
                     <Label text="Locations Actives" styleClass="stat-label"/>
                 </VBox>
             </HBox>
             <VBox styleClass="stat-card" spacing="10">
                 <HBox spacing="8" alignment="CENTER_LEFT">
-                    <FontIcon iconLiteral="mdi2i-information-outline" iconSize="18" iconColor="#415A77"/>
+                    <Label text="" style="-fx-font-size: 18px;"/>
                     <Label text="Résumé" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1B2838;"/>
                 </HBox>
                 <Label fx:id="statsResume" wrapText="true" style="-fx-text-fill: #555; -fx-font-size: 14px;"/>
@@ -298,13 +298,13 @@
         <!-- ===== PROFIL ===== -->
         <VBox fx:id="profilPane" spacing="20" visible="false" managed="false">
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <FontIcon iconLiteral="mdi2a-account-circle" iconSize="28" iconColor="#415A77"/>
+                <Label text="" style="-fx-font-size: 28px;"/>
                 <Label text="Mon Profil" styleClass="content-title"/>
             </HBox>
             <VBox styleClass="profil-card" spacing="16" maxWidth="500">
                 <HBox spacing="16" alignment="CENTER_LEFT">
                     <StackPane styleClass="profil-avatar">
-                        <FontIcon iconLiteral="mdi2a-account" iconSize="40" iconColor="white"/>
+                        <Label text="" style="-fx-font-size: 40px;"/>
                     </StackPane>
                     <VBox spacing="4">
                         <Label fx:id="profilEmail" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #1B2838;"/>
@@ -315,14 +315,14 @@
                 <Separator/>
 
                 <HBox spacing="8" alignment="CENTER_LEFT">
-                    <FontIcon iconLiteral="mdi2l-lock-outline" iconSize="16" iconColor="#415A77"/>
+                    <Label text="" style="-fx-font-size: 16px;"/>
                     <Label text="Changer le mot de passe" styleClass="form-label"/>
                 </HBox>
                 <PasswordField fx:id="newPasswordField" styleClass="form-field" promptText="Nouveau mot de passe"/>
                 <PasswordField fx:id="confirmPasswordField" styleClass="form-field" promptText="Confirmer le mot de passe"/>
                 <Label fx:id="profilMessage" style="-fx-font-size: 12px;"/>
-                <Button styleClass="action-button" onAction="#changerMotDePasse">
-                    <graphic><FontIcon iconLiteral="mdi2c-content-save-outline" iconSize="16" iconColor="white"/></graphic>
+                <Button text="Enregistrer" styleClass="action-button" onAction="#changerMotDePasse">
+                    <graphic><Label text="" style="-fx-font-size: 14px;"/></graphic>
                     <padding><Insets top="8" right="20" bottom="8" left="20"/></padding>
                 </Button>
             </VBox>

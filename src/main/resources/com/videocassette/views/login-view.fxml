@@ -24,8 +24,15 @@
         <Region prefHeight="6"/>
 
         <Label text="Mot de passe" styleClass="form-label" maxWidth="Infinity" alignment="CENTER_LEFT"/>
-        <PasswordField fx:id="passwordField" styleClass="login-field"
-                       promptText="Entrez votre mot de passe" prefHeight="42"/>
+        <HBox spacing="0" alignment="CENTER_LEFT">
+            <StackPane HBox.hgrow="ALWAYS">
+                <PasswordField fx:id="passwordField" styleClass="login-field"
+                               promptText="Entrez votre mot de passe" prefHeight="42"/>
+                <TextField fx:id="passwordTextField" styleClass="login-field"
+                           promptText="Entrez votre mot de passe" prefHeight="42" visible="false"/>
+            </StackPane>
+            <Button fx:id="togglePasswordBtn" onAction="#togglePasswordVisibility" prefHeight="42" text="Voir" style="-fx-background-color: transparent; -fx-border-color: #ced4da; -fx-border-width: 1 1 1 0; -fx-border-radius: 0 4 4 0; -fx-cursor: hand; -fx-font-size: 16px;"/>
+        </HBox>
 
         <Region prefHeight="6"/>
 

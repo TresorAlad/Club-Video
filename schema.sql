@@ -1,10 +1,10 @@
--- Structure de la base de données pour Video Club
-DROP TABLE IF EXISTS utilisateur;
-DROP TABLE IF EXISTS categorie;
-DROP TABLE IF EXISTS cassette;
-DROP TABLE IF EXISTS abonne;
-DROP TABLE IF EXISTS carte_abonne;
+-- 0. Supprimer les tables existantes (ordre inverse des dépendances pour les FK)
 DROP TABLE IF EXISTS location_cassette;
+DROP TABLE IF EXISTS carte_abonne;
+DROP TABLE IF EXISTS abonne;
+DROP TABLE IF EXISTS cassette;
+DROP TABLE IF EXISTS categorie;
+DROP TABLE IF EXISTS utilisateur;
 
 
 -- 1. Table Utilisateur (Informations d'authentification et d'identité)

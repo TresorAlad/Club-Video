@@ -492,3 +492,32 @@
     -fx-text-fill: white;
     -fx-border-color: #415A77;
 }
+
+/* === TOGGLE PASSWORD === */
+.password-container {
+    -fx-background-color: transparent;
+}
+
+.password-container .login-field {
+    -fx-background-radius: 8 0 0 8;
+    -fx-border-radius: 8 0 0 8;
+}
+
+.toggle-password-button {
+    -fx-background-color: white;
+    -fx-border-color: #E0E1DD;
+    -fx-border-width: 1 1 1 0;
+    -fx-border-radius: 0 8 8 0;
+    -fx-background-radius: 0 8 8 0;
+    -fx-padding: 0 12;
+    -fx-cursor: hand;
+}
+
+.toggle-password-button:hover {
+    -fx-background-color: #F8F9FA;
+}
+
+.toggle-password-button:focused {
+    -fx-border-color: #415A77;
+    -fx-border-width: 1 1 1 0;
+}

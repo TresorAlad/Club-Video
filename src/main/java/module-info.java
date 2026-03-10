@@ -2,9 +2,6 @@ module com.videocassette {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
-    requires org.kordamp.ikonli.core;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.ikonli.material2;
 
     opens com.videocassette to javafx.fxml;
     opens com.videocassette.controller to javafx.fxml;

@@ -113,13 +113,13 @@ public class DashboardController {
         cassTitreCol.setCellValueFactory(
                 d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getTitre()));
         cassDureeCol.setCellValueFactory(
-                d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getDuree()));
+                d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getDuree() + " min"));
         cassCatCol.setCellValueFactory(d -> {
             Categorie cat = categorieDAO.getById(d.getValue().getIdCategorie());
             return new javafx.beans.property.SimpleStringProperty(cat != null ? cat.getLibelleCategorie() : "—");
         });
         cassPrixCol.setCellValueFactory(
-                d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getPrix()));
+                d -> new javafx.beans.property.SimpleStringProperty(String.valueOf(d.getValue().getPrix())));
         cassDateCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
                 d.getValue().getDateAchat() != null ? d.getValue().getDateAchat().toString() : ""));
         cassDispoCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
@@ -353,17 +353,17 @@ public class DashboardController {
         lblTitre.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
         lblTitre.getStyleClass().add("cassette-info");
 
-        Label lblDuree = new Label("⏱ " + c.getDuree());
+        Label lblDuree = new Label(c.getDuree() + " min");
         lblDuree.getStyleClass().add("cassette-info");
 
         Categorie cat = categorieDAO.getById(c.getIdCategorie());
-        Label lblCat = new Label("📂 " + (cat != null ? cat.getLibelleCategorie() : "—"));
+        Label lblCat = new Label(cat != null ? cat.getLibelleCategorie() : "—");
         lblCat.getStyleClass().add("cassette-info");
 
-        Label lblPrix = new Label("💰 " + c.getPrix() + " CFA");
+        Label lblPrix = new Label(c.getPrix() + " CFA");
         lblPrix.getStyleClass().add("cassette-info");
 
-        Button btnLouer = new Button("📼 Louer");
+        Button btnLouer = new Button("Louer");
         btnLouer.getStyleClass().add("cassette-btn-loue");
         btnLouer.setMaxWidth(Double.MAX_VALUE);
         btnLouer.setDisable(!c.estDisponible());
@@ -386,7 +386,7 @@ public class DashboardController {
         grid.setPadding(new Insets(20));
 
         ComboBox<Abonne> cbAbonne = new ComboBox<>(FXCollections.observableArrayList(abonneDAO.getAll()));
-        cbAbonne.setPromptText("Choisir un abonné...");
+        cbAbonne.setPromptText("Choisir un abonné");
         cbAbonne.setMaxWidth(Double.MAX_VALUE);
         grid.add(new Label("Abonné :"), 0, 0);
         grid.add(cbAbonne, 1, 0);
