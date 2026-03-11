@@ -5,15 +5,22 @@ import com.videocassette.dao.CassetteDAO;
 import java.util.List;
 
 /**
- * Classe Categorie - Représente une catégorie de cassettes vidéo.
- * Correspond à la classe 'categorie' du diagramme de classes.
+ * La classe Categorie permet de classer les films par genre.
+ * Exemples : "Action", "Comédie", "Drame", "Horreur".
+ * Cela aide les clients à trouver le type de film qu'ils aiment.
  */
 public class Categorie {
 
+    // --- Les "Champs" ---
+
+    // Identifiant unique de la catégorie
     private int idCategorie;
+    
+    // Le nom de la catégorie (ex: "Science-Fiction")
     private String libelleCategorie;
 
-    // ======================== Constructeurs ========================
+    // --- Les Constructeurs ---
+    // (Voir Abonne.java pour le rôle des constructeurs)
 
     public Categorie() {
     }
@@ -27,7 +34,7 @@ public class Categorie {
         this.libelleCategorie = libelleCategorie;
     }
 
-    // ======================== Getters et Setters ========================
+    // --- Les Getters et Setters ---
 
     public int getIdCategorie() {
         return idCategorie;
@@ -45,17 +52,21 @@ public class Categorie {
         this.libelleCategorie = libelleCategorie;
     }
 
-    // ======================== Méthodes du diagramme ========================
+    // --- Les Méthodes Métier ---
 
     /**
-     * Retourne la liste des cassettes appartenant à cette catégorie.
-     * Méthode getCassettes() du diagramme de classes.
+     * Permet de savoir quels films font partie de cette catégorie.
+     * @return Une liste de toutes les cassettes classées ici.
      */
     public List<Cassette> getCassettes() {
         CassetteDAO cassetteDAO = new CassetteDAO();
+        // On demande au "pont" (le DAO) de nous donner les films de cette catégorie
         return cassetteDAO.getByCategorie(this.idCategorie);
     }
 
+    /**
+     * Affiche simplement le nom de la catégorie (ex: "Comédie")
+     */
     @Override
     public String toString() {
         return libelleCategorie;

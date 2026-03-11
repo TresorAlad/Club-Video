@@ -4,6 +4,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
+<!-- 
+    register-view.fxml : Fenêtre d'inscription.
+    Elle permet à un nouvel utilisateur de créer son compte en saisissant ses infos personnelles.
+-->
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.videocassette.controller.RegisterController"
            styleClass="login-background"
@@ -14,6 +18,8 @@
 
         <Label text="🎬 Inscription" styleClass="login-title"/>
         <Label text="Rejoignez notre club de vidéo dès aujourd'hui !" styleClass="login-subtitle"/>
+
+        <!-- Formulaire de saisie des données -->
 
         <Region prefHeight="10"/>
 
@@ -33,6 +39,7 @@
         <TextField fx:id="emailField" styleClass="login-field"
                  promptText="maxime.kombate@esgis.org" prefHeight="38"/>
 
+        <!-- Deux colonnes pour les mots de passe -->
         <HBox spacing="15">
             <VBox spacing="5" HBox.hgrow="ALWAYS">
                 <Label text="Mot de passe" styleClass="form-label"/>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<!-- 
+    location-form-view.fxml : Formulaire complet pour créer une location.
+    Il permet de choisir une cassette et un abonné via des listes déroulantes (ComboBox).
+-->
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.videocassette.controller.LocationFormController"
+      spacing="20" alignment="TOP_CENTER" styleClass="content-area"
+      prefWidth="1100" prefHeight="700">
+    
+    <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Nouvelle Location" styleClass="content-title"/>
+    </HBox>
+
+    <VBox spacing="20" maxWidth="600" styleClass="form-container" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+        
+        <VBox spacing="8">
+            <Label text="Sélectionner la Cassette" styleClass="form-label"/>
+            <ComboBox fx:id="cassetteCombo" styleClass="form-field" maxWidth="Infinity" promptText="Rechercher une cassette..."/>
+        </VBox>
+
+        <VBox spacing="8">
+            <Label text="Sélectionner l'Abonné" styleClass="form-label"/>
+            <ComboBox fx:id="abonneCombo" styleClass="form-field" maxWidth="Infinity" promptText="Rechercher un abonné..."/>
+        </VBox>
+
+        <HBox spacing="20">
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <Label text="Date de location" styleClass="form-label"/>
+                <DatePicker fx:id="dateLocationPicker" styleClass="form-field" maxWidth="Infinity"/>
+            </VBox>
+            <VBox spacing="8" HBox.hgrow="ALWAYS">
+                <Label text="Date de retour prévue" styleClass="form-label"/>
+                <DatePicker fx:id="dateRetourPicker" styleClass="form-field" maxWidth="Infinity"/>
+            </VBox>
+        </HBox>
+
+        <Region prefHeight="10"/>
+
+        <HBox spacing="15" alignment="CENTER_RIGHT">
+            <Button text="Annuler" styleClass="action-button-secondary" onAction="#handleCancel" prefWidth="120" prefHeight="40"/>
+            <Button text="Enregistrer" styleClass="action-button" onAction="#handleSave" prefWidth="120" prefHeight="40"/>
+        </HBox>
+    </VBox>
+
+</VBox>

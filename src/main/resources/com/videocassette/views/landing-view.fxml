@@ -5,20 +5,27 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Text?>
 
+<!-- 
+    landing-view.fxml : C'est la toute première page que l'on voit en ouvrant le logiciel.
+    Elle sert d'écran d'accueil pour choisir entre se connecter ou créer un compte.
+-->
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.videocassette.controller.LandingController"
            styleClass="login-background"
            prefWidth="900" prefHeight="600">
 
-    <VBox alignment="CENTER" spacing="30" maxWidth="600">
+    <!-- VBox aligne les éléments verticalement (les uns sous les autres) -->
         <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
 
+        <!-- Section du titre et du logo -->
         <VBox alignment="CENTER" spacing="10">
             <Label text="🎬" style="-fx-font-size: 80px;"/>
             <Label text="Video Club" style="-fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: white;"/>
             <Label text="Votre destination préférée pour le cinéma vintage" 
                    style="-fx-font-size: 18px; -fx-text-fill: #E0E1DD; -fx-opacity: 0.9;"/>
         </VBox>
+
+        <!-- Carte centrale contenant les boutons d'action -->
 
         <VBox alignment="CENTER" spacing="15" styleClass="login-card" style="-fx-background-color: rgba(255, 255, 255, 0.9);">
             <padding><Insets top="30" right="40" bottom="30" left="40"/></padding>
@@ -28,7 +35,9 @@
             
             <Region prefHeight="10"/>
 
+            <!-- HBox aligne les boutons horizontalement -->
             <HBox spacing="15" alignment="CENTER">
+                <!-- onAction="#goToLogin" appelle la méthode goToLogin() dans le contrôleur -->
                 <Button text="Se Connecter" styleClass="login-button" onAction="#goToLogin" 
                         prefWidth="160" prefHeight="45" style="-fx-min-width: 160;"/>
                 <Button text="S'inscrire" styleClass="action-button-secondary" onAction="#goToRegister" 
@@ -38,6 +47,8 @@
             <Button text="Nous Contacter" onAction="#showContactInfo" 
                     styleClass="landing-link" style="-fx-background-color: transparent;"/>
         </VBox>
+
+        <!-- Bloc d'informations de contact (caché par défaut) -->
 
         <VBox fx:id="contactBox" alignment="CENTER" spacing="10" 
               style="-fx-background-color: rgba(27, 40, 56, 0.8); -fx-background-radius: 12; -fx-padding: 20;" 

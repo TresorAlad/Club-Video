@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<!-- 
+    confirm-delete-view.fxml : Fenêtre de confirmation avant suppression.
+    C'est une sécurité pour éviter de supprimer par erreur.
+-->
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.videocassette.controller.ConfirmDeleteController"
+      spacing="30" alignment="CENTER" styleClass="content-area"
+      prefWidth="1100" prefHeight="700">
+    
+    <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+
+    <VBox spacing="20" maxWidth="500" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 40; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 15, 0, 0, 10);">
+        
+        <Label text="⚠️" style="-fx-font-size: 60px;"/>
+        
+        <Label fx:id="confirmTitle" text="Confirmation de suppression" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1B2838;"/>
+        
+        <Label fx:id="confirmMessage" text="Êtes-vous sûr de vouloir supprimer cet élément ?" 
+               wrapText="true" textAlignment="CENTER" style="-fx-font-size: 16px; -fx-text-fill: #415A77;"/>
+
+        <Region prefHeight="10"/>
+
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="Annuler" styleClass="action-button-secondary" onAction="#handleCancel" prefWidth="150" prefHeight="45"/>
+            <Button text="Supprimer" styleClass="action-button-danger" onAction="#handleConfirm" prefWidth="150" prefHeight="45"/>
+        </HBox>
+    </VBox>
+
+</VBox>

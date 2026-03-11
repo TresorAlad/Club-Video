@@ -3,19 +3,34 @@ package com.videocassette.model;
 import java.time.LocalDate;
 
 /**
- * Classe Location - Représente une location de cassette.
+ * La classe Location représente le contrat entre le club et un abonné.
+ * Elle enregistre quelle cassette est partie chez quel client, et quand.
  */
 public class Location {
 
-    private int idLocation;
-    private int idCassette;
-    private int idAbonne;
-    private LocalDate dateAllocation;
-    private LocalDate dateRetour; // Changé de String à LocalDate
+    // --- Les "Champs" ---
 
-    // Champs d'affichage pour les tables
+    // Numéro de la transaction de location
+    private int idLocation;
+    
+    // Le numéro de la cassette qui est louée
+    private int idCassette;
+    
+    // Le numéro de l'abonné qui loue la cassette
+    private int idAbonne;
+    
+    // La date où la cassette a été emportée
+    private LocalDate dateAllocation;
+    
+    // La date où la cassette a été rendue (null si elle est encore chez le client)
+    private LocalDate dateRetour; 
+
+    // --- Champs d'affichage pratique ---
+    // (Utilisés pour afficher le titre et le nom au lieu de simples numéros dans les tableaux)
     private String cassetteTitre;
     private String abonneNom;
+
+    // --- Les Constructeurs ---
 
     public Location() {
     }
@@ -28,7 +43,8 @@ public class Location {
         this.dateRetour = dateRetour;
     }
 
-    // Getters et Setters
+    // --- Les Getters et Setters ---
+
     public int getIdLocation() {
         return idLocation;
     }
@@ -85,16 +101,27 @@ public class Location {
         this.abonneNom = abonneNom;
     }
 
-    // Méthodes du diagramme
+    // --- Les Méthodes Métier ---
+
+    /**
+     * Prépare une nouvelle location : met la date d'aujourd'hui.
+     */
     public void creerLocation() {
         this.dateAllocation = LocalDate.now();
-        this.dateRetour = null;
+        this.dateRetour = null; // Pas encore rendue
     }
 
+    /**
+     * Clôture une location : enregistre la date de retour (aujourd'hui).
+     */
     public void cloturerLocation() {
         this.dateRetour = LocalDate.now();
     }
 
+    /**
+     * Indique si la cassette est encore chez le client.
+     * @return true si elle n'est pas revenue, false si elle est rendue.
+     */
     public boolean estActive() {
         return dateRetour == null;
     }

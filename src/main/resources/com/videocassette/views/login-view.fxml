@@ -4,6 +4,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
+<!-- 
+    login-view.fxml : Fenêtre de connexion.
+    Elle permet à l'utilisateur de saisir son email et son mot de passe pour entrer dans le système.
+-->
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.videocassette.controller.LoginController"
            styleClass="login-background"
@@ -12,6 +16,7 @@
     <VBox styleClass="login-card" alignment="CENTER" spacing="8" maxWidth="420">
         <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
 
+        <!-- Bouton retour vers l'accueil -->
         <HBox alignment="CENTER_LEFT">
             <Button text="← Retour" onAction="#goToLanding" style="-fx-background-color: transparent; -fx-text-fill: #778DA9; -fx-cursor: hand;"/>
         </HBox>
@@ -27,11 +32,14 @@
 
         <Region prefHeight="6"/>
 
+        <!-- Section du mot de passe avec option pour voir/masquer -->
         <Label text="Mot de passe" styleClass="form-label" maxWidth="Infinity" alignment="CENTER_LEFT"/>
         <HBox spacing="0" alignment="CENTER_LEFT">
             <StackPane HBox.hgrow="ALWAYS">
+                <!-- PasswordField cache les caractères par des points -->
                 <PasswordField fx:id="passwordField" styleClass="login-field"
                                promptText="Entrez votre mot de passe" prefHeight="42"/>
+                <!-- TextField affiche le mot de passe en clair (caché par défaut) -->
                 <TextField fx:id="passwordTextField" styleClass="login-field"
                            promptText="Entrez votre mot de passe" prefHeight="42" visible="false"/>
             </StackPane>

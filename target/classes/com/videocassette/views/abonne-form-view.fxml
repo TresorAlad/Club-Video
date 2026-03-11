@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<!-- 
+    abonne-form-view.fxml : Formulaire pour ajouter ou modifier un abonné.
+    Il est chargé dynamiquement dans le DashboardController.
+-->
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.videocassette.controller.AbonneFormController"
+      spacing="20" alignment="TOP_CENTER" styleClass="content-area"
+      prefWidth="1100" prefHeight="700">
+    
+    <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label fx:id="pageTitle" text="Ajouter un abonné" styleClass="content-title"/>
+    </HBox>
+
+    <VBox spacing="15" maxWidth="700" styleClass="form-container" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+        
+        <VBox spacing="5">
+            <Label text="Nom complet" styleClass="form-label"/>
+            <TextField fx:id="nomField" styleClass="form-field" promptText="Ex: Jean Dupont"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Adresse" styleClass="form-label"/>
+            <TextField fx:id="adresseField" styleClass="form-field" promptText="Ex: 123 Rue de la Liberté, Lome"/>
+        </VBox>
+
+        <HBox spacing="20">
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Code Abonné" styleClass="form-label"/>
+                <TextField fx:id="codeField" styleClass="form-field" promptText="Ex: CLUB123"/>
+            </VBox>
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Date d'abonnement" styleClass="form-label"/>
+                <DatePicker fx:id="dateAbonnementPicker" styleClass="form-field" maxWidth="Infinity"/>
+            </VBox>
+        </HBox>
+
+        <VBox spacing="5">
+            <Label text="Date d'entrée" styleClass="form-label"/>
+            <DatePicker fx:id="dateEntreePicker" styleClass="form-field" maxWidth="Infinity"/>
+        </VBox>
+
+        <Region prefHeight="10"/>
+
+        <HBox spacing="15" alignment="CENTER_RIGHT">
+            <Button text="Annuler" styleClass="action-button-secondary" onAction="#handleCancel" prefWidth="120"/>
+            <Button text="Enregistrer" styleClass="action-button" onAction="#handleSave" prefWidth="120"/>
+        </HBox>
+    </VBox>
+
+</VBox>

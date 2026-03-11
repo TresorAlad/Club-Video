@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<!-- 
+    cassette-form-view.fxml : Formulaire pour ajouter ou modifier une cassette.
+-->
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.videocassette.controller.CassetteFormController"
+      spacing="20" alignment="TOP_CENTER" styleClass="content-area"
+      prefWidth="1100" prefHeight="700">
+    
+    <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label fx:id="pageTitle" text="Ajouter une cassette" styleClass="content-title"/>
+    </HBox>
+
+    <VBox spacing="15" maxWidth="600" styleClass="form-container" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+        
+        <VBox spacing="5">
+            <Label text="Titre de la cassette" styleClass="form-label"/>
+            <TextField fx:id="titreField" styleClass="form-field" promptText="Ex: Le Parrain"/>
+        </VBox>
+
+        <HBox spacing="20">
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Durée (minutes)" styleClass="form-label"/>
+                <TextField fx:id="dureeField" styleClass="form-field" promptText="Ex: 120"/>
+            </VBox>
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Prix (CFA)" styleClass="form-label"/>
+                <TextField fx:id="prixField" styleClass="form-field" promptText="Ex: 500"/>
+            </VBox>
+        </HBox>
+
+        <HBox spacing="20">
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Catégorie" styleClass="form-label"/>
+                <ComboBox fx:id="categorieCombo" styleClass="form-field" maxWidth="Infinity" promptText="Sélectionner"/>
+            </VBox>
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Date d'achat" styleClass="form-label"/>
+                <DatePicker fx:id="dateAchatPicker" styleClass="form-field" maxWidth="Infinity"/>
+            </VBox>
+        </HBox>
+
+        <Region prefHeight="10"/>
+
+        <HBox spacing="15" alignment="CENTER_RIGHT">
+            <Button text="Annuler" styleClass="action-button-secondary" onAction="#handleCancel" prefWidth="120"/>
+            <Button text="Enregistrer" styleClass="action-button" onAction="#handleSave" prefWidth="120"/>
+        </HBox>
+    </VBox>
+
+</VBox>

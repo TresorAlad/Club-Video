@@ -1,15 +1,27 @@
 package com.videocassette.model;
 
 /**
- * Classe Utilisateur - Représente un utilisateur du système.
- * Correspond à la classe 'Utilisateur' du diagramme de classes.
+ * La classe Utilisateur représente une personne (souvent un employé) 
+ * qui a le droit d'utiliser ce logiciel.
+ * Elle permet de gérer la connexion (email et mot de passe).
  */
 public class Utilisateur {
 
+    // --- Les "Champs" ---
+
+    // Identifiant unique du compte utilisateur
     private int idUtilisateur;
+    
+    // Prénom et Nom de l'employé
     private String nomComplet;
+    
+    // Adresse email (sert d'identifiant de connexion)
     private String email;
+    
+    // Mot de passe secret
     private String motDePasse;
+
+    // --- Les Constructeurs ---
 
     public Utilisateur() {
     }
@@ -27,7 +39,7 @@ public class Utilisateur {
         this.motDePasse = motDePasse;
     }
 
-    // ======================== Getters et Setters ========================
+    // --- Les Getters et Setters ---
 
     public int getIdUtilisateur() {
         return idUtilisateur;
@@ -61,6 +73,9 @@ public class Utilisateur {
         this.motDePasse = motDePasse;
     }
 
+    /**
+     * Comment afficher l'utilisateur dans le système.
+     */
     @Override
     public String toString() {
         return nomComplet + " (" + email + ")";

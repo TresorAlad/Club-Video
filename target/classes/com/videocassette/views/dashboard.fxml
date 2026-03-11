@@ -5,11 +5,16 @@
 <?import javafx.geometry.Insets?>
 <!-- FontIcon removed -->
 
+<!-- 
+    dashboard.fxml : Le cœur de l'application. 
+    C'est ici que se trouvent l'accueil, la gestion des cassettes, abonnés, catégories et locations.
+    Le layout utilise un HBox : une barre latérale (Sidebar) à gauche et le contenu à droite.
+-->
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.videocassette.controller.DashboardController"
       prefWidth="1100" prefHeight="700">
 
-    <!-- ============ SIDEBAR ============ -->
+    <!-- ============ BARRE LATÉRALE (SIDEBAR) ============ -->
     <VBox styleClass="sidebar" spacing="2">
         <VBox styleClass="sidebar-header">
             <HBox spacing="10" alignment="CENTER_LEFT">
@@ -20,6 +25,7 @@
 
         <Region prefHeight="10"/>
 
+        <!-- Boutons de navigation du menu -->
         <Button text="Accueil" styleClass="nav-button" onAction="#showAccueil" fx:id="btnAccueil">
             <graphic><Label text="" style="-fx-font-size: 18px;"/></graphic>
             <padding><Insets top="13" right="24" bottom="13" left="16"/></padding>
@@ -64,7 +70,9 @@
         </VBox>
     </VBox>
 
-    <!-- ============ CONTENU ============ -->
+    <!-- ============ ZONE DE CONTENU (À DROITE) ============ -->
+    <!-- StackPane permet d'empiler les "panneaux" (panes) les uns sur les autres.
+         Seul le panneau actif est visible à un instant T. -->
     <StackPane fx:id="contentArea" HBox.hgrow="ALWAYS" styleClass="content-area">
 
         <!-- ===== ACCUEIL ===== -->
@@ -121,9 +129,10 @@
                 </HBox>
             </HBox>
 
-            <!-- Catalogue cassettes (cartes) -->
+            <!-- Catalogue cassettes (affichage sous forme de cartes d'images/titres) -->
             <ScrollPane fitToWidth="true" styleClass="scroll-pane" VBox.vgrow="ALWAYS"
                         style="-fx-background-color: transparent; -fx-background: transparent;">
+                <!-- FlowPane dispose ses enfants les uns après les autres et revient à la ligne si pas de place -->
                 <FlowPane fx:id="cassettesFlowPane" hgap="20" vgap="20">
                     <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
                 </FlowPane>
@@ -155,6 +164,7 @@
                     <padding><Insets top="8" right="16" bottom="8" left="16"/></padding>
                 </Button>
             </HBox>
+            <!-- Tableau de données (TableView) pour lister les cassettes -->
             <TableView fx:id="cassetteTable" VBox.vgrow="ALWAYS">
                 <columns>
                     <TableColumn fx:id="cassIdCol" text="ID" prefWidth="50"/>
@@ -164,6 +174,7 @@
                     <TableColumn fx:id="cassPrixCol" text="Prix" prefWidth="90"/>
                     <TableColumn fx:id="cassDateCol" text="Date Achat" prefWidth="110"/>
                     <TableColumn fx:id="cassDispoCol" text="Disponible" prefWidth="100"/>
+                    <TableColumn fx:id="cassLastLocCol" text="Dernière location" prefWidth="120"/>
                 </columns>
             </TableView>
         </VBox>
@@ -201,6 +212,7 @@
                     <TableColumn fx:id="abDateAbCol" text="Date Abonnement" prefWidth="130"/>
                     <TableColumn fx:id="abDateEntCol" text="Date Entrée" prefWidth="120"/>
                     <TableColumn fx:id="abNbLocCol" text="Nb Locations" prefWidth="100"/>
+                    <TableColumn fx:id="abLastLocCol" text="Dernière location" prefWidth="130"/>
                     <TableColumn fx:id="abActionsCol" text="Actions" prefWidth="100"/>
                 </columns>
             </TableView>

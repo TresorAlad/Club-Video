@@ -5,12 +5,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * La classe UtilisateurDAO gère les employés (ou admins) qui se connectent au logiciel.
+ */
 public class UtilisateurDAO {
 
+    /**
+     * Accès à la base de données.
+     */
     private Connection getConnection() {
         return DatabaseConnection.getInstance().getConnection();
     }
 
+    /**
+     * Crée un nouveau compte pour un employé.
+     */
     public boolean create(Utilisateur utilisateur) {
         String sql = "INSERT INTO utilisateur (nom_complet, email, mot_de_passe) VALUES (?, ?, ?)";
         try (PreparedStatement ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -31,6 +40,10 @@ public class UtilisateurDAO {
         return false;
     }
 
+    /**
+     * Tente de connecter un utilisateur.
+     * On utilise LOWER(?) pour que l'email marche même s'il y a des majuscules.
+     */
     public Utilisateur login(String email, String password) {
         String sql = "SELECT * FROM utilisateur WHERE LOWER(email) = LOWER(?) AND mot_de_passe = ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -39,6 +52,7 @@ public class UtilisateurDAO {
             ps.setString(2, password);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    // Si on trouve quelqu'un, on crée son objet
                     Utilisateur u = new Utilisateur();
                     u.setIdUtilisateur(rs.getInt("id_utilisateur"));
                     u.setNomComplet(rs.getString("nom_complet"));
@@ -53,6 +67,9 @@ public class UtilisateurDAO {
         return null;
     }
 
+    /**
+     * Permet de changer de mot de passe.
+     */
     public boolean updatePassword(int id, String newPassword) {
         String sql = "UPDATE utilisateur SET mot_de_passe = ? WHERE id_utilisateur = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
@@ -65,6 +82,9 @@ public class UtilisateurDAO {
         return false;
     }
 
+    /**
+     * Supprime un utilisateur.
+     */
     public boolean delete(int id) {
         String sql = "DELETE FROM utilisateur WHERE id_utilisateur = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {

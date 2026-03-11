@@ -1,9 +1,11 @@
 /* ========================================
    Video Club - Thème principal
-   Couleurs: #415A77 (sidebar) / #E0E1DD (fond)
+   Ce fichier gère toute l'apparence visuelle du logiciel (couleurs, boutons, polices).
+   On utilise le format CSS adapté à JavaFX (les propriétés commencent par -fx-).
    ======================================== */
 
 /* === Variables et Base === */
+/* .root s'applique à toute l'application (comme le <body> en HTML) */
 .root {
     -fx-font-family: 'Segoe UI', 'Arial', sans-serif;
     -fx-font-size: 14px;
@@ -74,7 +76,8 @@
     -fx-font-size: 12px;
 }
 
-/* === SIDEBAR === */
+/* === BARRE LATÉRALE (SIDEBAR) === */
+/* C'est le menu de navigation à gauche */
 .sidebar {
     -fx-background-color: #415A77;
     -fx-min-width: 240;
@@ -180,7 +183,8 @@
     -fx-text-fill: #778DA9;
 }
 
-/* === TABLEAUX === */
+/* === TABLEAUX (TABLEVIEW) === */
+/* Utilisés pour afficher les listes (cassettes, abonnés, etc.) */
 .table-view {
     -fx-background-color: white;
     -fx-background-radius: 10;
@@ -229,6 +233,7 @@
 }
 
 /* === BOUTONS D'ACTION === */
+/* Boutons standards utilisés dans tout le logiciel */
 .action-button {
     -fx-background-color: #415A77;
     -fx-text-fill: white;

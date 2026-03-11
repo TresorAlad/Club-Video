@@ -1,4 +1,10 @@
--- 0. Supprimer les tables existantes (ordre inverse des dépendances pour les FK)
+-- ==========================================================
+-- SCHEMA DE LA BASE DE DONNEES (SQLite)
+-- Ce fichier définit la structure de la base de données (les tables)
+-- et contient quelques données de départ pour tester l'application.
+-- ==========================================================
+
+-- 0. Supprimer les tables existantes (ordre inverse des dépendances pour éviter les erreurs)
 DROP TABLE IF EXISTS location_cassette;
 DROP TABLE IF EXISTS carte_abonne;
 DROP TABLE IF EXISTS abonne;
@@ -7,12 +13,12 @@ DROP TABLE IF EXISTS categorie;
 DROP TABLE IF EXISTS utilisateur;
 
 
--- 1. Table Utilisateur (Informations d'authentification et d'identité)
+-- 1. Table Utilisateur (Stocke les comptes pour se connecter)
 CREATE TABLE  utilisateur (
-    id_utilisateur INTEGER PRIMARY KEY AUTOINCREMENT,
-    nom_complet TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE,
-    mot_de_passe TEXT NOT NULL
+    id_utilisateur INTEGER PRIMARY KEY AUTOINCREMENT, -- Identifiant unique automatique
+    nom_complet TEXT NOT NULL,                         -- Nom et prénom
+    email TEXT NOT NULL UNIQUE,                        -- Adresse email unique (clé de connexion)
+    mot_de_passe TEXT NOT NULL                         -- Mot de passe (en texte clair ici pour simplifier)
 );
 
 -- 2. Table des catégories
@@ -21,26 +27,26 @@ CREATE TABLE  categorie (
     libelle_categorie TEXT NOT NULL
 );
 
--- 3. Table des cassettes
+-- 3. Table des cassettes (Les films disponibles à la location)
 CREATE TABLE  cassette (
     id_cassette INTEGER PRIMARY KEY AUTOINCREMENT,
     titre TEXT NOT NULL,
-    duree INTEGER,        -- Changé en NUMBER (Juste des minutes, ex: 148)
-    id_categorie INTEGER,
-    prix REAL,            -- Changé en DECIMAL (ex: 15.00)
-    date_achat TEXT,
+    duree INTEGER,        -- Durée en minutes (ex: 120)
+    id_categorie INTEGER, -- Lien vers la table catégorie
+    prix REAL,            -- Prix de location (ex: 15.5)
+    date_achat TEXT,      -- Date au format YYYY-MM-DD
     FOREIGN KEY (id_categorie) REFERENCES categorie(id_categorie) ON DELETE SET NULL
 );
 
--- 4. Table des abonnés (Le profil qui donne le droit d'avoir une carte et de louer)
+-- 4. Table des abonnés (Le profil client lié à un utilisateur)
 CREATE TABLE  abonne (
     id_abonne INTEGER PRIMARY KEY AUTOINCREMENT,
-    code_abonne TEXT UNIQUE,      -- Nouveau champ : CLUBXXX (ex: CLUB452)
+    code_abonne TEXT UNIQUE,       -- Code unique type CLUB001
     nom_abonne TEXT NOT NULL,
     adresse_abonne TEXT,
     date_abonnement TEXT,
     date_entree TEXT,
-    id_utilisateur INTEGER UNIQUE, -- Relation UNIQUE : 1 compte Utilisateur = 1 Abonné
+    id_utilisateur INTEGER UNIQUE, -- Un abonné est lié à UN SEUL compte utilisateur
     FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur) ON DELETE CASCADE
 );
 
@@ -51,13 +57,13 @@ CREATE TABLE  carte_abonne (
     FOREIGN KEY (id_abonne) REFERENCES abonne(id_abonne) ON DELETE CASCADE
 );
 
--- 6. Table des locations
+-- 6. Table des locations (Enregistre qui a loué quoi et quand)
 CREATE TABLE  location_cassette (
     id_location INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_cassette INTEGER NOT NULL,
-    id_abonne INTEGER NOT NULL,
+    id_cassette INTEGER NOT NULL, -- La cassette louée
+    id_abonne INTEGER NOT NULL,   -- L'abonné qui loue
     date_allocation TEXT NOT NULL,
-    date_retour TEXT,
+    date_retour TEXT,             -- Rempli quand la cassette est rendue
     FOREIGN KEY (id_cassette) REFERENCES cassette(id_cassette) ON DELETE CASCADE,
     FOREIGN KEY (id_abonne) REFERENCES abonne(id_abonne) ON DELETE CASCADE
 );

@@ -7,24 +7,43 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Classe Cassette - Représente une cassette vidéo.
- * Correspond à la classe 'cassette' du diagramme de classes.
+ * La classe Cassette représente un film ou une vidéo disponible à la location.
+ * Elle contient les informations techniques du film (titre, durée) et son prix.
  */
 public class Cassette {
 
-    private int idCassette;
-    private String titre;
-    private Integer duree;
-    private int idCategorie;
-    private String categorieNom;
-    private Double prix;
-    private LocalDate dateAchat;
+    // --- Les "Champs" ---
 
-    // ======================== Constructeurs ========================
+    // Identifiant unique (numéro automatique)
+    private int idCassette;
+    
+    // Le titre du film
+    private String titre;
+    
+    // La durée du film en minutes
+    private Integer duree;
+    
+    // L'identifiant de la catégorie (ex: Action, Comédie)
+    private int idCategorie;
+    
+    // Le nom de la catégorie (pour ne pas avoir juste un numéro)
+    private String categorieNom;
+    
+    // Le prix de la location
+    private Double prix;
+    
+    // La date à laquelle le club a acheté cette cassette
+    private LocalDate dateAchat;
+    
+    // La date de la dernière fois qu'elle a été louée
+    private String derniereDateLocation;
+
+    // --- Les Constructeurs ---
 
     public Cassette() {
     }
 
+    // Utilisé quand on connaît déjà l'ID (ex: chargement depuis la base)
     public Cassette(int idCassette, String titre, Integer duree, int idCategorie, Double prix, LocalDate dateAchat) {
         this.idCassette = idCassette;
         this.titre = titre;
@@ -34,6 +53,7 @@ public class Cassette {
         this.dateAchat = dateAchat;
     }
 
+    // Utilisé pour créer une nouvelle cassette (l'ID sera généré par la base)
     public Cassette(String titre, Integer duree, int idCategorie, Double prix, LocalDate dateAchat) {
         this.titre = titre;
         this.duree = duree;
@@ -42,7 +62,8 @@ public class Cassette {
         this.dateAchat = dateAchat;
     }
 
-    // ======================== Getters et Setters ========================
+    // --- Les Getters et Setters ---
+    // (Permettent d'accéder aux données privées en toute sécurité)
 
     public int getIdCassette() {
         return idCassette;
@@ -100,32 +121,45 @@ public class Cassette {
         this.dateAchat = dateAchat;
     }
 
-    // ======================== Méthodes du diagramme ========================
+    public String getDerniereDateLocation() {
+        return derniereDateLocation;
+    }
+
+    public void setDerniereDateLocation(String derniereDateLocation) {
+        this.derniereDateLocation = derniereDateLocation;
+    }
+
+    // --- Les Méthodes Métier ---
 
     /**
-     * Vérifie si la cassette est disponible (pas en location active).
-     * Méthode estDisponible() du diagramme de classes.
+     * Vérifie si la cassette est actuellement sur une étagère ou chez un client.
+     * @return true si elle est disponible, false si elle est en location.
      */
     public boolean estDisponible() {
         LocationDAO locationDAO = new LocationDAO();
+        // On récupère toutes les fois où cette cassette a été louée
         List<Location> locationsActives = locationDAO.getByCassette(this.idCassette);
+        
+        // On regarde si l'une de ces locations est encore "ouverte" (pas de date de retour)
         for (Location loc : locationsActives) {
             if (loc.estActive()) {
-                return false;
+                return false; // Trouvé une location en cours !
             }
         }
-        return true;
+        return true; // Aucune location active trouvée
     }
 
     /**
-     * Retourne la catégorie de cette cassette.
-     * Méthode getCategorie() du diagramme de classes.
+     * Récupère l'objet Catégorie complet lié à cette cassette.
      */
     public Categorie getCategorie() {
         CategorieDAO categorieDAO = new CategorieDAO();
         return categorieDAO.getById(this.idCategorie);
     }
 
+    /**
+     * Comment afficher la cassette dans une liste.
+     */
     @Override
     public String toString() {
         return titre + " (" + duree + " min)";
