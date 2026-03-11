@@ -8,16 +8,16 @@ import java.io.FileOutputStream;
 import java.time.format.DateTimeFormatter;
 import java.awt.Desktop;
 
-/**
- * PDFUtils est une classe qui s'occupe de créer des documents PDF.
- * Ici, on l'utilise surtout pour fabriquer les cartes de membre des abonnés.
+/*
+ PDFUtils est une classe qui s'occupe de créer des documents PDF.
+ Ici, on l'utilise surtout pour fabriquer les cartes de membre des abonnés.
  */
 public class PDFUtils {
 
-    /**
-     * Cette méthode fabrique un fichier PDF contenant une carte de membre.
-     * @param abonne L'abonné pour qui on crée la carte.
-     * @return Le chemin (l'adresse) du fichier créé sur l'ordinateur.
+    /*
+     Cette méthode fabrique un fichier PDF contenant une carte de membre.
+     @param abonne L'abonné pour qui on crée la carte.
+     @return Le chemin (l'adresse) du fichier créé sur l'ordinateur.
      */
     public static String generateMemberCard(Abonne abonne) {
         // 1. On crée un dossier appelé 'cards' pour ranger les cartes

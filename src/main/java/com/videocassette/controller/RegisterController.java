@@ -15,9 +15,9 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.time.LocalDate;
 
-/**
- * Le RegisterController s'occupe de la création des nouveaux comptes.
- * Quand on s'inscrit, il crée trois choses : un Utilisateur, un Abonné et une Carte.
+/*
+ Le RegisterController s'occupe de la création des nouveaux comptes.
+ Quand on s'inscrit, il crée trois choses : un Utilisateur, un Abonné et une Carte.
  */
 public class RegisterController {
 
@@ -40,8 +40,8 @@ public class RegisterController {
     private final AbonneDAO abonneDAO = new AbonneDAO();
     private final CarteAbonneDAO carteAbonneDAO = new CarteAbonneDAO();
 
-    /**
-     * Action déclenchée quand on clique sur "S'inscrire".
+    /*
+     Action déclenchée quand on clique sur "S'inscrire".
      */
     @FXML
     public void handleRegister() {
@@ -69,17 +69,17 @@ public class RegisterController {
             return;
         }
 
-        // --- ÉTape 1 : Créer le compte Utilisateur (Email / MDP) ---
+        // ÉTape 1 : Créer le compte Utilisateur (Email / MDP)
         Utilisateur user = new Utilisateur(nom, email, password);
         if (utilisateurDAO.create(user)) {
             
-            // --- Étape 2 : Créer la fiche Abonné liée à cet utilisateur ---
+            // Étape 2 : Créer la fiche Abonné liée à cet utilisateur
             Abonne abonne = new Abonne(nom, adresse, LocalDate.now(), LocalDate.now());
             abonne.setIdUtilisateur(user.getIdUtilisateur());
 
             if (abonneDAO.create(abonne)) {
                 
-                // --- Étape 3 : Créer sa Carte de membre automatique ---
+                // Étape 3 : Créer sa Carte de membre automatique
                 CarteAbonne carte = new CarteAbonne();
                 carte.setIdAbonne(abonne.getIdAbonne());
                 carteAbonneDAO.create(carte);
@@ -104,8 +104,8 @@ public class RegisterController {
         }
     }
 
-    /**
-     * Retourner à la page de connexion.
+    /*
+     Retourner à la page de connexion.
      */
     @FXML
     public void goToLogin() {

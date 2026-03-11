@@ -4,10 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<!-- 
-    confirm-delete-view.fxml : Fenêtre de confirmation avant suppression.
-    C'est une sécurité pour éviter de supprimer par erreur.
--->
+<!-- confirm-delete-view.fxml : Fenêtre de confirmation avant suppression.
+    C'est une sécurité pour éviter de supprimer par erreur. -->
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.videocassette.controller.ConfirmDeleteController"
       spacing="30" alignment="CENTER" styleClass="content-area"

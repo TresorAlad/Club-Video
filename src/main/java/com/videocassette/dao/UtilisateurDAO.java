@@ -5,20 +5,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * La classe UtilisateurDAO gère les employés (ou admins) qui se connectent au logiciel.
+/*
+ La classe UtilisateurDAO gère les employés (ou admins) qui se connectent au logiciel.
  */
 public class UtilisateurDAO {
 
-    /**
-     * Accès à la base de données.
+    /*
+     Accès à la base de données.
      */
     private Connection getConnection() {
         return DatabaseConnection.getInstance().getConnection();
     }
 
-    /**
-     * Crée un nouveau compte pour un employé.
+    /*
+     Crée un nouveau compte pour un employé.
      */
     public boolean create(Utilisateur utilisateur) {
         String sql = "INSERT INTO utilisateur (nom_complet, email, mot_de_passe) VALUES (?, ?, ?)";
@@ -40,9 +40,9 @@ public class UtilisateurDAO {
         return false;
     }
 
-    /**
-     * Tente de connecter un utilisateur.
-     * On utilise LOWER(?) pour que l'email marche même s'il y a des majuscules.
+    /*
+     Tente de connecter un utilisateur.
+     On utilise LOWER(?) pour que l'email marche même s'il y a des majuscules.
      */
     public Utilisateur login(String email, String password) {
         String sql = "SELECT * FROM utilisateur WHERE LOWER(email) = LOWER(?) AND mot_de_passe = ?";
@@ -67,8 +67,8 @@ public class UtilisateurDAO {
         return null;
     }
 
-    /**
-     * Permet de changer de mot de passe.
+    /*
+     Permet de changer de mot de passe.
      */
     public boolean updatePassword(int id, String newPassword) {
         String sql = "UPDATE utilisateur SET mot_de_passe = ? WHERE id_utilisateur = ?";
@@ -82,8 +82,8 @@ public class UtilisateurDAO {
         return false;
     }
 
-    /**
-     * Supprime un utilisateur.
+    /*
+     Supprime un utilisateur.
      */
     public boolean delete(int id) {
         String sql = "DELETE FROM utilisateur WHERE id_utilisateur = ?";

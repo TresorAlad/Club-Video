@@ -19,30 +19,32 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.List;
 
-/**
- * Le DashboardController est le "Cerveau" de l'application une fois connecté.
- * Il gère tout : l'accueil, la liste des films, les abonnés, les catégories, les locations et les stats.
- * C'est un gros fichier car il centralise l'affichage de tous les tableaux (TableView).
+/*
+  Le DashboardController est le "Cerveau" de l'application une fois connecté.
+  Il gère tout : l'accueil, la liste des films, les abonnés, les catégories,
+  les locations et les stats.
+  C'est un gros fichier car il centralise l'affichage de tous les tableaux
+  (TableView).
  */
 public class DashboardController {
 
-    // --- Boutons du menu latéral ---
+    // Boutons du menu latéral
     @FXML
     private Button btnAccueil, btnCassettes, btnAbonnes, btnCategories, btnLocations, btnStats, btnProfil;
-    
-    // --- Zone centrale où le contenu change ---
+
+    // Zone centrale où le contenu change
     @FXML
     private StackPane contentArea;
-    
-    // --- Les différents panneaux (pages) qu'on peut afficher ---
+
+    // Les différents panneaux (pages) qu'on peut afficher
     @FXML
     private VBox accueilPane, cassettesPane, abonnesPane, categoriesPane, locationsPane, statistiquesPane, profilPane;
-    
-    // --- Labels pour les petites stats rapides en haut ---
+
+    // Labels pour les petites stats rapides en haut
     @FXML
     private Label statCassettes, statAbonnes, statLocationsActives, statCategories;
 
-    // ---- Page Accueil : Le catalogue avec des "cartes" (FlowPane) ----
+    // Page Accueil : Le catalogue avec des "cartes" (FlowPane)
     @FXML
     private FlowPane cassettesFlowPane; // Zone où les films s'affichent sous forme de jolies cartes
     @FXML
@@ -50,7 +52,7 @@ public class DashboardController {
     @FXML
     private TextField searchCassette; // Barre de recherche pour les films (accueil)
 
-    // ---- Page Cassettes : Un tableau classique (CRUD) ----
+    // Page Cassettes : Un tableau classique (CRUD)
     @FXML
     private TableView<Cassette> cassetteTable;
     @FXML
@@ -61,21 +63,21 @@ public class DashboardController {
     @FXML
     private TextField searchCassetteTable;
 
-    // ---- Page Abonnés : Liste des clients ----
+    // Page Abonnés : Liste des clients
     @FXML
     private TableView<Abonne> abonneTable;
     @FXML
-    private TableColumn<Abonne, String> abCodeCol, abNomCol, abAdresseCol, abDateAbCol, abDateEntCol, abLastLocCol;
+    private TableColumn<Abonne, String> abCodeCol, abNomCol;
     @FXML
     private TableColumn<Abonne, Integer> abNbLocCol;
     @FXML
-    private TableColumn<Abonne, Abonne> abActionsCol; // Colonne spéciale pour les boutons (ex: imprimer)
+    private TableColumn<Abonne, Abonne> abActionsCol; // Colonne spéciale pour les boutons (ex: détails)
 
     private final java.util.Random random = new java.util.Random();
     @FXML
     private TextField searchAbonne;
 
-    // ---- Page Catégories : Types de films ----
+    // Page Catégories : Types de films
     @FXML
     private TableView<Categorie> categorieTable;
     @FXML
@@ -83,15 +85,16 @@ public class DashboardController {
     @FXML
     private TableColumn<Categorie, String> catLibelleCol;
 
-    // ---- Page Locations : Historique des prêts ----
+    // Page Locations : Historique des prêts
     @FXML
     private TableView<Location> locationTable;
     @FXML
     private TableColumn<Location, Integer> locIdCol;
     @FXML
-    private TableColumn<Location, String> locCassetteCol, locAbonneCol, locDateAllocCol, locDateRetCol, locStatutCol;
+    private TableColumn<Location, String> locCassetteCol, locAbonneCol, locDateAllocCol, locDateRetourPrevueCol,
+            locDateRetCol, locStatutCol;
 
-    // ---- Elements divers (Stats détaillées, Profil) ----
+    // Elements divers (Stats détaillées, Profil)
     @FXML
     private Label statTotalCassettes2, statTotalAbonnes2, statLocActives2, statsResume;
     @FXML
@@ -99,7 +102,7 @@ public class DashboardController {
     @FXML
     private PasswordField newPasswordField, confirmPasswordField;
 
-    // --- Accès aux données (DAOs) ---
+    // Accès aux données (DAOs)
     private final CassetteDAO cassetteDAO = new CassetteDAO();
     private final AbonneDAO abonneDAO = new AbonneDAO();
     private final CategorieDAO categorieDAO = new CategorieDAO();
@@ -107,28 +110,29 @@ public class DashboardController {
     private final UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
     private final CarteAbonneDAO carteAbonneDAO = new CarteAbonneDAO();
 
-    // --- Listes d'objets pour remplir les tableaux ---
+    // Listes d'objets pour remplir les tableaux
     private ObservableList<Cassette> cassettesData = FXCollections.observableArrayList();
     private ObservableList<Cassette> cassettesTableData = FXCollections.observableArrayList();
     private ObservableList<Abonne> abonnesData = FXCollections.observableArrayList();
     private ObservableList<Categorie> categoriesData = FXCollections.observableArrayList();
     private ObservableList<Location> locationsData = FXCollections.observableArrayList();
 
-    /**
+    /*
      * Cette méthode se lance dès que la page est chargée.
      */
     @FXML
     public void initialize() {
-        setupTables();  // 1. On prépare les colonnes des tableaux
-        setupSearch();  // 2. On prépare les barres de recherche
-        showAccueil();  // 3. On affiche la page d'accueil par défaut
+        setupTables(); // 1. On prépare les colonnes des tableaux
+        setupSearch(); // 2. On prépare les barres de recherche
+        showAccueil(); // 3. On affiche la page d'accueil par défaut
     }
 
-    /** 
-     * Configure comment les données sont affichées dans chaque colonne des tableaux.
+    /*
+     * Configure comment les données sont affichées dans chaque colonne des
+     * tableaux.
      */
     private void setupTables() {
-        // --- Colonnes du tableau des Cassettes ---
+        // Colonnes du tableau des Cassettes
         cassIdCol.setCellValueFactory(
                 d -> new javafx.beans.property.SimpleIntegerProperty(d.getValue().getIdCassette()).asObject());
         cassTitreCol.setCellValueFactory(
@@ -136,7 +140,8 @@ public class DashboardController {
         cassDureeCol.setCellValueFactory(
                 d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getDuree() + " min"));
         cassCatCol.setCellValueFactory(d -> {
-            // Pour afficher le nom de la catégorie (ex: Action) au lieu de son ID technique (ex: 1)
+            // Pour afficher le nom de la catégorie (ex: Action) au lieu de son ID technique
+            // (ex: 1)
             Categorie cat = categorieDAO.getById(d.getValue().getIdCategorie());
             return new javafx.beans.property.SimpleStringProperty(cat != null ? cat.getLibelleCategorie() : "—");
         });
@@ -145,52 +150,28 @@ public class DashboardController {
         cassDateCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
                 d.getValue().getDateAchat() != null ? d.getValue().getDateAchat().toString() : ""));
         cassDispoCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
-                d.getValue().estDisponible() ? "✅ Oui" : "❌ Non"));
+                d.getValue().estDisponible() ? " Oui" : " Non"));
         cassLastLocCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
                 d.getValue().getDerniereDateLocation() != null ? d.getValue().getDerniereDateLocation() : "—"));
         cassetteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // --- Colonnes du tableau des Abonnés ---
+        // Colonnes du tableau des Abonnés
         abCodeCol
                 .setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getCodeAbonne()));
         abNomCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getNomAbonne()));
-        abAdresseCol.setCellValueFactory(
-                d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getAdresseAbonne()));
-        abDateAbCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
-                d.getValue().getDateAbonement() != null ? d.getValue().getDateAbonement().toString() : ""));
-        abDateEntCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
-                d.getValue().getDateEntree() != null ? d.getValue().getDateEntree().toString() : ""));
         abNbLocCol.setCellValueFactory(
                 d -> new javafx.beans.property.SimpleIntegerProperty(d.getValue().getNombreLocations()).asObject());
-        abLastLocCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
-                d.getValue().getDerniereDateLocation() != null ? d.getValue().getDerniereDateLocation() : "—"));
 
-        // --- Colonne spéciale pour le bouton "Imprimer" sur chaque ligne d'abonné ---
+        // Colonne spéciale pour le bouton "Détails" sur chaque ligne d'abonné
         abActionsCol.setCellValueFactory(param -> new javafx.beans.property.SimpleObjectProperty<>(param.getValue()));
         abActionsCol.setCellFactory(param -> new TableCell<Abonne, Abonne>() {
-            private final Button btn = new Button("🖨️ Imprimer");
+            private final Button btn = new Button(" Détails");
             {
                 btn.getStyleClass().add("action-button-secondary");
                 btn.setOnAction(event -> {
                     Abonne a = getItem();
                     if (a != null) {
-                        btn.setDisable(true); 
-                        // On lance la création du PDF dans un autre "thread" pour ne pas faire ramer le logiciel
-                        new Thread(() -> {
-                            String path = com.videocassette.util.PDFUtils.generateMemberCard(a);
-                            javafx.application.Platform.runLater(() -> {
-                                btn.setDisable(false);
-                                if (path != null) {
-                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                    alert.setTitle("Impression réussie");
-                                    alert.setHeaderText("Carte générée");
-                                    alert.setContentText("Le PDF a été créé dans :\n" + path);
-                                    alert.showAndWait();
-                                } else {
-                                    alerte("Erreur lors de la génération du PDF.");
-                                }
-                            });
-                        }).start();
+                        showDetailsAbonne(a);
                     }
                 });
             }
@@ -208,14 +189,14 @@ public class DashboardController {
 
         abonneTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // --- Colonnes du tableau des Catégories ---
+        // Colonnes du tableau des Catégories
         catIdCol.setCellValueFactory(
                 d -> new javafx.beans.property.SimpleIntegerProperty(d.getValue().getIdCategorie()).asObject());
         catLibelleCol.setCellValueFactory(
                 d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getLibelleCategorie()));
         categorieTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // --- Colonnes du tableau des Locations ---
+        // Colonnes du tableau des Locations
         locIdCol.setCellValueFactory(
                 d -> new javafx.beans.property.SimpleIntegerProperty(d.getValue().getIdLocation()).asObject());
         locCassetteCol.setCellValueFactory(
@@ -224,15 +205,17 @@ public class DashboardController {
                 d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getAbonneNom()));
         locDateAllocCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
                 d.getValue().getDateAllocation() != null ? d.getValue().getDateAllocation().toString() : ""));
+        locDateRetourPrevueCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
+                d.getValue().getDateRetourPrevue() != null ? d.getValue().getDateRetourPrevue().toString() : "—"));
         locDateRetCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
                 d.getValue().getDateRetour() != null ? d.getValue().getDateRetour().toString() : "—"));
         locStatutCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
-                d.getValue().estActive() ? "🟢 Active" : "⚪ Terminée"));
+                d.getValue().estActive() ? " Active" : " Terminée"));
         locationTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    /**
-     * Configure le fonctionnement des barres de recherche. 
+    /*
+     * Configure le fonctionnement des barres de recherche.
      * Dès qu'on tape une lettre, le tableau se filtre tout seul.
      */
     private void setupSearch() {
@@ -253,11 +236,11 @@ public class DashboardController {
                     a -> val == null || val.isEmpty()
                             || a.getNomAbonne().toLowerCase().contains(val.toLowerCase())
                             || (a.getCodeAbonne() != null
-                                     && a.getCodeAbonne().toLowerCase().contains(val.toLowerCase()))));
+                                    && a.getCodeAbonne().toLowerCase().contains(val.toLowerCase()))));
         });
     }
 
-    /**
+    /*
      * Méthode générique pour afficher un panneau et cacher les autres.
      * Elle gère aussi la couleur du bouton actif dans le menu.
      */
@@ -322,7 +305,7 @@ public class DashboardController {
         }
     }
 
-    /**
+    /*
      * Quitter la session et revenir à la page de connexion.
      */
     @FXML
@@ -335,11 +318,8 @@ public class DashboardController {
         }
     }
 
-    // =========================================================
     // Méthodes de rafraîchissement des données (BDD -> UI)
-    // =========================================================
-
-    /** Met à jour les 4 badges de stats rapides en haut de l'écran. */
+    /* Met à jour les 4 badges de stats rapides en haut de l'écran. */
     private void refreshStats() {
         statCassettes.setText(String.valueOf(cassetteDAO.count()));
         statAbonnes.setText(String.valueOf(abonneDAO.count()));
@@ -347,14 +327,14 @@ public class DashboardController {
         statCategories.setText(String.valueOf(categorieDAO.getAll().size()));
     }
 
-    /** Recharge les films pour le catalogue de l'accueil. */
+    /* Recharge les films pour le catalogue de l'accueil. */
     private void refreshAccueilCatalogue() {
         cassettesData.setAll(cassetteDAO.getAll());
         setupCategoryFilters();
         applyCassettesFilter();
     }
 
-    /** Recharge les films pour le tableau de gestion. */
+    /* Recharge les films pour le tableau de gestion. */
     private void refreshCassettesTable() {
         cassettesTableData.setAll(cassetteDAO.getAll());
         cassetteTable.setItems(cassettesTableData);
@@ -362,7 +342,10 @@ public class DashboardController {
 
     private ToggleGroup categoryToggleGroup = new ToggleGroup();
 
-    /** Crée dynamiquement les boutons de catégories (Action, Comédie, etc.) pour filtrer. */
+    /*
+     * Crée dynamiquement les boutons de catégories (Action, Comédie, etc.) pour
+     * filtrer.
+     */
     private void setupCategoryFilters() {
         categoryFilterBox.getChildren().clear();
         categoryToggleGroup = new ToggleGroup();
@@ -396,7 +379,7 @@ public class DashboardController {
         });
     }
 
-    /** Applique le filtre (texte + catégorie) sur les cartes de l'accueil. */
+    /* Applique le filtre (texte + catégorie) sur les cartes de l'accueil. */
     private void applyCassettesFilter() {
         cassettesFlowPane.getChildren().clear();
         String searchText = searchCassette.getText() != null ? searchCassette.getText().toLowerCase() : "";
@@ -416,14 +399,15 @@ public class DashboardController {
         }
     }
 
-    /** 
-     * Crée une jolie carte visuelle pour un film (avec icône, titre, prix et bouton Louer).
+    /*
+     * Crée une jolie carte visuelle pour un film (avec icône, titre, prix et bouton
+     * Louer).
      */
     private VBox createAccueilCard(Cassette c) {
         VBox card = new VBox();
         card.getStyleClass().add("cassette-card");
 
-        // --- Zone de l'image (icône 🎬) ---
+        // Zone de l'image (icône 🎬)
         StackPane imageBox = new StackPane();
         imageBox.getStyleClass().add("cassette-image-box");
 
@@ -437,7 +421,7 @@ public class DashboardController {
 
         imageBox.getChildren().addAll(icon, badge);
 
-        // --- Infos du film ---
+        // Infos du film
         Label lblTitre = new Label(c.getTitre());
         lblTitre.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
         lblTitre.getStyleClass().add("cassette-info");
@@ -452,7 +436,7 @@ public class DashboardController {
         Label lblPrix = new Label(c.getPrix() + " CFA");
         lblPrix.getStyleClass().add("cassette-info");
 
-        // --- Bouton Louer ---
+        // Bouton Louer
         Button btnLouer = new Button("Louer");
         btnLouer.getStyleClass().add("cassette-btn-loue");
         btnLouer.setMaxWidth(Double.MAX_VALUE);
@@ -463,7 +447,7 @@ public class DashboardController {
         return card;
     }
 
-    /** 
+    /*
      * Action déclenchée quand on veut louer un film depuis la carte.
      */
     private void ouvrirDialogLouer(Cassette c) {
@@ -475,14 +459,10 @@ public class DashboardController {
         }
     }
 
-    // =========================================================
     // CRUD Cassettes (page Cassettes - TableView)
-    // =========================================================
-    // =========================================================
+    //
     // CRUD Cassettes (Gestion via le tableau)
-    // =========================================================
-    
-    /** Ouvre le formulaire pour ajouter un nouveau film. */
+    // /*Ouvre le formulaire pour ajouter un nouveau film. */
     @FXML
     private void ajouterCassette() {
         try {
@@ -492,7 +472,7 @@ public class DashboardController {
         }
     }
 
-    /** Ouvre le formulaire pour modifier le film sélectionné dans le tableau. */
+    /* Ouvre le formulaire pour modifier le film sélectionné dans le tableau. */
     @FXML
     private void modifierCassetteSelecTable() {
         Cassette sel = cassetteTable.getSelectionModel().getSelectedItem();
@@ -508,7 +488,7 @@ public class DashboardController {
         }
     }
 
-    /** Demande confirmation avant de supprimer le film sélectionné. */
+    /* Demande confirmation avant de supprimer le film sélectionné. */
     @FXML
     private void supprimerCassetteSelecTable() {
         Cassette sel = cassetteTable.getSelectionModel().getSelectedItem();
@@ -525,17 +505,14 @@ public class DashboardController {
         }
     }
 
-    // =========================================================
     // CRUD Abonnés
-    // =========================================================
-    
-    /** Recharge la liste des abonnés depuis la base. */
+    /* Recharge la liste des abonnés depuis la base. */
     private void refreshAbonnes() {
         abonnesData.setAll(abonneDAO.getAll());
         abonneTable.setItems(abonnesData);
     }
 
-    /** Ouvre le formulaire d'ajout d'abonné. */
+    /* Ouvre le formulaire d'ajout d'abonné. */
     @FXML
     private void ajouterAbonne() {
         try {
@@ -545,7 +522,7 @@ public class DashboardController {
         }
     }
 
-    /** Ouvre le formulaire pour modifier l'abonné choisi. */
+    /* Ouvre le formulaire pour modifier l'abonné choisi. */
     @FXML
     private void modifierAbonne() {
         Abonne sel = abonneTable.getSelectionModel().getSelectedItem();
@@ -561,7 +538,7 @@ public class DashboardController {
         }
     }
 
-    /** Demande confirmation pour supprimer un abonné. */
+    /* Demande confirmation pour supprimer un abonné. */
     @FXML
     private void supprimerAbonne() {
         Abonne sel = abonneTable.getSelectionModel().getSelectedItem();
@@ -578,10 +555,75 @@ public class DashboardController {
         }
     }
 
-    // =========================================================
+    /*
+     * Affiche une boîte de dialogue avec tous les détails de l'abonné.
+     */
+    private void showDetailsAbonne(Abonne a) {
+        Alert dialog = new Alert(Alert.AlertType.NONE);
+        dialog.setTitle("Détails de l'abonné");
+        dialog.setHeaderText("Fiche de l'abonné : " + a.getNomAbonne());
+
+        VBox content = new VBox(10);
+        content.setPadding(new Insets(20));
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+
+        grid.add(new Label("Code :"), 0, 0);
+        grid.add(new Label(a.getCodeAbonne()), 1, 0);
+
+        grid.add(new Label("Nom :"), 0, 1);
+        grid.add(new Label(a.getNomAbonne()), 1, 1);
+
+        grid.add(new Label("Adresse :"), 0, 2);
+        grid.add(new Label(a.getAdresseAbonne()), 1, 2);
+
+        grid.add(new Label("Date Abonnement :"), 0, 3);
+        grid.add(new Label(a.getDateAbonement() != null ? a.getDateAbonement().toString() : "—"), 1, 3);
+
+        grid.add(new Label("Date Entrée :"), 0, 4);
+        grid.add(new Label(a.getDateEntree() != null ? a.getDateEntree().toString() : "—"), 1, 4);
+
+        grid.add(new Label("Nombre Locations :"), 0, 5);
+        grid.add(new Label(String.valueOf(a.getNombreLocations())), 1, 5);
+
+        grid.add(new Label("Dernière location :"), 0, 6);
+        grid.add(new Label(a.getDerniereDateLocation() != null ? a.getDerniereDateLocation() : "—"), 1, 6);
+
+        Button btnImprimer = new Button("️ Imprimer");
+        btnImprimer.getStyleClass().add("action-button-secondary");
+        btnImprimer.setOnAction(e -> {
+            imprimerCarteAbonne(a);
+        });
+
+        content.getChildren().addAll(grid, new Separator(), btnImprimer);
+        dialog.getDialogPane().setContent(content);
+        dialog.getButtonTypes().add(ButtonType.CLOSE);
+        dialog.showAndWait();
+    }
+
+    /*
+     * Gère la génération et l'affichage du PDF de la carte d'abonné.
+     */
+    private void imprimerCarteAbonne(Abonne a) {
+        new Thread(() -> {
+            String path = com.videocassette.util.PDFUtils.generateMemberCard(a);
+            javafx.application.Platform.runLater(() -> {
+                if (path != null) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Impression réussie");
+                    alert.setHeaderText("Carte générée");
+                    alert.setContentText("Le PDF a été créé dans :\n" + path);
+                    alert.showAndWait();
+                } else {
+                    alerte("Erreur lors de la génération du PDF.");
+                }
+            });
+        }).start();
+    }
+
     // CRUD Catégories
-    // =========================================================
-    
     private void refreshCategories() {
         categoriesData.setAll(categorieDAO.getAll());
         categorieTable.setItems(categoriesData);
@@ -627,16 +669,13 @@ public class DashboardController {
         }
     }
 
-    // =========================================================
     // Locations (Historique et fin de prêt)
-    // =========================================================
-    
     private void refreshLocations() {
         locationsData.setAll(locationDAO.getAll());
         locationTable.setItems(locationsData);
     }
 
-    /** Créer une nouvelle location (souvent via le bouton "Louer" de l'accueil). */
+    /* Créer une nouvelle location (souvent via le bouton "Louer" de l'accueil). */
     @FXML
     private void nouvelleLocation() {
         try {
@@ -646,7 +685,7 @@ public class DashboardController {
         }
     }
 
-    /** Quand un client ramène le film, on clôture sa location. */
+    /* Quand un client ramène le film, on clôture sa location. */
     @FXML
     private void cloturerLocation() {
         Location sel = locationTable.getSelectionModel().getSelectedItem();
@@ -657,9 +696,7 @@ public class DashboardController {
         }
     }
 
-    // =========================================================
     // Statistiques Détaillées
-    // =========================================================
     private void refreshStatistiques() {
         int tc = cassetteDAO.count();
         int ta = abonneDAO.count();
@@ -670,9 +707,7 @@ public class DashboardController {
         statsResume.setText("Résumé : " + tc + " cassettes, " + ta + " abonnés, " + la + " locations en cours.");
     }
 
-    // =========================================================
     // Page Profil (Changement de mot de passe)
-    // =========================================================
     @FXML
     private void changerMotDePasse() {
         String p1 = newPasswordField.getText();
@@ -687,16 +722,13 @@ public class DashboardController {
         }
     }
 
-    // =========================================================
     // Utilitaires (Alertes et Confirmations)
-    // =========================================================
-    
-    /** Affiche un simple message d'information. */
+    /* Affiche un simple message d'information. */
     private void alerte(String m) {
         new Alert(Alert.AlertType.INFORMATION, m).showAndWait();
     }
 
-    /** Demande à l'utilisateur de cliquer sur OUI ou NON. */
+    /* Demande à l'utilisateur de cliquer sur OUI ou NON. */
     private boolean confirmer(String m) {
         return new Alert(Alert.AlertType.CONFIRMATION, m, ButtonType.YES, ButtonType.NO).showAndWait()
                 .get() == ButtonType.YES;

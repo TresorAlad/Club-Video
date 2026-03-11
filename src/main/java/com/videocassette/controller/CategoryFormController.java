@@ -11,8 +11,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-/**
- * Le CategoryFormController gère le formulaire pour créer ou modifier une catégorie (ex: Action, Comédie).
+/*
+ Le CategoryFormController gère le formulaire pour créer ou modifier une catégorie (ex: Action, Comédie).
  */
 public class CategoryFormController {
 
@@ -22,8 +22,8 @@ public class CategoryFormController {
     private final CategorieDAO categorieDAO = new CategorieDAO();
     private Categorie existingCategory; // L'objet catégorie si on est en train de modifier
 
-    /**
-     * Initialisation : On vérifie si on a reçu une catégorie à modifier.
+    /*
+     Initialisation : On vérifie si on a reçu une catégorie à modifier.
      */
     @FXML
     public void initialize() {
@@ -36,8 +36,8 @@ public class CategoryFormController {
         }
     }
 
-    /**
-     * Action déclenchée par le bouton "Enregistrer".
+    /*
+     Action déclenchée par le bouton "Enregistrer".
      */
     @FXML
     private void handleSave() throws IOException {
@@ -61,8 +61,8 @@ public class CategoryFormController {
         App.changerVue("/com/videocassette/views/dashboard.fxml");
     }
 
-    /**
-     * Action déclenchée par le bouton "Annuler".
+    /*
+     Action déclenchée par le bouton "Annuler".
      */
     @FXML
     private void handleCancel() throws IOException {

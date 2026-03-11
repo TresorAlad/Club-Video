@@ -4,34 +4,37 @@ import java.sql.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-/**
- * La classe DatabaseConnection est le "cerveau" de la communication.
- * Elle s'occupe de brancher le logiciel à la base de données SQLite (le fichier videocassette.db).
- * 
- * Elle utilise le motif "Singleton" : cela signifie qu'il n'y a qu'une seule 
- * prise (connexion) partagée par tout le programme pour éviter de s'emmêler les pinceaux.
+/*
+ La classe DatabaseConnection est le "cerveau" de la communication.
+ Elle s'occupe de brancher le logiciel à la base de données SQLite (le fichier
+ clubvideo.db).
+ 
+ Elle utilise le motif "Singleton" : cela signifie qu'il n'y a qu'une seule
+ prise (connexion) partagée par tout le programme pour éviter de s'emmêler les
+ pinceaux.
  */
 public class DatabaseConnection {
 
     // L'unique exemplaire de cette classe
     private static DatabaseConnection instance;
-    
+
     // L'objet qui représente la connexion réelle
     private Connection connection;
-    
-    // L'adresse du fichier de la base de données sur l'ordinateur
-    private static final String DB_URL = "jdbc:sqlite:videocassette.db";
 
-    /**
-     * Le constructeur est "private" pour empêcher de créer plusieurs connexions.
-     * On doit obligatoirement passer par getInstance().
+    // L'adresse du fichier de la base de données sur l'ordinateur
+    // On utilise clubvideo.db pour correspondre aux attentes des utilisateurs
+    private static final String DB_URL = "jdbc:sqlite:clubvideo.db";
+
+    /*
+     Le constructeur est "private" pour empêcher de créer plusieurs connexions.
+     On doit obligatoirement passer par getInstance().
      */
     private DatabaseConnection() {
         try {
             // On tente d'ouvrir la porte vers la base de données
             connection = DriverManager.getConnection(DB_URL);
-            
-            // On active une sécurité (clés étrangères) pour éviter de supprimer 
+
+            // On active une sécurité (clés étrangères) pour éviter de supprimer
             // une catégorie si des films l'utilisent encore.
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute("PRAGMA foreign_keys = ON;");
@@ -42,9 +45,10 @@ public class DatabaseConnection {
         }
     }
 
-    /**
-     * C'est ici qu'on demande la connexion.
-     * Si elle n'existe pas encore, on la crée. Sinon, on donne celle qui existe déjà.
+    /*
+     C'est ici qu'on demande la connexion.
+     Si elle n'existe pas encore, on la crée. Sinon, on donne celle qui existe
+     déjà.
      */
     public static synchronized DatabaseConnection getInstance() {
         if (instance == null) {
@@ -53,8 +57,8 @@ public class DatabaseConnection {
         return instance;
     }
 
-    /**
-     * Donne l'objet "Connection" qui permet de lancer des ordres SQL.
+    /*
+     Donne l'objet "Connection" qui permet de lancer des ordres SQL.
      */
     public Connection getConnection() {
         try {
@@ -68,10 +72,10 @@ public class DatabaseConnection {
         return connection;
     }
 
-    /**
-     * Cette méthode est magique : elle lit le fichier "schema.sql" et crée 
-     * toutes les tables (Abonnés, Cassettes, etc.) si elles n'existent pas encore.
-     * C'est comme construire les étagères avant de ranger les livres.
+    /*
+     Cette méthode est magique : elle lit le fichier "schema.sql" et crée
+     toutes les tables (Abonnés, Cassettes, etc.) si elles n'existent pas encore.
+     C'est comme construire les étagères avant de ranger les livres.
      */
     public void initialiserBase() {
         InputStream is = null;
@@ -130,7 +134,8 @@ public class DatabaseConnection {
                 }
                 System.out.println("Base de données initialisée (" + count + " instructions SQL exécutées).");
 
-                // 4. Petite vérification finale : est-ce que la table des utilisateurs est bien là ?
+                // 4. Petite vérification finale : est-ce que la table des utilisateurs est bien
+                // là ?
                 try (ResultSet rs = getConnection().getMetaData().getTables(null, null, "utilisateur", null)) {
                     boolean exists = false;
                     while (rs.next()) {

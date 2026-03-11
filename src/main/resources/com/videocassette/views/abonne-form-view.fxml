@@ -4,10 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<!-- 
-    abonne-form-view.fxml : Formulaire pour ajouter ou modifier un abonné.
-    Il est chargé dynamiquement dans le DashboardController.
--->
+<!-- abonne-form-view.fxml : Formulaire pour ajouter ou modifier un abonné.
+    Il est chargé dynamiquement dans le DashboardController. -->
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.videocassette.controller.AbonneFormController"
       spacing="20" alignment="TOP_CENTER" styleClass="content-area"

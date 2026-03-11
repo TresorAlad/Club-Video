@@ -7,20 +7,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * La classe CassetteDAO gère le catalogue des films (cassettes).
+/*
+ La classe CassetteDAO gère le catalogue des films (cassettes).
  */
 public class CassetteDAO {
 
-    /**
-     * Accès à la base de données.
+    /*
+     Accès à la base de données.
      */
     private Connection getConnection() {
         return DatabaseConnection.getInstance().getConnection();
     }
 
-    /**
-     * Traduit une ligne SQL en un objet Cassette.
+    /*
+     Traduit une ligne SQL en un objet Cassette.
      */
     private Cassette mapRow(ResultSet rs) throws SQLException {
         Cassette c = new Cassette();
@@ -48,8 +48,8 @@ public class CassetteDAO {
         return c;
     }
 
-    /**
-     * Ajoute un nouveau film au catalogue.
+    /*
+     Ajoute un nouveau film au catalogue.
      */
     public boolean create(Cassette cassette) {
         String sql = "INSERT INTO cassette (titre, duree, id_categorie, prix, date_achat) VALUES (?, ?, ?, ?, ?)";
@@ -84,8 +84,8 @@ public class CassetteDAO {
         return false;
     }
 
-    /**
-     * Liste toutes les cassettes du club.
+    /*
+     Liste toutes les cassettes du club.
      */
     public List<Cassette> getAll() {
         List<Cassette> list = new ArrayList<>();
@@ -104,8 +104,8 @@ public class CassetteDAO {
         return list;
     }
 
-    /**
-     * Trouve un film précis.
+    /*
+     Trouve un film précis.
      */
     public Cassette getById(int id) {
         String sql = "SELECT c.*, cat.libelle_categorie, " +
@@ -122,8 +122,8 @@ public class CassetteDAO {
         return null;
     }
 
-    /**
-     * Trouve tous les films d'une catégorie (ex: tous les films d'Horreur).
+    /*
+     Trouve tous les films d'une catégorie (ex: tous les films d'Horreur).
      */
     public List<Cassette> getByCategorie(int idCategorie) {
         List<Cassette> list = new ArrayList<>();
@@ -139,8 +139,8 @@ public class CassetteDAO {
         return list;
     }
 
-    /**
-     * Modifie les infos d'un film.
+    /*
+     Modifie les infos d'un film.
      */
     public boolean update(Cassette cassette) {
         String sql = "UPDATE cassette SET titre = ?, duree = ?, id_categorie = ?, prix = ?, date_achat = ? WHERE id_cassette = ?";
@@ -164,8 +164,8 @@ public class CassetteDAO {
         return false;
     }
 
-    /**
-     * Supprime un film de la base.
+    /*
+     Supprime un film de la base.
      */
     public boolean delete(int id) {
         String sql = "DELETE FROM cassette WHERE id_cassette = ?";
@@ -178,8 +178,8 @@ public class CassetteDAO {
         return false;
     }
 
-    /**
-     * Compte combien de cassettes on possède en tout.
+    /*
+     Compte combien de cassettes on possède en tout.
      */
     public int count() {
         String sql = "SELECT COUNT(*) FROM cassette";
@@ -193,8 +193,8 @@ public class CassetteDAO {
         return 0;
     }
 
-    /**
-     * Donne la liste des films qui ne sont pas loués en ce moment.
+    /*
+     Donne la liste des films qui ne sont pas loués en ce moment.
      */
     public List<Cassette> getAllDisponibles() {
         return getAll().stream().filter(Cassette::estDisponible).toList();

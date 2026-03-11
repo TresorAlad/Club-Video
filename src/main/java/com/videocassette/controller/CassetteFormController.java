@@ -13,8 +13,8 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.time.LocalDate;
 
-/**
- * Le CassetteFormController gère le formulaire pour ajouter ou modifier un film.
+/*
+ Le CassetteFormController gère le formulaire pour ajouter ou modifier un film.
  */
 public class CassetteFormController {
 
@@ -29,8 +29,8 @@ public class CassetteFormController {
     private final CategorieDAO categorieDAO = new CategorieDAO();
     private Cassette existingCassette; // Si on modifie un film, on le stocke ici
 
-    /**
-     * Initialisation : On remplit la liste des catégories et on vérifie si on est en mode "édition".
+    /*
+     Initialisation : On remplit la liste des catégories et on vérifie si on est en mode "édition".
      */
     @FXML
     public void initialize() {
@@ -60,8 +60,8 @@ public class CassetteFormController {
         }
     }
 
-    /**
-     * Action déclenchée quand on clique sur "Enregistrer".
+    /*
+     Action déclenchée quand on clique sur "Enregistrer".
      */
     @FXML
     private void handleSave() throws IOException {
@@ -104,16 +104,16 @@ public class CassetteFormController {
         }
     }
 
-    /**
-     * Action déclenchée par le bouton "Annuler".
+    /*
+     Action déclenchée par le bouton "Annuler".
      */
     @FXML
     private void handleCancel() throws IOException {
         App.changerVue("/com/videocassette/views/dashboard.fxml");
     }
 
-    /**
-     * Petite méthode pratique pour afficher une boîte d'alerte.
+    /*
+     Petite méthode pratique pour afficher une boîte d'alerte.
      */
     private void alerte(String m) {
         new Alert(Alert.AlertType.WARNING, m).showAndWait();

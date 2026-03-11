@@ -4,9 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<!-- 
-    cassette-form-view.fxml : Formulaire pour ajouter ou modifier une cassette.
--->
+<!-- cassette-form-view.fxml : Formulaire pour ajouter ou modifier une cassette. -->
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.videocassette.controller.CassetteFormController"
       spacing="20" alignment="TOP_CENTER" styleClass="content-area"

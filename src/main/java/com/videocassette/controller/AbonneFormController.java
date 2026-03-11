@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Random;
 
-/**
- * Le AbonneFormController gère le formulaire pour ajouter ou modifier un abonné.
- * Il permet aussi de générer une carte de membre en PDF.
+/*
+ Le AbonneFormController gère le formulaire pour ajouter ou modifier un abonné.
+ Il permet aussi de générer une carte de membre en PDF.
  */
 public class AbonneFormController {
 
@@ -32,8 +32,8 @@ public class AbonneFormController {
     private Abonne existingAbonne; // L'abonné qu'on modifie (si c'est le cas)
     private final Random random = new Random(); // Pour générer un code aléatoire
 
-    /**
-     * Initialisation : On pré-remplit les champs si c'est une modification.
+    /*
+     Initialisation : On pré-remplit les champs si c'est une modification.
      */
     @FXML
     public void initialize() {
@@ -54,8 +54,8 @@ public class AbonneFormController {
         }
     }
 
-    /**
-     * Action déclenchée par le bouton "Enregistrer".
+    /*
+     Action déclenchée par le bouton "Enregistrer".
      */
     @FXML
     private void handleSave() throws IOException {
@@ -72,7 +72,7 @@ public class AbonneFormController {
         }
 
         if (existingAbonne == null) {
-            // --- Création d'un nouvel abonné ---
+            // Création d'un nouvel abonné
             Abonne newAbonne = new Abonne(code, nom, adresse, dateAb, dateEnt);
             if (abonneDAO.create(newAbonne)) {
                 // On lui crée aussi sa carte automatique dans la base
@@ -84,7 +84,7 @@ public class AbonneFormController {
                 confirmPdfAndReturn(newAbonne);
             }
         } else {
-            // --- Mise à jour de l'abonné existant ---
+            // Mise à jour de l'abonné existant
             existingAbonne.setNomAbonne(nom);
             existingAbonne.setAdresseAbonne(adresse);
             existingAbonne.setCodeAbonne(code);
@@ -95,8 +95,8 @@ public class AbonneFormController {
         }
     }
 
-    /**
-     * Propose de générer le fichier PDF de la carte de membre.
+    /*
+     Propose de générer le fichier PDF de la carte de membre.
      */
     private void confirmPdfAndReturn(Abonne a) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, 

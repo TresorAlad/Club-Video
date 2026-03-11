@@ -8,17 +8,17 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
-/**
- * Le LandingController gère la toute première page que l'on voit (la page d'accueil).
- * C'est ici que l'utilisateur choisit s'il veut se connecter ou s'inscrire.
+/*
+ Le LandingController gère la toute première page que l'on voit (la page d'accueil).
+ C'est ici que l'utilisateur choisit s'il veut se connecter ou s'inscrire.
  */
 public class LandingController {
 
     @FXML
     private VBox contactBox; // Une boîte qui contient les infos de contact
 
-    /**
-     * Cette méthode se lance automatiquement quand la page s'affiche.
+    /*
+     Cette méthode se lance automatiquement quand la page s'affiche.
      */
     @FXML
     public void initialize() {
@@ -29,8 +29,8 @@ public class LandingController {
         }
     }
 
-    /**
-     * Action déclenchée par le bouton "Se Connecter".
+    /*
+     Action déclenchée par le bouton "Se Connecter".
      */
     @FXML
     public void goToLogin() {
@@ -42,8 +42,8 @@ public class LandingController {
         }
     }
 
-    /**
-     * Action déclenchée par le bouton "Créer un compte".
+    /*
+     Action déclenchée par le bouton "Créer un compte".
      */
     @FXML
     public void goToRegister() {
@@ -55,8 +55,8 @@ public class LandingController {
         }
     }
 
-    /**
-     * Action déclenchée par le bouton "Contact".
+    /*
+     Action déclenchée par le bouton "Contact".
      */
     @FXML
     public void showContactInfo() {
@@ -70,9 +70,9 @@ public class LandingController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Contact du Video Club");
             alert.setHeaderText("Nos coordonnées");
-            alert.setContentText("📧 Email : bester@videoclub.org\n" +
-                    "📞 Téléphone : +228 99 70 70 99\n" +
-                    "📍 Adresse : 123 Rue du Cinéma, Bd 30 Août ADIDOGOME");
+            alert.setContentText(" Email : bester@videoclub.org\n" +
+                    " Téléphone : +228 99 70 70 99\n" +
+                    " Adresse : 123 Rue du Cinéma, Bd 30 Août ADIDOGOME");
             alert.showAndWait();
         }
     }

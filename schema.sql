@@ -63,7 +63,8 @@ CREATE TABLE  location_cassette (
     id_cassette INTEGER NOT NULL, -- La cassette louée
     id_abonne INTEGER NOT NULL,   -- L'abonné qui loue
     date_allocation TEXT NOT NULL,
-    date_retour TEXT,             -- Rempli quand la cassette est rendue
+    date_retour_prevue TEXT,      -- Date à laquelle l'abonné doit rendre la cassette
+    date_retour TEXT,             -- Rempli quand la cassette est effectivement rendue
     FOREIGN KEY (id_cassette) REFERENCES cassette(id_cassette) ON DELETE CASCADE,
     FOREIGN KEY (id_abonne) REFERENCES abonne(id_abonne) ON DELETE CASCADE
 );

@@ -6,14 +6,13 @@ import com.videocassette.dao.LocationDAO;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * La classe Cassette représente un film ou une vidéo disponible à la location.
- * Elle contient les informations techniques du film (titre, durée) et son prix.
+/*
+ La classe Cassette représente un film ou une vidéo disponible à la location.
+ Elle contient les informations techniques du film (titre, durée) et son prix.
  */
 public class Cassette {
 
-    // --- Les "Champs" ---
-
+    // Les "Champs"
     // Identifiant unique (numéro automatique)
     private int idCassette;
     
@@ -38,8 +37,7 @@ public class Cassette {
     // La date de la dernière fois qu'elle a été louée
     private String derniereDateLocation;
 
-    // --- Les Constructeurs ---
-
+    // Les Constructeurs
     public Cassette() {
     }
 
@@ -62,7 +60,7 @@ public class Cassette {
         this.dateAchat = dateAchat;
     }
 
-    // --- Les Getters et Setters ---
+    // Les Getters et Setters
     // (Permettent d'accéder aux données privées en toute sécurité)
 
     public int getIdCassette() {
@@ -129,11 +127,10 @@ public class Cassette {
         this.derniereDateLocation = derniereDateLocation;
     }
 
-    // --- Les Méthodes Métier ---
-
-    /**
-     * Vérifie si la cassette est actuellement sur une étagère ou chez un client.
-     * @return true si elle est disponible, false si elle est en location.
+    // Les Méthodes Métier
+    /*
+     Vérifie si la cassette est actuellement sur une étagère ou chez un client.
+     @return true si elle est disponible, false si elle est en location.
      */
     public boolean estDisponible() {
         LocationDAO locationDAO = new LocationDAO();
@@ -149,16 +146,16 @@ public class Cassette {
         return true; // Aucune location active trouvée
     }
 
-    /**
-     * Récupère l'objet Catégorie complet lié à cette cassette.
+    /*
+     Récupère l'objet Catégorie complet lié à cette cassette.
      */
     public Categorie getCategorie() {
         CategorieDAO categorieDAO = new CategorieDAO();
         return categorieDAO.getById(this.idCategorie);
     }
 
-    /**
-     * Comment afficher la cassette dans une liste.
+    /*
+     Comment afficher la cassette dans une liste.
      */
     @Override
     public String toString() {

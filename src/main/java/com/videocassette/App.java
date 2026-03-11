@@ -11,30 +11,29 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-/**
- * La classe App est le point de départ de tout le programme.
- * C'est elle qui "allume" le logiciel et affiche la première fenêtre.
+/*
+ La classe App est le point de départ de tout le programme.
+ C'est elle qui "allume" le logiciel et affiche la première fenêtre.
  */
 public class App extends Application {
 
-    // On garde une trace de la fenêtre principale pour pouvoir changer ce qu'il y a dedans
+    // On garde une trace de la fenêtre principale pour pouvoir changer ce qu'il y a
+    // dedans
     private static Stage primaryStage;
 
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
 
-        // 1. Initialiser la base de données (créer les tables si elles n'existent pas)
-        DatabaseConnection.getInstance().initialiserBase();
-
-        // 2. Charger la toute première page (la page d'accueil)
+        // 1. Charger la toute première page (la page d'accueil)
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/videocassette/views/landing-view.fxml"));
         Parent root = loader.load();
 
         // 3. Créer une "Scène" (le contenu de la fenêtre) avec une taille par défaut
         Scene scene = new Scene(root, 900, 600);
-        
-        // 4. Ajouter le fichier de style (CSS) pour que ce soit joli (couleurs, boutons, etc.)
+
+        // 4. Ajouter le fichier de style (CSS) pour que ce soit joli (couleurs,
+        // boutons, etc.)
         scene.getStylesheets().add(getClass().getResource("/com/videocassette/styles/style.css").toExternalForm());
 
         // 5. Configurer et afficher la fenêtre
@@ -45,16 +44,18 @@ public class App extends Application {
         stage.show();
     }
 
-    /**
-     * Permet d'accéder à la fenêtre de n'importe où dans le code.
+    /*
+     Permet d'accéder à la fenêtre de n'importe où dans le code.
      */
     public static Stage getPrimaryStage() {
         return primaryStage;
     }
 
-    /**
-     * Cette méthode magique permet de changer de page.
-     * @param fxmlPath Le chemin vers le fichier de la nouvelle page (ex: "/com/videocassette/views/login-view.fxml")
+    /*
+     Cette méthode magique permet de changer de page.
+     
+     @param fxmlPath Le chemin vers le fichier de la nouvelle page (ex:
+                     "/com/videocassette/views/login-view.fxml")
      */
     public static void changerVue(String fxmlPath) throws IOException {
         URL resource = App.class.getResource(fxmlPath);
@@ -63,7 +64,7 @@ public class App extends Application {
         }
         FXMLLoader loader = new FXMLLoader(resource);
         Parent root = loader.load();
-        
+
         // On crée une nouvelle scène plus grande pour le tableau de bord
         Scene scene = new Scene(root, 1100, 700);
 
@@ -77,8 +78,8 @@ public class App extends Application {
         primaryStage.centerOnScreen(); // On recentre la fenêtre sur l'écran
     }
 
-    /**
-     * Même chose que changerVue, mais on peut choisir la taille de la fenêtre.
+    /*
+     Même chose que changerVue, mais on peut choisir la taille de la fenêtre.
      */
     public static void changerVue(String fxmlPath, double width, double height) throws IOException {
         URL resource = App.class.getResource(fxmlPath);
@@ -98,8 +99,8 @@ public class App extends Application {
         primaryStage.centerOnScreen();
     }
 
-    /**
-     * La méthode main est celle que l'ordinateur appelle en premier.
+    /*
+     La méthode main est celle que l'ordinateur appelle en premier.
      */
     public static void main(String[] args) {
         launch(args); // Lance l'application JavaFX

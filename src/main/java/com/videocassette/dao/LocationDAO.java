@@ -6,21 +6,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * La classe LocationDAO gère les contrats de location.
- * C'est ici qu'on enregistre qui a pris quel film et quand il le rend.
+/*
+ La classe LocationDAO gère les contrats de location.
+ C'est ici qu'on enregistre qui a pris quel film et quand il le rend.
  */
 public class LocationDAO {
 
-    /**
-     * Accès à la base de données.
+    /*
+     Accès à la base de données.
      */
     private Connection getConnection() {
         return DatabaseConnection.getInstance().getConnection();
     }
 
-    /**
-     * Transforme une ligne de la base de données en objet Location.
+    /*
+     Transforme une ligne de la base de données en objet Location.
      */
     private Location mapRow(ResultSet rs) throws SQLException {
         Location l = new Location();
@@ -32,6 +32,11 @@ public class LocationDAO {
         String dateAll = rs.getString("date_allocation");
         if (dateAll != null && !dateAll.isEmpty()) {
             l.setDateAllocation(LocalDate.parse(dateAll));
+        }
+
+        String dateRetPrev = rs.getString("date_retour_prevue");
+        if (dateRetPrev != null && !dateRetPrev.isEmpty()) {
+            l.setDateRetourPrevue(LocalDate.parse(dateRetPrev));
         }
 
         String dateRet = rs.getString("date_retour");
@@ -51,18 +56,19 @@ public class LocationDAO {
         return l;
     }
 
-    /**
-     * Crée un nouveau contrat de location (quand quelqu'un part avec un film).
+    /*
+     Crée un nouveau contrat de location (quand quelqu'un part avec un film).
      */
     public boolean create(Location location) {
-        String sql = "INSERT INTO location_cassette (id_cassette, id_abonne, date_allocation, date_retour) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO location_cassette (id_cassette, id_abonne, date_allocation, date_retour_prevue, date_retour) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, location.getIdCassette());
             ps.setInt(2, location.getIdAbonne());
             // Si aucune date n'est précisée, on prend la date d'aujourd'hui
             ps.setString(3, location.getDateAllocation() != null ? location.getDateAllocation().toString()
                     : LocalDate.now().toString());
-            ps.setString(4, location.getDateRetour() != null ? location.getDateRetour().toString() : null);
+            ps.setString(4, location.getDateRetourPrevue() != null ? location.getDateRetourPrevue().toString() : null);
+            ps.setString(5, location.getDateRetour() != null ? location.getDateRetour().toString() : null);
 
             int rows = ps.executeUpdate();
             if (rows > 0) {
@@ -77,9 +83,9 @@ public class LocationDAO {
         return false;
     }
 
-    /**
-     * Liste toutes les locations (historique complet).
-     * Les plus récentes apparaissent en premier (ORDER BY ... DESC).
+    /*
+     Liste toutes les locations (historique complet).
+     Les plus récentes apparaissent en premier (ORDER BY ... DESC).
      */
     public List<Location> getAll() {
         List<Location> list = new ArrayList<>();
@@ -97,8 +103,8 @@ public class LocationDAO {
         return list;
     }
 
-    /**
-     * Trouve les locations d'un abonné qui n'a pas encore rendu ses films.
+    /*
+     Trouve les locations d'un abonné qui n'a pas encore rendu ses films.
      */
     public List<Location> getActiveByAbonne(int idAbonne) {
         List<Location> list = new ArrayList<>();
@@ -116,8 +122,8 @@ public class LocationDAO {
         return list;
     }
 
-    /**
-     * Historique des locations pour un abonné précis.
+    /*
+     Historique des locations pour un abonné précis.
      */
     public List<Location> getByAbonne(int idAbonne) {
         List<Location> list = new ArrayList<>();
@@ -135,9 +141,9 @@ public class LocationDAO {
         return list;
     }
 
-    /**
-     * Récupère toutes les locations (actives ou non) pour une cassette donnée.
-     * Utilisé pour vérifier si la cassette est disponible.
+    /*
+     Récupère toutes les locations (actives ou non) pour une cassette donnée.
+     Utilisé pour vérifier si la cassette est disponible.
      */
     public List<Location> getByCassette(int idCassette) {
         List<Location> list = new ArrayList<>();
@@ -155,9 +161,9 @@ public class LocationDAO {
         return list;
     }
 
-    /**
-     * Termine une location (quand l'abonné ramène le film).
-     * On met la date d'aujourd'hui comme date de retour.
+    /*
+     Termine une location (quand l'abonné ramène le film).
+     On met la date d'aujourd'hui comme date de retour.
      */
     public boolean cloturerLocation(int idLocation) {
         String sql = "UPDATE location_cassette SET date_retour = ? WHERE id_location = ?";
@@ -171,8 +177,8 @@ public class LocationDAO {
         return false;
     }
 
-    /**
-     * Compte combien de films sont actuellement "dehors" (en cours de location).
+    /*
+     Compte combien de films sont actuellement "dehors" (en cours de location).
      */
     public int countActives() {
         String sql = "SELECT COUNT(*) FROM location_cassette WHERE date_retour IS NULL OR date_retour = ''";
@@ -186,8 +192,8 @@ public class LocationDAO {
         return 0;
     }
 
-    /**
-     * Supprime une ligne de location par erreur.
+    /*
+     Supprime une ligne de location par erreur.
      */
     public boolean delete(int id) {
         String sql = "DELETE FROM location_cassette WHERE id_location = ?";

@@ -4,10 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<!-- 
-    login-view.fxml : Fenêtre de connexion.
-    Elle permet à l'utilisateur de saisir son email et son mot de passe pour entrer dans le système.
--->
+<!-- login-view.fxml : Fenêtre de connexion.
+    Elle permet à l'utilisateur de saisir son email et son mot de passe pour entrer dans le système. -->
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.videocassette.controller.LoginController"
            styleClass="login-background"

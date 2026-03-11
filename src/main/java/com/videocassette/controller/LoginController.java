@@ -13,9 +13,9 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-/**
- * Le LoginController gère l'écran de connexion.
- * Il vérifie si l'email et le mot de passe sont corrects pour laisser entrer l'utilisateur.
+/*
+ Le LoginController gère l'écran de connexion.
+ Il vérifie si l'email et le mot de passe sont corrects pour laisser entrer l'utilisateur.
  */
 public class LoginController {
 
@@ -36,17 +36,17 @@ public class LoginController {
 
     private boolean isPasswordVisible = false;
 
-    /**
-     * Initialisation : On lie les deux champs de mot de passe (caché et visible).
-     * Comme ça, ce qu'on tape dans l'un s'écrit automatiquement dans l'autre.
+    /*
+     Initialisation : On lie les deux champs de mot de passe (caché et visible).
+     Comme ça, ce qu'on tape dans l'un s'écrit automatiquement dans l'autre.
      */
     @FXML
     public void initialize() {
         passwordTextField.textProperty().bindBidirectional(passwordField.textProperty());
     }
 
-    /**
-     * Action déclenchée par le bouton "Voir/Masquer".
+    /*
+     Action déclenchée par le bouton "Voir/Masquer".
      */
     @FXML
     public void togglePasswordVisibility() {
@@ -66,8 +66,8 @@ public class LoginController {
     private final UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
     private final AbonneDAO abonneDAO = new AbonneDAO();
 
-    /**
-     * Action déclenchée quand on clique sur "Se Connecter".
+    /*
+     Action déclenchée quand on clique sur "Se Connecter".
      */
     @FXML
     public void handleLogin() {
@@ -106,8 +106,8 @@ public class LoginController {
         }
     }
 
-    /**
-     * Redirection vers la page d'inscription.
+    /*
+     Redirection vers la page d'inscription.
      */
     @FXML
     public void goToRegister() {
@@ -118,8 +118,8 @@ public class LoginController {
         }
     }
 
-    /**
-     * Retour à la page d'accueil.
+    /*
+     Retour à la page d'accueil.
      */
     @FXML
     public void goToLanding() {

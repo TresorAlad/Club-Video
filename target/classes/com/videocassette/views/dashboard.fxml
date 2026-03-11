@@ -5,16 +5,14 @@
 <?import javafx.geometry.Insets?>
 <!-- FontIcon removed -->
 
-<!-- 
-    dashboard.fxml : Le cœur de l'application. 
+<!-- dashboard.fxml : Le cœur de l'application. 
     C'est ici que se trouvent l'accueil, la gestion des cassettes, abonnés, catégories et locations.
-    Le layout utilise un HBox : une barre latérale (Sidebar) à gauche et le contenu à droite.
--->
+    Le layout utilise un HBox : une barre latérale (Sidebar) à gauche et le contenu à droite. -->
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.videocassette.controller.DashboardController"
       prefWidth="1100" prefHeight="700">
 
-    <!-- ============ BARRE LATÉRALE (SIDEBAR) ============ -->
+    <!-- BARRE LATÉRALE (SIDEBAR) -->
     <VBox styleClass="sidebar" spacing="2">
         <VBox styleClass="sidebar-header">
             <HBox spacing="10" alignment="CENTER_LEFT">
@@ -70,12 +68,12 @@
         </VBox>
     </VBox>
 
-    <!-- ============ ZONE DE CONTENU (À DROITE) ============ -->
+    <!-- ZONE DE CONTENU (À DROITE) -->
     <!-- StackPane permet d'empiler les "panneaux" (panes) les uns sur les autres.
          Seul le panneau actif est visible à un instant T. -->
     <StackPane fx:id="contentArea" HBox.hgrow="ALWAYS" styleClass="content-area">
 
-        <!-- ===== ACCUEIL ===== -->
+        <!-- ACCUEIL -->
         <VBox fx:id="accueilPane" spacing="20" VBox.vgrow="ALWAYS">
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Label text="" style="-fx-font-size: 28px;"/>
@@ -139,7 +137,7 @@
             </ScrollPane>
         </VBox>
 
-        <!-- ===== CASSETTES (Gestion - TableView) ===== -->
+        <!-- CASSETTES (Gestion - TableView) -->
         <VBox fx:id="cassettesPane" spacing="14" visible="false" managed="false" VBox.vgrow="ALWAYS">
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Label text="" style="-fx-font-size: 28px;"/>
@@ -179,7 +177,7 @@
             </TableView>
         </VBox>
 
-        <!-- ===== ABONNÉS ===== -->
+        <!-- ABONNÉS -->
         <VBox fx:id="abonnesPane" spacing="14" visible="false" managed="false" VBox.vgrow="ALWAYS">
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Label text="" style="-fx-font-size: 28px;"/>
@@ -206,19 +204,15 @@
             </HBox>
             <TableView fx:id="abonneTable" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="abCodeCol" text="Code" prefWidth="90"/>
-                    <TableColumn fx:id="abNomCol" text="Nom" prefWidth="180"/>
-                    <TableColumn fx:id="abAdresseCol" text="Adresse" prefWidth="200"/>
-                    <TableColumn fx:id="abDateAbCol" text="Date Abonnement" prefWidth="130"/>
-                    <TableColumn fx:id="abDateEntCol" text="Date Entrée" prefWidth="120"/>
-                    <TableColumn fx:id="abNbLocCol" text="Nb Locations" prefWidth="100"/>
-                    <TableColumn fx:id="abLastLocCol" text="Dernière location" prefWidth="130"/>
-                    <TableColumn fx:id="abActionsCol" text="Actions" prefWidth="100"/>
+                    <TableColumn fx:id="abCodeCol" text="Code" prefWidth="120"/>
+                    <TableColumn fx:id="abNomCol" text="Nom" prefWidth="250"/>
+                    <TableColumn fx:id="abNbLocCol" text="Nombre de location" prefWidth="150"/>
+                    <TableColumn fx:id="abActionsCol" text="Actions" prefWidth="150"/>
                 </columns>
             </TableView>
         </VBox>
 
-        <!-- ===== CATÉGORIES ===== -->
+        <!-- CATÉGORIES -->
         <VBox fx:id="categoriesPane" spacing="14" visible="false" managed="false" VBox.vgrow="ALWAYS">
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Label text="" style="-fx-font-size: 28px;"/>
@@ -247,7 +241,7 @@
             </TableView>
         </VBox>
 
-        <!-- ===== LOCATIONS ===== -->
+        <!-- LOCATIONS -->
         <VBox fx:id="locationsPane" spacing="14" visible="false" managed="false" VBox.vgrow="ALWAYS">
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Label text="" style="-fx-font-size: 28px;"/>
@@ -270,13 +264,14 @@
                     <TableColumn fx:id="locCassetteCol" text="Cassette" prefWidth="180"/>
                     <TableColumn fx:id="locAbonneCol" text="Abonné" prefWidth="150"/>
                     <TableColumn fx:id="locDateAllocCol" text="Date Location" prefWidth="120"/>
+                    <TableColumn fx:id="locDateRetourPrevueCol" text="Retour Prévu" prefWidth="120"/>
                     <TableColumn fx:id="locDateRetCol" text="Date Retour" prefWidth="120"/>
                     <TableColumn fx:id="locStatutCol" text="Statut" prefWidth="100"/>
                 </columns>
             </TableView>
         </VBox>
 
-        <!-- ===== STATISTIQUES ===== -->
+        <!-- STATISTIQUES -->
         <VBox fx:id="statistiquesPane" spacing="20" visible="false" managed="false">
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Label text="" style="-fx-font-size: 28px;"/>
@@ -308,7 +303,7 @@
             </VBox>
         </VBox>
 
-        <!-- ===== PROFIL ===== -->
+        <!-- PROFIL -->
         <VBox fx:id="profilPane" spacing="20" visible="false" managed="false">
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Label text="" style="-fx-font-size: 28px;"/>

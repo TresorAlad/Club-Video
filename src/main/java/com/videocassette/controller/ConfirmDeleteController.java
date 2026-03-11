@@ -13,9 +13,9 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
-/**
- * Le ConfirmDeleteController gère la page qui demande "Êtes-vous sûr ?" avant de supprimer.
- * Il s'adapte selon qu'on veuille supprimer un film, un abonné ou une catégorie.
+/*
+ Le ConfirmDeleteController gère la page qui demande "Êtes-vous sûr ?" avant de supprimer.
+ Il s'adapte selon qu'on veuille supprimer un film, un abonné ou une catégorie.
  */
 public class ConfirmDeleteController {
 
@@ -25,8 +25,8 @@ public class ConfirmDeleteController {
     private Object target; // L'objet qu'on veut supprimer (Cassette, Abonne ou Categorie)
     private String type; // Le type d'objet (ex: "CASSETTE")
 
-    /**
-     * Initialisation : On récupère l'objet à supprimer qui a été "transféré" par la page précédente.
+    /*
+     Initialisation : On récupère l'objet à supprimer qui a été "transféré" par la page précédente.
      */
     @FXML
     public void initialize() {
@@ -55,8 +55,8 @@ public class ConfirmDeleteController {
         }
     }
 
-    /**
-     * Action déclenchée quand on clique sur "Confirmer la suppression".
+    /*
+     Action déclenchée quand on clique sur "Confirmer la suppression".
      */
     @FXML
     private void handleConfirm() throws IOException {
@@ -72,8 +72,8 @@ public class ConfirmDeleteController {
         App.changerVue("/com/videocassette/views/dashboard.fxml");
     }
 
-    /**
-     * Action déclenchée quand on clique sur "Annuler".
+    /*
+     Action déclenchée quand on clique sur "Annuler".
      */
     @FXML
     private void handleCancel() throws IOException {

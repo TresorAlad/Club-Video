@@ -56,7 +56,7 @@ src/main/
 ### 2. Clonage / Récupération
 Placez-vous dans le répertoire du projet :
 ```bash
-cd "Documents/Projet Java"
+cd "..../Projet Java"
 ```
 
 ### 3. Compilation
@@ -82,11 +82,22 @@ Utilisez la page **Inscription** pour créer votre propre compte. Tous les membr
 
 ## 🗃️ Base de Données (SQLite)
 
-Le fichier de base de données `videocassette.db` est créé automatiquement à la racine du projet lors du premier lancement.  
-Pour réinitialiser complètement la base :
+Le fichier de base de données `clubvideo.db` est stocké à la racine du projet. 
+
+**Note importante :** La base de données ne s'initialise plus automatiquement au lancement de l'application. Vous devez le faire manuellement lors de la première installation.
+
+### Initialisation manuelle
+Pour créer les tables et recharger les données par défaut (depuis `schema.sql`), utilisez la commande standard SQLite :
+```bash
+sqlite3 clubvideo.db < schema.sql
+```
+
+*(Note : Assurez-vous d'avoir sqlite3 installé sur votre système. Si vous préférez passer par Java, vous pouvez aussi utiliser `mvn exec:java -Dexec.mainClass="com.videocassette.DbInitializer"`)*
+
+### Réinitialisation complète
 1. Fermez l'application.
-2. Supprimez le fichier `videocassette.db`.
-3. Relancez l'application. Elle se reconstruira à partir du fichier `src/main/resources/com/videocassette/sql/schema.sql`.
+2. Supprimez le fichier `clubvideo.db`.
+3. Relancez la commande d'initialisation ci-dessus.
 
 ---
 

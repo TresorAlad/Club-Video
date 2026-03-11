@@ -6,20 +6,20 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * La classe CarteAbonneDAO gère la création et la lecture des cartes de membres.
+/*
+ La classe CarteAbonneDAO gère la création et la lecture des cartes de membres.
  */
 public class CarteAbonneDAO {
 
-    /**
-     * Accès à la base de données.
+    /*
+     Accès à la base de données.
      */
     private Connection getConnection() {
         return DatabaseConnection.getInstance().getConnection();
     }
 
-    /**
-     * Crée une nouvelle carte pour un abonné.
+    /*
+     Crée une nouvelle carte pour un abonné.
      */
     public boolean create(CarteAbonne carte) {
         String sql = "INSERT INTO carte_abonne (id_abonne) VALUES (?)";
@@ -39,9 +39,9 @@ public class CarteAbonneDAO {
         return false;
     }
 
-    /**
-     * Trouve la carte d'un abonné.
-     * On utilise "LEFT JOIN" pour récupérer aussi le nom de l'abonné en une seule fois.
+    /*
+     Trouve la carte d'un abonné.
+     On utilise "LEFT JOIN" pour récupérer aussi le nom de l'abonné en une seule fois.
      */
     public CarteAbonne getByAbonne(int idAbonne) {
         String sql = "SELECT ca.*, a.nom_abonne FROM carte_abonne ca LEFT JOIN abonne a ON ca.id_abonne = a.id_abonne WHERE ca.id_abonne = ?";
@@ -63,8 +63,8 @@ public class CarteAbonneDAO {
         return null;
     }
 
-    /**
-     * Liste toutes les cartes existantes.
+    /*
+     Liste toutes les cartes existantes.
      */
     public List<CarteAbonne> getAll() {
         List<CarteAbonne> list = new ArrayList<>();
@@ -85,8 +85,8 @@ public class CarteAbonneDAO {
         return list;
     }
 
-    /**
-     * Supprime une carte (par exemple si l'abonné quitte le club).
+    /*
+     Supprime une carte (par exemple si l'abonné quitte le club).
      */
     public boolean delete(int id) {
         String sql = "DELETE FROM carte_abonne WHERE id_carte_abonne = ?";

@@ -6,26 +6,26 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * La classe AbonneDAO est comme un "majordome" pour les Abonnés.
- * Son seul travail est de faire le lien entre les objets Java (les Abonnés)
- * et les lignes de texte dans la base de données (SQL).
- * 
- * DAO signifie "Data Access Object" (Objet d'Accès aux Données).
+/*
+ La classe AbonneDAO est comme un "majordome" pour les Abonnés.
+ Son seul travail est de faire le lien entre les objets Java (les Abonnés)
+ et les lignes de texte dans la base de données (SQL).
+ 
+ DAO signifie "Data Access Object" (Objet d'Accès aux Données).
  */
 public class AbonneDAO {
 
-    /**
-     * Récupère la connexion active vers la base de données.
+    /*
+     Récupère la connexion active vers la base de données.
      */
     private Connection getConnection() {
         return DatabaseConnection.getInstance().getConnection();
     }
 
-    /**
-     * Cette méthode est un "traducteur".
-     * Elle prend une ligne de résultat SQL (ResultSet) et la transforme en un bel
-     * objet Abonne.
+    /*
+     Cette méthode est un "traducteur".
+     Elle prend une ligne de résultat SQL (ResultSet) et la transforme en un bel
+     objet Abonne.
      */
     private Abonne mapRow(ResultSet rs) throws SQLException {
         Abonne ab = new Abonne();
@@ -60,9 +60,9 @@ public class AbonneDAO {
         return ab;
     }
 
-    /**
-     * Enregistre un nouvel abonné dans la base de données.
-     * C'est la commande SQL "INSERT INTO".
+    /*
+     Enregistre un nouvel abonné dans la base de données.
+     C'est la commande SQL "INSERT INTO".
      */
     public boolean create(Abonne abonne) {
         String sql = "INSERT INTO abonne (code_abonne, nom_abonne, adresse_abonne, date_abonnement, date_entree, id_utilisateur) VALUES (?, ?, ?, ?, ?, ?)";
@@ -91,9 +91,9 @@ public class AbonneDAO {
         return false;
     }
 
-    /**
-     * Récupère la liste de TOUS les abonnés.
-     * C'est la commande SQL "SELECT * FROM".
+    /*
+     Récupère la liste de TOUS les abonnés.
+     C'est la commande SQL "SELECT * FROM".
      */
     public List<Abonne> getAll() {
         List<Abonne> list = new ArrayList<>();
@@ -114,8 +114,8 @@ public class AbonneDAO {
         return list;
     }
 
-    /**
-     * Trouve un abonné en connaissant son numéro unique (ID).
+    /*
+     Trouve un abonné en connaissant son numéro unique (ID).
      */
     public Abonne getById(int id) {
         String sql = "SELECT a.*, " +
@@ -134,9 +134,9 @@ public class AbonneDAO {
         return null;
     }
 
-    /**
-     * Trouve un abonné à partir de l'ID de son compte utilisateur.
-     * Utilisé lors du login pour charger le profil abonné.
+    /*
+     Trouve un abonné à partir de l'ID de son compte utilisateur.
+     Utilisé lors du login pour charger le profil abonné.
      */
     public Abonne getByUtilisateurId(int idUtilisateur) {
         String sql = "SELECT a.*, " +
@@ -155,9 +155,9 @@ public class AbonneDAO {
         return null;
     }
 
-    /**
-     * Trouve un abonné à partir de son code unique (ex: CLUB123).
-     * Utilisé lors de la location rapide depuis le catalogue.
+    /*
+     Trouve un abonné à partir de son code unique (ex: CLUB123).
+     Utilisé lors de la location rapide depuis le catalogue.
      */
     public Abonne getByCode(String code) {
         String sql = "SELECT a.*, " +
@@ -176,9 +176,9 @@ public class AbonneDAO {
         return null;
     }
 
-    /**
-     * Met à jour les informations d'un abonné qui existe déjà.
-     * C'est la commande SQL "UPDATE".
+    /*
+     Met à jour les informations d'un abonné qui existe déjà.
+     C'est la commande SQL "UPDATE".
      */
     public boolean update(Abonne abonne) {
         String sql = "UPDATE abonne SET code_abonne = ?, nom_abonne = ?, adresse_abonne = ?, date_abonnement = ?, date_entree = ? WHERE id_abonne = ?";
@@ -196,9 +196,9 @@ public class AbonneDAO {
         return false;
     }
 
-    /**
-     * Supprime un abonné définitivement.
-     * C'est la commande SQL "DELETE".
+    /*
+     Supprime un abonné définitivement.
+     C'est la commande SQL "DELETE".
      */
     public boolean delete(int id) {
         String sql = "DELETE FROM abonne WHERE id_abonne = ?";
@@ -211,8 +211,8 @@ public class AbonneDAO {
         return false;
     }
 
-    /**
-     * Compte combien il y a d'abonnés au total dans le club.
+    /*
+     Compte combien il y a d'abonnés au total dans le club.
      */
     public int count() {
         String sql = "SELECT COUNT(*) FROM abonne";

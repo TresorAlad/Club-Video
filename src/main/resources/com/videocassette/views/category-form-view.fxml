@@ -4,9 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<!-- 
-    category-form-view.fxml : Formulaire pour gérer les catégories de films.
--->
+<!-- category-form-view.fxml : Formulaire pour gérer les catégories de films. -->
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.videocassette.controller.CategoryFormController"
       spacing="30" alignment="CENTER" styleClass="content-area"

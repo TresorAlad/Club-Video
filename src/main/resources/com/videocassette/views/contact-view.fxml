@@ -4,10 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<!-- 
-    contact-view.fxml : Fenêtre de contact.
-    Elle permet aux utilisateurs d'envoyer un message aux administrateurs.
--->
+<!-- contact-view.fxml : Fenêtre de contact.
+    Elle permet aux utilisateurs d'envoyer un message aux administrateurs. -->
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.videocassette.controller.ContactController"
            styleClass="login-background"

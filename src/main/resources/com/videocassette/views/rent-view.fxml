@@ -4,10 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<!-- 
-    rent-view.fxml : Fenêtre rapide pour louer une cassette à un abonné.
-    Apparaît quand on clique sur "Louer" depuis une carte de cassette.
--->
+<!-- rent-view.fxml : Fenêtre rapide pour louer une cassette à un abonné.
+    Apparaît quand on clique sur "Louer" depuis une carte de cassette. -->
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.videocassette.controller.RentCassetteController"
       spacing="30" alignment="CENTER" styleClass="content-area"
@@ -20,12 +18,17 @@
         <VBox spacing="10" alignment="CENTER">
             <Label text="🎬" style="-fx-font-size: 50px;"/>
             <Label fx:id="cassetteTitleLabel" text="Louer une cassette" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1B2838;"/>
-            <Label text="Sélectionnez l'abonné pour cette location" style="-fx-font-size: 14px; -fx-text-fill: #778DA9;"/>
+            <Label text="Sélectionnez l'abonné et la date de retour" style="-fx-font-size: 14px; -fx-text-fill: #778DA9;"/>
         </VBox>
 
         <VBox spacing="8">
             <Label text="Code Abonné" styleClass="form-label"/>
             <TextField fx:id="codeAbonneField" styleClass="form-field" promptText="Ex: CLUB452" prefHeight="45"/>
+        </VBox>
+
+        <VBox spacing="8">
+            <Label text="Date de retour prévue" styleClass="form-label"/>
+            <DatePicker fx:id="dateRetourPicker" styleClass="form-field" maxWidth="Infinity" prefHeight="45"/>
         </VBox>
 
         <HBox spacing="15" alignment="CENTER">

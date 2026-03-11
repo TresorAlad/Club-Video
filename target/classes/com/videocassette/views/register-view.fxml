@@ -4,10 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<!-- 
-    register-view.fxml : Fenêtre d'inscription.
-    Elle permet à un nouvel utilisateur de créer son compte en saisissant ses infos personnelles.
--->
+<!-- register-view.fxml : Fenêtre d'inscription.
+    Elle permet à un nouvel utilisateur de créer son compte en saisissant ses infos personnelles. -->
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.videocassette.controller.RegisterController"
            styleClass="login-background"

@@ -8,8 +8,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-/**
- * Le ContactController gère la page où l'utilisateur peut envoyer un message au club.
+/*
+ Le ContactController gère la page où l'utilisateur peut envoyer un message au club.
  */
 public class ContactController {
 
@@ -22,8 +22,8 @@ public class ContactController {
     @FXML
     private TextArea messageArea; // La grande zone pour le message
 
-    /**
-     * Action déclenchée par le bouton "Envoyer".
+    /*
+     Action déclenchée par le bouton "Envoyer".
      */
     @FXML
     public void envoyerMessage() {
@@ -51,8 +51,8 @@ public class ContactController {
         messageArea.clear();
     }
 
-    /**
-     * Retour à la page d'accueil.
+    /*
+     Retour à la page d'accueil.
      */
     @FXML
     public void goToLanding() {

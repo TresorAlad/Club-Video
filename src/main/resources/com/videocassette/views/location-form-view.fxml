@@ -4,10 +4,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<!-- 
-    location-form-view.fxml : Formulaire complet pour créer une location.
-    Il permet de choisir une cassette et un abonné via des listes déroulantes (ComboBox).
--->
+<!-- location-form-view.fxml : Formulaire complet pour créer une location.
+    Il permet de choisir une cassette et un abonné via des listes déroulantes (ComboBox). -->
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.videocassette.controller.LocationFormController"
       spacing="20" alignment="TOP_CENTER" styleClass="content-area"

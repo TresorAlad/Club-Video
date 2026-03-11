@@ -14,6 +14,7 @@ com/videocassette/controller/LoginController.class
 com/videocassette/controller/DashboardController$1.class
 com/videocassette/model/Cassette.class
 com/videocassette/model/Utilisateur.class
+com/videocassette/DbInitializer.class
 com/videocassette/dao/CarteAbonneDAO.class
 com/videocassette/model/CarteAbonne.class
 com/videocassette/dao/DatabaseConnection.class

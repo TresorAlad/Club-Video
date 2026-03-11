@@ -5,10 +5,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Text?>
 
-<!-- 
-    landing-view.fxml : C'est la toute première page que l'on voit en ouvrant le logiciel.
-    Elle sert d'écran d'accueil pour choisir entre se connecter ou créer un compte.
--->
+<!-- landing-view.fxml : C'est la toute première page que l'on voit en ouvrant le logiciel.
+    Elle sert d'écran d'accueil pour choisir entre se connecter ou créer un compte. -->
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="com.videocassette.controller.LandingController"
            styleClass="login-background"
@@ -16,7 +14,7 @@
 
     <!-- VBox aligne les éléments verticalement (les uns sous les autres) -->
     <VBox alignment="CENTER" spacing="30">
-        <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+        <padding><Insets top="40" right="15" bottom="40" left="15"/></padding>
 
         <!-- Section du titre et du logo -->
         <VBox alignment="CENTER" spacing="10">
@@ -28,11 +26,11 @@
 
         <!-- Carte centrale contenant les boutons d'action -->
 
-        <VBox alignment="CENTER" spacing="15" styleClass="login-card" style="-fx-background-color: rgba(255, 255, 255, 0.9);">
-            <padding><Insets top="30" right="40" bottom="30" left="40"/></padding>
+        <VBox alignment="CENTER" spacing="15" styleClass="login-card" style="-fx-background-color: rgba(255, 255, 255, 0.9);" maxWidth="800">
+            <padding><Insets top="35" right="50" bottom="35" left="50"/></padding>
             
             <Label text="Système d'information dédié à la gestion des locations de cassettes, au suivi des abonnés et au contrôle des retours." 
-                   wrapText="true" textAlignment="CENTER" style="-fx-font-size: 14px; -fx-text-fill: #415A77;"/>
+                   wrapText="true" textAlignment="CENTER" style="-fx-font-size: 20px; -fx-text-fill: #415A77;"/>
             
             <Region prefHeight="10"/>
 
