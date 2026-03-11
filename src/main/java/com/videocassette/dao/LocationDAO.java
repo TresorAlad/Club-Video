@@ -39,7 +39,8 @@ public class LocationDAO {
             l.setDateRetour(LocalDate.parse(dateRet));
         }
 
-        // Si on a fait une jointure (JOIN), on récupère aussi le titre du film et le nom de l'abonné
+        // Si on a fait une jointure (JOIN), on récupère aussi le titre du film et le
+        // nom de l'abonné
         try {
             l.setCassetteTitre(rs.getString("titre"));
             l.setAbonneNom(rs.getString("nom_abonne"));
@@ -125,6 +126,26 @@ public class LocationDAO {
                 "WHERE l.id_abonne = ? ORDER BY l.date_allocation DESC";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setInt(1, idAbonne);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+                list.add(mapRow(rs));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * Récupère toutes les locations (actives ou non) pour une cassette donnée.
+     * Utilisé pour vérifier si la cassette est disponible.
+     */
+    public List<Location> getByCassette(int idCassette) {
+        List<Location> list = new ArrayList<>();
+        String sql = "SELECT l.*, a.nom_abonne FROM location_cassette l " +
+                "LEFT JOIN abonne a ON l.id_abonne = a.id_abonne " +
+                "WHERE l.id_cassette = ? ORDER BY l.date_allocation DESC";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setInt(1, idCassette);
             ResultSet rs = ps.executeQuery();
             while (rs.next())
                 list.add(mapRow(rs));

@@ -24,7 +24,8 @@ public class AbonneDAO {
 
     /**
      * Cette méthode est un "traducteur".
-     * Elle prend une ligne de résultat SQL (ResultSet) et la transforme en un bel objet Abonne.
+     * Elle prend une ligne de résultat SQL (ResultSet) et la transforme en un bel
+     * objet Abonne.
      */
     private Abonne mapRow(ResultSet rs) throws SQLException {
         Abonne ab = new Abonne();
@@ -44,14 +45,17 @@ public class AbonneDAO {
 
         ab.setIdUtilisateur(rs.getInt("id_utilisateur"));
 
-        // On récupère aussi les infos calculées par SQL (comme le nombre de films loués)
+        // On récupère aussi les infos calculées par SQL (comme le nombre de films
+        // loués)
         try {
             ab.setNombreLocations(rs.getInt("nb_locations"));
-        } catch (SQLException e) {}
-        
+        } catch (SQLException e) {
+        }
+
         try {
             ab.setDerniereDateLocation(rs.getString("derniere_location"));
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+        }
 
         return ab;
     }
@@ -93,11 +97,13 @@ public class AbonneDAO {
      */
     public List<Abonne> getAll() {
         List<Abonne> list = new ArrayList<>();
-        // On demande aussi de compter les locations et de trouver la date de la dernière
+        // On demande aussi de compter les locations et de trouver la date de la
+        // dernière
         String sql = "SELECT a.*, " +
-                     "(SELECT COUNT(*) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as nb_locations, " +
-                     "(SELECT MAX(date_allocation) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as derniere_location " +
-                     "FROM abonne a ORDER BY a.nom_abonne";
+                "(SELECT COUNT(*) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as nb_locations, " +
+                "(SELECT MAX(date_allocation) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as derniere_location "
+                +
+                "FROM abonne a ORDER BY a.nom_abonne";
         try (Statement stmt = getConnection().createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next())
@@ -113,11 +119,54 @@ public class AbonneDAO {
      */
     public Abonne getById(int id) {
         String sql = "SELECT a.*, " +
-                     "(SELECT COUNT(*) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as nb_locations, " +
-                     "(SELECT MAX(date_allocation) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as derniere_location " +
-                     "FROM abonne a WHERE a.id_abonne = ?";
+                "(SELECT COUNT(*) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as nb_locations, " +
+                "(SELECT MAX(date_allocation) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as derniere_location "
+                +
+                "FROM abonne a WHERE a.id_abonne = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return mapRow(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Trouve un abonné à partir de l'ID de son compte utilisateur.
+     * Utilisé lors du login pour charger le profil abonné.
+     */
+    public Abonne getByUtilisateurId(int idUtilisateur) {
+        String sql = "SELECT a.*, " +
+                "(SELECT COUNT(*) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as nb_locations, " +
+                "(SELECT MAX(date_allocation) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as derniere_location "
+                +
+                "FROM abonne a WHERE a.id_utilisateur = ?";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setInt(1, idUtilisateur);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return mapRow(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Trouve un abonné à partir de son code unique (ex: CLUB123).
+     * Utilisé lors de la location rapide depuis le catalogue.
+     */
+    public Abonne getByCode(String code) {
+        String sql = "SELECT a.*, " +
+                "(SELECT COUNT(*) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as nb_locations, " +
+                "(SELECT MAX(date_allocation) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as derniere_location "
+                +
+                "FROM abonne a WHERE a.code_abonne = ?";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setString(1, code);
             ResultSet rs = ps.executeQuery();
             if (rs.next())
                 return mapRow(rs);

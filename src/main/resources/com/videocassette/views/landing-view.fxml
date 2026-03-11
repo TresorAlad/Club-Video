@@ -15,6 +15,7 @@
            prefWidth="900" prefHeight="600">
 
     <!-- VBox aligne les éléments verticalement (les uns sous les autres) -->
+    <VBox alignment="CENTER" spacing="30">
         <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
 
         <!-- Section du titre et du logo -->

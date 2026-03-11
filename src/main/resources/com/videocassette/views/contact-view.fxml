@@ -17,7 +17,6 @@
         <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
 
         <VBox alignment="CENTER" spacing="10">
-            <Label text="✉️" style="-fx-font-size: 60px;"/>
             <Label text="Nous Contacter" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;"/>
             <Label text="N'hésitez pas à nous envoyer un message" 
                    style="-fx-font-size: 16px; -fx-text-fill: #E0E1DD; -fx-opacity: 0.9;"/>
@@ -25,9 +24,9 @@
 
         <HBox spacing="15" alignment="CENTER" style="-fx-background-color: rgba(27, 40, 56, 0.8); -fx-background-radius: 12; -fx-padding: 20;">
             <VBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="📍 123 Rue du Cinéma, Bd 30 Août ADIDOGOME" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-                <Label text="📞 +228 99 70 70 99" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
-                <Label text="📧 bester@videoclub.org" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                <Label text=" 123 Rue du Cinéma, Bd 30 Août ADIDOGOME" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                <Label text=" +228 99 70 70 99" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
+                <Label text=" bester@videoclub.org" style="-fx-text-fill: white; -fx-font-size: 14px;"/>
             </VBox>
         </HBox>
 

@@ -2,11 +2,11 @@ com/videocassette/dao/CassetteDAO.class
 com/videocassette/controller/CassetteFormController.class
 com/videocassette/model/Categorie.class
 com/videocassette/util/PDFUtils.class
-com/videocassette/controller/CategoryFormController.class
 com/videocassette/dao/LocationDAO.class
+com/videocassette/controller/CategoryFormController.class
 com/videocassette/dao/AbonneDAO.class
-com/videocassette/controller/RegisterController.class
 com/videocassette/util/Session.class
+com/videocassette/controller/RegisterController.class
 com/videocassette/App.class
 com/videocassette/controller/ConfirmDeleteController.class
 module-info.class
