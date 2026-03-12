@@ -16,16 +16,16 @@ import java.util.List;
 public class AbonneDAO {
 
     /*
-     Récupère la connexion active vers la base de données.
+     * Récupère la connexion active vers la base de données.
      */
     private Connection getConnection() {
         return DatabaseConnection.getInstance().getConnection();
     }
 
     /*
-     Cette méthode est un "traducteur".
-     Elle prend une ligne de résultat SQL (ResultSet) et la transforme en un bel
-     objet Abonne.
+     * Cette méthode est un "traducteur".
+     * Elle prend une ligne de résultat SQL (ResultSet) et la transforme en un bel
+     * objet Abonne.
      */
     private Abonne mapRow(ResultSet rs) throws SQLException {
         Abonne ab = new Abonne();
@@ -61,8 +61,8 @@ public class AbonneDAO {
     }
 
     /*
-     Enregistre un nouvel abonné dans la base de données.
-     C'est la commande SQL "INSERT INTO".
+     * Enregistre un nouvel abonné dans la base de données.
+     * C'est la commande SQL "INSERT INTO".
      */
     public boolean create(Abonne abonne) {
         String sql = "INSERT INTO abonne (code_abonne, nom_abonne, adresse_abonne, date_abonnement, date_entree, id_utilisateur) VALUES (?, ?, ?, ?, ?, ?)";
@@ -92,8 +92,8 @@ public class AbonneDAO {
     }
 
     /*
-     Récupère la liste de TOUS les abonnés.
-     C'est la commande SQL "SELECT * FROM".
+     * Récupère la liste de TOUS les abonnés.
+     * C'est la commande SQL "SELECT * FROM".
      */
     public List<Abonne> getAll() {
         List<Abonne> list = new ArrayList<>();
@@ -115,7 +115,7 @@ public class AbonneDAO {
     }
 
     /*
-     Trouve un abonné en connaissant son numéro unique (ID).
+     * Trouve un abonné en connaissant son numéro unique (ID).
      */
     public Abonne getById(int id) {
         String sql = "SELECT a.*, " +
@@ -135,8 +135,8 @@ public class AbonneDAO {
     }
 
     /*
-     Trouve un abonné à partir de l'ID de son compte utilisateur.
-     Utilisé lors du login pour charger le profil abonné.
+     * Trouve un abonné à partir de l'ID de son compte utilisateur.
+     * Utilisé lors du login pour charger le profil abonné.
      */
     public Abonne getByUtilisateurId(int idUtilisateur) {
         String sql = "SELECT a.*, " +
@@ -156,8 +156,8 @@ public class AbonneDAO {
     }
 
     /*
-     Trouve un abonné à partir de son code unique (ex: CLUB123).
-     Utilisé lors de la location rapide depuis le catalogue.
+     * Trouve un abonné à partir de son code unique (ex: CLUB123).
+     * Utilisé lors de la location rapide depuis le catalogue.
      */
     public Abonne getByCode(String code) {
         String sql = "SELECT a.*, " +
@@ -177,8 +177,8 @@ public class AbonneDAO {
     }
 
     /*
-     Met à jour les informations d'un abonné qui existe déjà.
-     C'est la commande SQL "UPDATE".
+     * Met à jour les informations d'un abonné qui existe déjà.
+     * C'est la commande SQL "UPDATE".
      */
     public boolean update(Abonne abonne) {
         String sql = "UPDATE abonne SET code_abonne = ?, nom_abonne = ?, adresse_abonne = ?, date_abonnement = ?, date_entree = ? WHERE id_abonne = ?";
@@ -197,8 +197,8 @@ public class AbonneDAO {
     }
 
     /*
-     Supprime un abonné définitivement.
-     C'est la commande SQL "DELETE".
+     * Supprime un abonné définitivement.
+     * C'est la commande SQL "DELETE".
      */
     public boolean delete(int id) {
         String sql = "DELETE FROM abonne WHERE id_abonne = ?";
@@ -212,7 +212,7 @@ public class AbonneDAO {
     }
 
     /*
-     Compte combien il y a d'abonnés au total dans le club.
+     * Compte combien il y a d'abonnés au total dans le club.
      */
     public int count() {
         String sql = "SELECT COUNT(*) FROM abonne";
@@ -220,6 +220,50 @@ public class AbonneDAO {
                 ResultSet rs = stmt.executeQuery(sql)) {
             if (rs.next())
                 return rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
+     * Récupère les "Super-Loueurs" : les abonnés ayant effectué le plus de
+     * locations.
+     */
+    public List<Abonne> getTopRenters(int limit) {
+        List<Abonne> list = new ArrayList<>();
+        String sql = "SELECT a.*, " +
+                "(SELECT COUNT(*) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as nb_locations, " +
+                "(SELECT MAX(date_allocation) FROM location_cassette lc WHERE lc.id_abonne = a.id_abonne) as derniere_location "
+                +
+                "FROM abonne a " +
+                "ORDER BY nb_locations DESC LIMIT ?";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setInt(1, limit);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * Compte le nombre de nouveaux abonnés inscrits durant une période donnée.
+     * 
+     * @param period 'week' ou 'month'
+     */
+    public int countNewSubscribers(String period) {
+        String interval = period.equals("week") ? "-7 days" : "-1 month";
+        String sql = "SELECT COUNT(*) FROM abonne WHERE date_abonnement >= date('now', ?)";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setString(1, interval);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

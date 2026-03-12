@@ -20,6 +20,7 @@ com/videocassette/model/CarteAbonne.class
 com/videocassette/dao/DatabaseConnection.class
 com/videocassette/controller/DashboardController.class
 com/videocassette/model/Abonne.class
+com/videocassette/controller/DashboardController$2.class
 com/videocassette/controller/AbonneFormController.class
 com/videocassette/controller/RentCassetteController.class
 com/videocassette/util/DataTransfer.class

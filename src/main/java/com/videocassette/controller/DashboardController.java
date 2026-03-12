@@ -96,7 +96,13 @@ public class DashboardController {
 
     // Elements divers (Stats détaillées, Profil)
     @FXML
-    private Label statTotalCassettes2, statTotalAbonnes2, statLocActives2, statsResume;
+    private Label statTotalCassettes2, statTotalAbonnes2, statLocActives2, statNouveauxAbonnes;
+    @FXML
+    private TableView<Abonne> topRentersTable;
+    @FXML
+    private TableColumn<Abonne, Integer> topRankCol, topNbLocCol;
+    @FXML
+    private TableColumn<Abonne, String> topNomCol;
     @FXML
     private Label profilEmail, profilRole, profilMessage;
     @FXML
@@ -212,6 +218,22 @@ public class DashboardController {
         locStatutCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(
                 d.getValue().estActive() ? " Active" : " Terminée"));
         locationTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        // Colonnes du tableau des Top Renters
+        topRankCol.setCellFactory(col -> new TableCell<Abonne, Integer>() {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(String.valueOf(getIndex() + 1));
+                }
+            }
+        });
+        topNomCol.setCellValueFactory(d -> new javafx.beans.property.SimpleStringProperty(d.getValue().getNomAbonne()));
+        topNbLocCol.setCellValueFactory(
+                d -> new javafx.beans.property.SimpleIntegerProperty(d.getValue().getNombreLocations()).asObject());
     }
 
     /*
@@ -701,10 +723,15 @@ public class DashboardController {
         int tc = cassetteDAO.count();
         int ta = abonneDAO.count();
         int la = locationDAO.countActives();
+        int na = abonneDAO.countNewSubscribers("month");
+
         statTotalCassettes2.setText(String.valueOf(tc));
         statTotalAbonnes2.setText(String.valueOf(ta));
         statLocActives2.setText(String.valueOf(la));
-        statsResume.setText("Résumé : " + tc + " cassettes, " + ta + " abonnés, " + la + " locations en cours.");
+        statNouveauxAbonnes.setText(String.valueOf(na));
+
+        // Chargement des Top Renters
+        topRentersTable.setItems(FXCollections.observableArrayList(abonneDAO.getTopRenters(5)));
     }
 
     // Page Profil (Changement de mot de passe)
